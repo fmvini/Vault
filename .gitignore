@@ -17,3 +17,6 @@ backend/*.db
 .impeccable/live/
 .DS_Store
 Thumbs.db
+
+# Arquivos do impeccable
+.impeccable/*

@@ -1,0 +1,434 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/features/transactions/TransactionsPage.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=93f2479f"; const Fragment = __vite__cjsImport0_react_jsxDevRuntime["Fragment"]; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import { zodResolver } from "/node_modules/.vite/deps/@hookform_resolvers_zod.js?v=93f2479f";
+import { CalendarDays, Filter, Plus, Search, SlidersHorizontal } from "/node_modules/.vite/deps/lucide-react.js?v=93f2479f";
+import __vite__cjsImport5_react from "/node_modules/.vite/deps/react.js?v=93f2479f"; const useMemo = __vite__cjsImport5_react["useMemo"]; const useState = __vite__cjsImport5_react["useState"];
+import { useForm } from "/node_modules/.vite/deps/react-hook-form.js?v=93f2479f";
+import { z } from "/node_modules/.vite/deps/zod.js?v=93f2479f";
+import { PageHeader } from "/src/components/PageHeader.tsx";
+import { transactions as initialTransactions } from "/src/lib/demo.ts";
+import { formatMoney, formatShortDate } from "/src/lib/format.ts";
+const transactionSchema = z.object({
+  description: z.string().min(2, "Descreva a transação"),
+  amount: z.coerce.number().positive("Informe um valor maior que zero"),
+  type: z.enum(["expense", "income"]),
+  categoryName: z.string().min(1),
+  transactionDate: z.string().min(1)
+});
+export function TransactionsPage() {
+  _s();
+  const [items, setItems] = useState(initialTransactions);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const visible = useMemo(() => items.filter((item) => item.description.toLowerCase().includes(search.toLowerCase())), [items, search]);
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    resolver: zodResolver(transactionSchema),
+    defaultValues: { type: "expense", transactionDate: "2026-09-21", categoryName: "Alimentação" }
+  });
+  const addTransaction = (values) => {
+    const item = { id: crypto.randomUUID(), currency: "BRL", icon: "entry", ...values };
+    setItems((current) => [item, ...current]);
+    reset();
+    setDrawerOpen(false);
+  };
+  return /* @__PURE__ */ jsxDEV("div", { className: "feature-page", children: [
+    /* @__PURE__ */ jsxDEV(PageHeader, { title: "Transações", description: "Cada movimento do seu dinheiro, pesquisável e explicado.", action: /* @__PURE__ */ jsxDEV("button", { className: "primary-button compact", onClick: () => setDrawerOpen(true), children: [
+      /* @__PURE__ */ jsxDEV(Plus, { size: 17 }, void 0, false, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+        lineNumber: 57,
+        columnNumber: 194
+      }, this),
+      "Nova transação"
+    ] }, void 0, true, {
+      fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+      lineNumber: 57,
+      columnNumber: 115
+    }, this) }, void 0, false, {
+      fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+      lineNumber: 57,
+      columnNumber: 5
+    }, this),
+    /* @__PURE__ */ jsxDEV("section", { className: "filter-strip", children: [
+      /* @__PURE__ */ jsxDEV("label", { className: "table-search", children: [
+        /* @__PURE__ */ jsxDEV(Search, { size: 16 }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+          lineNumber: 59,
+          columnNumber: 39
+        }, this),
+        /* @__PURE__ */ jsxDEV("input", { value: search, onChange: (event) => setSearch(event.target.value), placeholder: "Buscar por descrição" }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+          lineNumber: 59,
+          columnNumber: 59
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+        lineNumber: 59,
+        columnNumber: 7
+      }, this),
+      /* @__PURE__ */ jsxDEV("button", { children: [
+        /* @__PURE__ */ jsxDEV(CalendarDays, { size: 16 }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+          lineNumber: 60,
+          columnNumber: 15
+        }, this),
+        "1–30 set 2026"
+      ] }, void 0, true, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+        lineNumber: 60,
+        columnNumber: 7
+      }, this),
+      /* @__PURE__ */ jsxDEV("button", { children: [
+        /* @__PURE__ */ jsxDEV(Filter, { size: 16 }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+          lineNumber: 60,
+          columnNumber: 71
+        }, this),
+        "Todas as categorias"
+      ] }, void 0, true, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+        lineNumber: 60,
+        columnNumber: 63
+      }, this),
+      /* @__PURE__ */ jsxDEV("button", { children: [
+        /* @__PURE__ */ jsxDEV(SlidersHorizontal, { size: 16 }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+          lineNumber: 60,
+          columnNumber: 127
+        }, this),
+        "Mais filtros"
+      ] }, void 0, true, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+        lineNumber: 60,
+        columnNumber: 119
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+      lineNumber: 58,
+      columnNumber: 5
+    }, this),
+    /* @__PURE__ */ jsxDEV("section", { className: "ledger-surface", children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "ledger-summary", children: [
+        /* @__PURE__ */ jsxDEV("span", { children: [
+          "Saldo do período",
+          /* @__PURE__ */ jsxDEV("strong", { children: formatMoney(2460) }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 63,
+            columnNumber: 61
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+          lineNumber: 63,
+          columnNumber: 39
+        }, this),
+        /* @__PURE__ */ jsxDEV("span", { children: [
+          "Receitas",
+          /* @__PURE__ */ jsxDEV("strong", { className: "positive", children: formatMoney(6200) }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 63,
+            columnNumber: 118
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+          lineNumber: 63,
+          columnNumber: 104
+        }, this),
+        /* @__PURE__ */ jsxDEV("span", { children: [
+          "Gastos",
+          /* @__PURE__ */ jsxDEV("strong", { className: "negative", children: formatMoney(3740) }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 63,
+            columnNumber: 194
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+          lineNumber: 63,
+          columnNumber: 182
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+        lineNumber: 63,
+        columnNumber: 7
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "feature-table", children: [
+        /* @__PURE__ */ jsxDEV("div", { className: "feature-row feature-row-head", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: "Data" }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 64,
+            columnNumber: 84
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { children: "Descrição" }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 64,
+            columnNumber: 101
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { children: "Categoria" }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 64,
+            columnNumber: 123
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { children: "Tipo" }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 64,
+            columnNumber: 145
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { children: "Valor" }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 64,
+            columnNumber: 162
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+          lineNumber: 64,
+          columnNumber: 38
+        }, this),
+        visible.map((item) => /* @__PURE__ */ jsxDEV("div", { className: "feature-row", children: [
+          /* @__PURE__ */ jsxDEV("span", { children: formatShortDate(item.transactionDate) }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 64,
+            columnNumber: 252
+          }, this),
+          /* @__PURE__ */ jsxDEV("strong", { children: item.description }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 64,
+            columnNumber: 304
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { children: item.categoryName }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 64,
+            columnNumber: 339
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { children: item.type === "expense" ? "Gasto" : "Receita" }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 64,
+            columnNumber: 371
+          }, this),
+          /* @__PURE__ */ jsxDEV("strong", { className: item.type === "expense" ? "negative" : "positive", children: [
+            item.type === "expense" ? "−" : "+",
+            " ",
+            formatMoney(item.amount)
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 64,
+            columnNumber: 431
+          }, this)
+        ] }, item.id, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+          lineNumber: 64,
+          columnNumber: 209
+        }, this))
+      ] }, void 0, true, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+        lineNumber: 64,
+        columnNumber: 7
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+      lineNumber: 62,
+      columnNumber: 5
+    }, this),
+    drawerOpen && /* @__PURE__ */ jsxDEV(Fragment, { children: [
+      /* @__PURE__ */ jsxDEV("button", { className: "drawer-scrim", "aria-label": "Fechar formulário", onClick: () => setDrawerOpen(false) }, void 0, false, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+        lineNumber: 66,
+        columnNumber: 22
+      }, this),
+      /* @__PURE__ */ jsxDEV("aside", { className: "entry-drawer", children: [
+        /* @__PURE__ */ jsxDEV("header", { children: [
+          /* @__PURE__ */ jsxDEV("div", { children: [
+            /* @__PURE__ */ jsxDEV("h2", { children: "Nova transação" }, void 0, false, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+              lineNumber: 66,
+              columnNumber: 170
+            }, this),
+            /* @__PURE__ */ jsxDEV("p", { children: "Registre em poucos campos." }, void 0, false, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+              lineNumber: 66,
+              columnNumber: 193
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 66,
+            columnNumber: 165
+          }, this),
+          /* @__PURE__ */ jsxDEV("button", { onClick: () => setDrawerOpen(false), children: "Fechar" }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 66,
+            columnNumber: 232
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+          lineNumber: 66,
+          columnNumber: 157
+        }, this),
+        /* @__PURE__ */ jsxDEV("form", { onSubmit: handleSubmit(addTransaction), children: [
+          /* @__PURE__ */ jsxDEV("label", { children: [
+            "Descrição",
+            /* @__PURE__ */ jsxDEV("input", { ...register("description") }, void 0, false, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+              lineNumber: 66,
+              columnNumber: 363
+            }, this),
+            errors.description && /* @__PURE__ */ jsxDEV("small", { children: errors.description.message }, void 0, false, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+              lineNumber: 66,
+              columnNumber: 424
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 66,
+            columnNumber: 347
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "field-pair", children: [
+            /* @__PURE__ */ jsxDEV("label", { children: [
+              "Valor",
+              /* @__PURE__ */ jsxDEV("input", { type: "number", step: "0.01", ...register("amount") }, void 0, false, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+                lineNumber: 66,
+                columnNumber: 516
+              }, this),
+              errors.amount && /* @__PURE__ */ jsxDEV("small", { children: errors.amount.message }, void 0, false, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+                lineNumber: 66,
+                columnNumber: 593
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+              lineNumber: 66,
+              columnNumber: 504
+            }, this),
+            /* @__PURE__ */ jsxDEV("label", { children: [
+              "Tipo",
+              /* @__PURE__ */ jsxDEV("select", { ...register("type"), children: [
+                /* @__PURE__ */ jsxDEV("option", { value: "expense", children: "Gasto" }, void 0, false, {
+                  fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+                  lineNumber: 66,
+                  columnNumber: 681
+                }, this),
+                /* @__PURE__ */ jsxDEV("option", { value: "income", children: "Receita" }, void 0, false, {
+                  fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+                  lineNumber: 66,
+                  columnNumber: 719
+                }, this)
+              ] }, void 0, true, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+                lineNumber: 66,
+                columnNumber: 651
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+              lineNumber: 66,
+              columnNumber: 640
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 66,
+            columnNumber: 476
+          }, this),
+          /* @__PURE__ */ jsxDEV("label", { children: [
+            "Categoria",
+            /* @__PURE__ */ jsxDEV("select", { ...register("categoryName"), children: [
+              /* @__PURE__ */ jsxDEV("option", { children: "Alimentação" }, void 0, false, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+                lineNumber: 66,
+                columnNumber: 835
+              }, this),
+              /* @__PURE__ */ jsxDEV("option", { children: "Moradia" }, void 0, false, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+                lineNumber: 66,
+                columnNumber: 863
+              }, this),
+              /* @__PURE__ */ jsxDEV("option", { children: "Transporte" }, void 0, false, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+                lineNumber: 66,
+                columnNumber: 887
+              }, this),
+              /* @__PURE__ */ jsxDEV("option", { children: "Salário" }, void 0, false, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+                lineNumber: 66,
+                columnNumber: 914
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+              lineNumber: 66,
+              columnNumber: 797
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 66,
+            columnNumber: 781
+          }, this),
+          /* @__PURE__ */ jsxDEV("label", { children: [
+            "Data",
+            /* @__PURE__ */ jsxDEV("input", { type: "date", ...register("transactionDate") }, void 0, false, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+              lineNumber: 66,
+              columnNumber: 966
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 66,
+            columnNumber: 955
+          }, this),
+          /* @__PURE__ */ jsxDEV("button", { className: "primary-button", type: "submit", children: "Salvar transação" }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+            lineNumber: 66,
+            columnNumber: 1028
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+          lineNumber: 66,
+          columnNumber: 301
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+        lineNumber: 66,
+        columnNumber: 125
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+      lineNumber: 66,
+      columnNumber: 20
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx",
+    lineNumber: 56,
+    columnNumber: 10
+  }, this);
+}
+_s(TransactionsPage, "k7p+0e0bd4QngC2gzvvd/jgYICM=", false, function() {
+  return [useForm];
+});
+_c = TransactionsPage;
+var _c;
+$RefreshReg$(_c, "TransactionsPage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/vinic/Documents/Vault/frontend/src/features/transactions/TransactionsPage.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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aUJBQWlFO0FBQUEsVUFBUSx1QkFBQyxZQUFPLFdBQVUsa0JBQWlCLE1BQUssVUFBUyxnQ0FBakQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFBaUU7QUFBQSxhQUF4eEI7QUFBQTtBQUFBO0FBQUE7QUFBQSxlQUFpeUI7QUFBQSxXQUFqOUI7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQUF3OUI7QUFBQSxTQUFqa0M7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQUF5a0M7QUFBQSxPQVZubEM7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQVdQO0FBQ0Y7QUFBQ1osR0E3QmVELGtCQUFnQjtBQUFBLFVBS21DcEIsT0FBTztBQUFBO0FBQUEsS0FMMURvQjtBQUFnQixJQUFBaUM7QUFBQSxhQUFBQSxJQUFBIiwibmFtZXMiOlsiem9kUmVzb2x2ZXIiLCJDYWxlbmRhckRheXMiLCJGaWx0ZXIiLCJQbHVzIiwiU2VhcmNoIiwiU2xpZGVyc0hvcml6b250YWwiLCJ1c2VNZW1vIiwidXNlU3RhdGUiLCJ1c2VGb3JtIiwieiIsIlBhZ2VIZWFkZXIiLCJ0cmFuc2FjdGlvbnMiLCJpbml0aWFsVHJhbnNhY3Rpb25zIiwiZm9ybWF0TW9uZXkiLCJmb3JtYXRTaG9ydERhdGUiLCJ0cmFuc2FjdGlvblNjaGVtYSIsIm9iamVjdCIsImRlc2NyaXB0aW9uIiwic3RyaW5nIiwibWluIiwiYW1vdW50IiwiY29lcmNlIiwibnVtYmVyIiwicG9zaXRpdmUiLCJ0eXBlIiwiZW51bSIsImNhdGVnb3J5TmFtZSIsInRyYW5zYWN0aW9uRGF0ZSIsIlRyYW5zYWN0aW9uc1BhZ2UiLCJfcyIsIml0ZW1zIiwic2V0SXRlbXMiLCJkcmF3ZXJPcGVuIiwic2V0RHJhd2VyT3BlbiIsInNlYXJjaCIsInNldFNlYXJjaCIsInZpc2libGUiLCJmaWx0ZXIiLCJpdGVtIiwidG9Mb3dlckNhc2UiLCJpbmNsdWRlcyIsInJlZ2lzdGVyIiwiaGFuZGxlU3VibWl0IiwicmVzZXQiLCJmb3JtU3RhdGUiLCJlcnJvcnMiLCJyZXNvbHZlciIsImRlZmF1bHRWYWx1ZXMiLCJhZGRUcmFuc2FjdGlvbiIsInZhbHVlcyIsImlkIiwiY3J5cHRvIiwicmFuZG9tVVVJRCIsImN1cnJlbmN5IiwiaWNvbiIsImN1cnJlbnQiLCJldmVudCIsInRhcmdldCIsInZhbHVlIiwibWFwIiwibWVzc2FnZSIsIl9jIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbIlRyYW5zYWN0aW9uc1BhZ2UudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IHpvZFJlc29sdmVyIH0gZnJvbSBcIkBob29rZm9ybS9yZXNvbHZlcnMvem9kXCI7XG5pbXBvcnQgeyBDYWxlbmRhckRheXMsIEZpbHRlciwgUGx1cywgU2VhcmNoLCBTbGlkZXJzSG9yaXpvbnRhbCB9IGZyb20gXCJsdWNpZGUtcmVhY3RcIjtcbmltcG9ydCB7IHVzZU1lbW8sIHVzZVN0YXRlIH0gZnJvbSBcInJlYWN0XCI7XG5pbXBvcnQgeyB1c2VGb3JtIH0gZnJvbSBcInJlYWN0LWhvb2stZm9ybVwiO1xuaW1wb3J0IHsgeiB9IGZyb20gXCJ6b2RcIjtcbmltcG9ydCB7IFBhZ2VIZWFkZXIgfSBmcm9tIFwiLi4vLi4vY29tcG9uZW50cy9QYWdlSGVhZGVyXCI7XG5pbXBvcnQgeyB0cmFuc2FjdGlvbnMgYXMgaW5pdGlhbFRyYW5zYWN0aW9ucyB9IGZyb20gXCIuLi8uLi9saWIvZGVtb1wiO1xuaW1wb3J0IHsgZm9ybWF0TW9uZXksIGZvcm1hdFNob3J0RGF0ZSB9IGZyb20gXCIuLi8uLi9saWIvZm9ybWF0XCI7XG5pbXBvcnQgdHlwZSB7IFRyYW5zYWN0aW9uIH0gZnJvbSBcIi4uLy4uL3R5cGVzXCI7XG5cbmNvbnN0IHRyYW5zYWN0aW9uU2NoZW1hID0gei5vYmplY3Qoe1xuICBkZXNjcmlwdGlvbjogei5zdHJpbmcoKS5taW4oMiwgXCJEZXNjcmV2YSBhIHRyYW5zYcOnw6NvXCIpLFxuICBhbW91bnQ6IHouY29lcmNlLm51bWJlcigpLnBvc2l0aXZlKFwiSW5mb3JtZSB1bSB2YWxvciBtYWlvciBxdWUgemVyb1wiKSxcbiAgdHlwZTogei5lbnVtKFtcImV4cGVuc2VcIiwgXCJpbmNvbWVcIl0pLFxuICBjYXRlZ29yeU5hbWU6IHouc3RyaW5nKCkubWluKDEpLFxuICB0cmFuc2FjdGlvbkRhdGU6IHouc3RyaW5nKCkubWluKDEpXG59KTtcbnR5cGUgVHJhbnNhY3Rpb25Gb3JtID0gei5pbmZlcjx0eXBlb2YgdHJhbnNhY3Rpb25TY2hlbWE+O1xuXG5leHBvcnQgZnVuY3Rpb24gVHJhbnNhY3Rpb25zUGFnZSgpIHtcbiAgY29uc3QgW2l0ZW1zLCBzZXRJdGVtc10gPSB1c2VTdGF0ZShpbml0aWFsVHJhbnNhY3Rpb25zKTtcbiAgY29uc3QgW2RyYXdlck9wZW4sIHNldERyYXdlck9wZW5dID0gdXNlU3RhdGUoZmFsc2UpO1xuICBjb25zdCBbc2VhcmNoLCBzZXRTZWFyY2hdID0gdXNlU3RhdGUoXCJcIik7XG4gIGNvbnN0IHZpc2libGUgPSB1c2VNZW1vKCgpID0+IGl0ZW1zLmZpbHRlcigoaXRlbSkgPT4gaXRlbS5kZXNjcmlwdGlvbi50b0xvd2VyQ2FzZSgpLmluY2x1ZGVzKHNlYXJjaC50b0xvd2VyQ2FzZSgpKSksIFtpdGVtcywgc2VhcmNoXSk7XG4gIGNvbnN0IHsgcmVnaXN0ZXIsIGhhbmRsZVN1Ym1pdCwgcmVzZXQsIGZvcm1TdGF0ZTogeyBlcnJvcnMgfSB9ID0gdXNlRm9ybTxUcmFuc2FjdGlvbkZvcm0+KHtcbiAgICByZXNvbHZlcjogem9kUmVzb2x2ZXIodHJhbnNhY3Rpb25TY2hlbWEpLFxuICAgIGRlZmF1bHRWYWx1ZXM6IHsgdHlwZTogXCJleHBlbnNlXCIsIHRyYW5zYWN0aW9uRGF0ZTogXCIyMDI2LTA5LTIxXCIsIGNhdGVnb3J5TmFtZTogXCJBbGltZW50YcOnw6NvXCIgfVxuICB9KTtcblxuICBjb25zdCBhZGRUcmFuc2FjdGlvbiA9ICh2YWx1ZXM6IFRyYW5zYWN0aW9uRm9ybSkgPT4ge1xuICAgIGNvbnN0IGl0ZW06IFRyYW5zYWN0aW9uID0geyBpZDogY3J5cHRvLnJhbmRvbVVVSUQoKSwgY3VycmVuY3k6IFwiQlJMXCIsIGljb246IFwiZW50cnlcIiwgLi4udmFsdWVzIH07XG4gICAgc2V0SXRlbXMoKGN1cnJlbnQpID0+IFtpdGVtLCAuLi5jdXJyZW50XSk7XG4gICAgcmVzZXQoKTtcbiAgICBzZXREcmF3ZXJPcGVuKGZhbHNlKTtcbiAgfTtcblxuICByZXR1cm4gPGRpdiBjbGFzc05hbWU9XCJmZWF0dXJlLXBhZ2VcIj5cbiAgICA8UGFnZUhlYWRlciB0aXRsZT1cIlRyYW5zYcOnw7Vlc1wiIGRlc2NyaXB0aW9uPVwiQ2FkYSBtb3ZpbWVudG8gZG8gc2V1IGRpbmhlaXJvLCBwZXNxdWlzw6F2ZWwgZSBleHBsaWNhZG8uXCIgYWN0aW9uPXs8YnV0dG9uIGNsYXNzTmFtZT1cInByaW1hcnktYnV0dG9uIGNvbXBhY3RcIiBvbkNsaWNrPXsoKSA9PiBzZXREcmF3ZXJPcGVuKHRydWUpfT48UGx1cyBzaXplPXsxN30gLz5Ob3ZhIHRyYW5zYcOnw6NvPC9idXR0b24+fSAvPlxuICAgIDxzZWN0aW9uIGNsYXNzTmFtZT1cImZpbHRlci1zdHJpcFwiPlxuICAgICAgPGxhYmVsIGNsYXNzTmFtZT1cInRhYmxlLXNlYXJjaFwiPjxTZWFyY2ggc2l6ZT17MTZ9IC8+PGlucHV0IHZhbHVlPXtzZWFyY2h9IG9uQ2hhbmdlPXsoZXZlbnQpID0+IHNldFNlYXJjaChldmVudC50YXJnZXQudmFsdWUpfSBwbGFjZWhvbGRlcj1cIkJ1c2NhciBwb3IgZGVzY3Jpw6fDo29cIiAvPjwvbGFiZWw+XG4gICAgICA8YnV0dG9uPjxDYWxlbmRhckRheXMgc2l6ZT17MTZ9IC8+MeKAkzMwIHNldCAyMDI2PC9idXR0b24+PGJ1dHRvbj48RmlsdGVyIHNpemU9ezE2fSAvPlRvZGFzIGFzIGNhdGVnb3JpYXM8L2J1dHRvbj48YnV0dG9uPjxTbGlkZXJzSG9yaXpvbnRhbCBzaXplPXsxNn0gLz5NYWlzIGZpbHRyb3M8L2J1dHRvbj5cbiAgICA8L3NlY3Rpb24+XG4gICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwibGVkZ2VyLXN1cmZhY2VcIj5cbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwibGVkZ2VyLXN1bW1hcnlcIj48c3Bhbj5TYWxkbyBkbyBwZXLDrW9kbzxzdHJvbmc+e2Zvcm1hdE1vbmV5KDI0NjApfTwvc3Ryb25nPjwvc3Bhbj48c3Bhbj5SZWNlaXRhczxzdHJvbmcgY2xhc3NOYW1lPVwicG9zaXRpdmVcIj57Zm9ybWF0TW9uZXkoNjIwMCl9PC9zdHJvbmc+PC9zcGFuPjxzcGFuPkdhc3RvczxzdHJvbmcgY2xhc3NOYW1lPVwibmVnYXRpdmVcIj57Zm9ybWF0TW9uZXkoMzc0MCl9PC9zdHJvbmc+PC9zcGFuPjwvZGl2PlxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJmZWF0dXJlLXRhYmxlXCI+PGRpdiBjbGFzc05hbWU9XCJmZWF0dXJlLXJvdyBmZWF0dXJlLXJvdy1oZWFkXCI+PHNwYW4+RGF0YTwvc3Bhbj48c3Bhbj5EZXNjcmnDp8Ojbzwvc3Bhbj48c3Bhbj5DYXRlZ29yaWE8L3NwYW4+PHNwYW4+VGlwbzwvc3Bhbj48c3Bhbj5WYWxvcjwvc3Bhbj48L2Rpdj57dmlzaWJsZS5tYXAoKGl0ZW0pID0+IDxkaXYgY2xhc3NOYW1lPVwiZmVhdHVyZS1yb3dcIiBrZXk9e2l0ZW0uaWR9PjxzcGFuPntmb3JtYXRTaG9ydERhdGUoaXRlbS50cmFuc2FjdGlvbkRhdGUpfTwvc3Bhbj48c3Ryb25nPntpdGVtLmRlc2NyaXB0aW9ufTwvc3Ryb25nPjxzcGFuPntpdGVtLmNhdGVnb3J5TmFtZX08L3NwYW4+PHNwYW4+e2l0ZW0udHlwZSA9PT0gXCJleHBlbnNlXCIgPyBcIkdhc3RvXCIgOiBcIlJlY2VpdGFcIn08L3NwYW4+PHN0cm9uZyBjbGFzc05hbWU9e2l0ZW0udHlwZSA9PT0gXCJleHBlbnNlXCIgPyBcIm5lZ2F0aXZlXCIgOiBcInBvc2l0aXZlXCJ9PntpdGVtLnR5cGUgPT09IFwiZXhwZW5zZVwiID8gXCLiiJJcIiA6IFwiK1wifSB7Zm9ybWF0TW9uZXkoaXRlbS5hbW91bnQpfTwvc3Ryb25nPjwvZGl2Pil9PC9kaXY+XG4gICAgPC9zZWN0aW9uPlxuICAgIHtkcmF3ZXJPcGVuICYmIDw+PGJ1dHRvbiBjbGFzc05hbWU9XCJkcmF3ZXItc2NyaW1cIiBhcmlhLWxhYmVsPVwiRmVjaGFyIGZvcm11bMOhcmlvXCIgb25DbGljaz17KCkgPT4gc2V0RHJhd2VyT3BlbihmYWxzZSl9IC8+PGFzaWRlIGNsYXNzTmFtZT1cImVudHJ5LWRyYXdlclwiPjxoZWFkZXI+PGRpdj48aDI+Tm92YSB0cmFuc2HDp8OjbzwvaDI+PHA+UmVnaXN0cmUgZW0gcG91Y29zIGNhbXBvcy48L3A+PC9kaXY+PGJ1dHRvbiBvbkNsaWNrPXsoKSA9PiBzZXREcmF3ZXJPcGVuKGZhbHNlKX0+RmVjaGFyPC9idXR0b24+PC9oZWFkZXI+PGZvcm0gb25TdWJtaXQ9e2hhbmRsZVN1Ym1pdChhZGRUcmFuc2FjdGlvbil9PjxsYWJlbD5EZXNjcmnDp8OjbzxpbnB1dCB7Li4ucmVnaXN0ZXIoXCJkZXNjcmlwdGlvblwiKX0gLz57ZXJyb3JzLmRlc2NyaXB0aW9uICYmIDxzbWFsbD57ZXJyb3JzLmRlc2NyaXB0aW9uLm1lc3NhZ2V9PC9zbWFsbD59PC9sYWJlbD48ZGl2IGNsYXNzTmFtZT1cImZpZWxkLXBhaXJcIj48bGFiZWw+VmFsb3I8aW5wdXQgdHlwZT1cIm51bWJlclwiIHN0ZXA9XCIwLjAxXCIgey4uLnJlZ2lzdGVyKFwiYW1vdW50XCIpfSAvPntlcnJvcnMuYW1vdW50ICYmIDxzbWFsbD57ZXJyb3JzLmFtb3VudC5tZXNzYWdlfTwvc21hbGw+fTwvbGFiZWw+PGxhYmVsPlRpcG88c2VsZWN0IHsuLi5yZWdpc3RlcihcInR5cGVcIil9PjxvcHRpb24gdmFsdWU9XCJleHBlbnNlXCI+R2FzdG88L29wdGlvbj48b3B0aW9uIHZhbHVlPVwiaW5jb21lXCI+UmVjZWl0YTwvb3B0aW9uPjwvc2VsZWN0PjwvbGFiZWw+PC9kaXY+PGxhYmVsPkNhdGVnb3JpYTxzZWxlY3Qgey4uLnJlZ2lzdGVyKFwiY2F0ZWdvcnlOYW1lXCIpfT48b3B0aW9uPkFsaW1lbnRhw6fDo288L29wdGlvbj48b3B0aW9uPk1vcmFkaWE8L29wdGlvbj48b3B0aW9uPlRyYW5zcG9ydGU8L29wdGlvbj48b3B0aW9uPlNhbMOhcmlvPC9vcHRpb24+PC9zZWxlY3Q+PC9sYWJlbD48bGFiZWw+RGF0YTxpbnB1dCB0eXBlPVwiZGF0ZVwiIHsuLi5yZWdpc3RlcihcInRyYW5zYWN0aW9uRGF0ZVwiKX0gLz48L2xhYmVsPjxidXR0b24gY2xhc3NOYW1lPVwicHJpbWFyeS1idXR0b25cIiB0eXBlPVwic3VibWl0XCI+U2FsdmFyIHRyYW5zYcOnw6NvPC9idXR0b24+PC9mb3JtPjwvYXNpZGU+PC8+fVxuICA8L2Rpdj47XG59XG4iXSwiZmlsZSI6IkM6L1VzZXJzL3ZpbmljL0RvY3VtZW50cy9WYXVsdC9mcm9udGVuZC9zcmMvZmVhdHVyZXMvdHJhbnNhY3Rpb25zL1RyYW5zYWN0aW9uc1BhZ2UudHN4In0=

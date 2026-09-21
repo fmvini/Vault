@@ -1,0 +1,299 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/features/settings/SettingsPage.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=93f2479f"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import { BellRing, Check, Globe2, UserRound } from "/node_modules/.vite/deps/lucide-react.js?v=93f2479f";
+import { PageHeader } from "/src/components/PageHeader.tsx";
+export function SettingsPage() {
+  return /* @__PURE__ */ jsxDEV("div", { className: "feature-page", children: [
+    /* @__PURE__ */ jsxDEV(PageHeader, { title: "Configurações", description: "Preferências da sua conta e do jeito como o FinTrack conversa com você." }, void 0, false, {
+      fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+      lineNumber: 24,
+      columnNumber: 40
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "settings-layout", children: [
+      /* @__PURE__ */ jsxDEV("nav", { children: [
+        /* @__PURE__ */ jsxDEV("a", { href: "#profile", className: "active", children: [
+          /* @__PURE__ */ jsxDEV(UserRound, {}, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+            lineNumber: 25,
+            columnNumber: 81
+          }, this),
+          "Perfil"
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+          lineNumber: 25,
+          columnNumber: 43
+        }, this),
+        /* @__PURE__ */ jsxDEV("a", { href: "#currency", children: [
+          /* @__PURE__ */ jsxDEV(Globe2, {}, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+            lineNumber: 25,
+            columnNumber: 124
+          }, this),
+          "Moeda"
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+          lineNumber: 25,
+          columnNumber: 104
+        }, this),
+        /* @__PURE__ */ jsxDEV("a", { href: "#notifications", children: [
+          /* @__PURE__ */ jsxDEV(BellRing, {}, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+            lineNumber: 25,
+            columnNumber: 168
+          }, this),
+          "Notificações"
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+          lineNumber: 25,
+          columnNumber: 143
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+        lineNumber: 25,
+        columnNumber: 38
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "settings-panels", children: [
+        /* @__PURE__ */ jsxDEV("section", { id: "profile", children: [
+          /* @__PURE__ */ jsxDEV("header", { children: [
+            /* @__PURE__ */ jsxDEV("h2", { children: "Perfil" }, void 0, false, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+              lineNumber: 25,
+              columnNumber: 265
+            }, this),
+            /* @__PURE__ */ jsxDEV("p", { children: "Informações usadas na sua experiência." }, void 0, false, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+              lineNumber: 25,
+              columnNumber: 280
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+            lineNumber: 25,
+            columnNumber: 257
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "settings-fields", children: [
+            /* @__PURE__ */ jsxDEV("label", { children: [
+              "Nome",
+              /* @__PURE__ */ jsxDEV("input", { defaultValue: "Marina Ribeiro" }, void 0, false, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+                lineNumber: 25,
+                columnNumber: 378
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+              lineNumber: 25,
+              columnNumber: 367
+            }, this),
+            /* @__PURE__ */ jsxDEV("label", { children: [
+              "E-mail",
+              /* @__PURE__ */ jsxDEV("input", { type: "email", defaultValue: "marina@exemplo.com", disabled: true }, void 0, false, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+                lineNumber: 25,
+                columnNumber: 438
+              }, this),
+              /* @__PURE__ */ jsxDEV("small", { children: "Para alterar o e-mail, confirme sua identidade." }, void 0, false, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+                lineNumber: 25,
+                columnNumber: 503
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+              lineNumber: 25,
+              columnNumber: 425
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+            lineNumber: 25,
+            columnNumber: 334
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+          lineNumber: 25,
+          columnNumber: 235
+        }, this),
+        /* @__PURE__ */ jsxDEV("section", { id: "currency", children: [
+          /* @__PURE__ */ jsxDEV("header", { children: [
+            /* @__PURE__ */ jsxDEV("h2", { children: "Moeda padrão" }, void 0, false, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+              lineNumber: 25,
+              columnNumber: 620
+            }, this),
+            /* @__PURE__ */ jsxDEV("p", { children: "Usada para consolidar o dashboard." }, void 0, false, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+              lineNumber: 25,
+              columnNumber: 641
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+            lineNumber: 25,
+            columnNumber: 612
+          }, this),
+          /* @__PURE__ */ jsxDEV("label", { children: [
+            "Moeda",
+            /* @__PURE__ */ jsxDEV("select", { defaultValue: "BRL", children: [
+              /* @__PURE__ */ jsxDEV("option", { value: "BRL", children: "Real brasileiro — BRL" }, void 0, false, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+                lineNumber: 25,
+                columnNumber: 730
+              }, this),
+              /* @__PURE__ */ jsxDEV("option", { value: "USD", children: "Dólar americano — USD" }, void 0, false, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+                lineNumber: 25,
+                columnNumber: 780
+              }, this),
+              /* @__PURE__ */ jsxDEV("option", { value: "EUR", children: "Euro — EUR" }, void 0, false, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+                lineNumber: 25,
+                columnNumber: 830
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+              lineNumber: 25,
+              columnNumber: 703
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+            lineNumber: 25,
+            columnNumber: 691
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+          lineNumber: 25,
+          columnNumber: 589
+        }, this),
+        /* @__PURE__ */ jsxDEV("section", { id: "notifications", children: [
+          /* @__PURE__ */ jsxDEV("header", { children: [
+            /* @__PURE__ */ jsxDEV("h2", { children: "Notificações por e-mail" }, void 0, false, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+              lineNumber: 25,
+              columnNumber: 932
+            }, this),
+            /* @__PURE__ */ jsxDEV("p", { children: "Escolha quais sinais merecem chegar até você." }, void 0, false, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+              lineNumber: 25,
+              columnNumber: 964
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+            lineNumber: 25,
+            columnNumber: 924
+          }, this),
+          /* @__PURE__ */ jsxDEV("label", { className: "toggle-row", children: [
+            /* @__PURE__ */ jsxDEV("span", { children: [
+              /* @__PURE__ */ jsxDEV("strong", { children: "Meta ultrapassada" }, void 0, false, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+                lineNumber: 25,
+                columnNumber: 1061
+              }, this),
+              /* @__PURE__ */ jsxDEV("small", { children: "Quando uma categoria passa do limite mensal." }, void 0, false, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+                lineNumber: 25,
+                columnNumber: 1095
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+              lineNumber: 25,
+              columnNumber: 1055
+            }, this),
+            /* @__PURE__ */ jsxDEV("input", { type: "checkbox", defaultChecked: true }, void 0, false, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+              lineNumber: 25,
+              columnNumber: 1161
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+            lineNumber: 25,
+            columnNumber: 1025
+          }, this),
+          /* @__PURE__ */ jsxDEV("label", { className: "toggle-row", children: [
+            /* @__PURE__ */ jsxDEV("span", { children: [
+              /* @__PURE__ */ jsxDEV("strong", { children: "Gasto fixo próximo" }, void 0, false, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+                lineNumber: 25,
+                columnNumber: 1245
+              }, this),
+              /* @__PURE__ */ jsxDEV("small", { children: "Um lembrete antes do vencimento." }, void 0, false, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+                lineNumber: 25,
+                columnNumber: 1280
+              }, this)
+            ] }, void 0, true, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+              lineNumber: 25,
+              columnNumber: 1239
+            }, this),
+            /* @__PURE__ */ jsxDEV("input", { type: "checkbox", defaultChecked: true }, void 0, false, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+              lineNumber: 25,
+              columnNumber: 1334
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+            lineNumber: 25,
+            columnNumber: 1209
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+          lineNumber: 25,
+          columnNumber: 896
+        }, this),
+        /* @__PURE__ */ jsxDEV("button", { className: "primary-button compact", children: [
+          /* @__PURE__ */ jsxDEV(Check, { size: 16 }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+            lineNumber: 25,
+            columnNumber: 1435
+          }, this),
+          "Salvar alterações"
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+          lineNumber: 25,
+          columnNumber: 1392
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+        lineNumber: 25,
+        columnNumber: 202
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+      lineNumber: 25,
+      columnNumber: 5
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx",
+    lineNumber: 24,
+    columnNumber: 10
+  }, this);
+}
+_c = SettingsPage;
+var _c;
+$RefreshReg$(_c, "SettingsPage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/vinic/Documents/Vault/frontend/src/features/settings/SettingsPage.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBSXVDOzs7Ozs7Ozs7Ozs7Ozs7O0FBSnZDLFNBQVNBLFVBQVVDLE9BQU9DLFFBQVFDLGlCQUFpQjtBQUNuRCxTQUFTQyxrQkFBa0I7QUFFcEIsZ0JBQVNDLGVBQWU7QUFDN0IsU0FBTyx1QkFBQyxTQUFJLFdBQVUsZ0JBQWU7QUFBQSwyQkFBQyxjQUFXLE9BQU0saUJBQWdCLGFBQVksNkVBQTlDO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0FBdUg7QUFBQSxJQUMxSix1QkFBQyxTQUFJLFdBQVUsbUJBQWtCO0FBQUEsNkJBQUMsU0FBSTtBQUFBLCtCQUFDLE9BQUUsTUFBSyxZQUFXLFdBQVUsVUFBUztBQUFBLGlDQUFDLGVBQUQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFBVTtBQUFBLFVBQUc7QUFBQSxhQUFuRDtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBQXlEO0FBQUEsUUFBSSx1QkFBQyxPQUFFLE1BQUssYUFBWTtBQUFBLGlDQUFDLFlBQUQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFBTztBQUFBLFVBQUc7QUFBQSxhQUE5QjtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBQW1DO0FBQUEsUUFBSSx1QkFBQyxPQUFFLE1BQUssa0JBQWlCO0FBQUEsaUNBQUMsY0FBRDtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUFTO0FBQUEsVUFBRztBQUFBLGFBQXJDO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUFBaUQ7QUFBQSxXQUExSjtBQUFBO0FBQUE7QUFBQTtBQUFBLGFBQThKO0FBQUEsTUFBTSx1QkFBQyxTQUFJLFdBQVUsbUJBQWtCO0FBQUEsK0JBQUMsYUFBUSxJQUFHLFdBQVU7QUFBQSxpQ0FBQyxZQUFPO0FBQUEsbUNBQUMsUUFBRyxzQkFBSjtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUFVO0FBQUEsWUFBSyx1QkFBQyxPQUFFLHNEQUFIO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBQXlDO0FBQUEsZUFBaEU7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFBb0U7QUFBQSxVQUFTLHVCQUFDLFNBQUksV0FBVSxtQkFBa0I7QUFBQSxtQ0FBQyxXQUFNO0FBQUE7QUFBQSxjQUFJLHVCQUFDLFdBQU0sY0FBYSxvQkFBcEI7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFBb0M7QUFBQSxpQkFBL0M7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFBa0Q7QUFBQSxZQUFRLHVCQUFDLFdBQU07QUFBQTtBQUFBLGNBQU0sdUJBQUMsV0FBTSxNQUFLLFNBQVEsY0FBYSxzQkFBcUIsVUFBUSxRQUE5RDtBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUE4RDtBQUFBLGNBQUcsdUJBQUMsV0FBTSwrREFBUDtBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUFzRDtBQUFBLGlCQUFwSTtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUE0STtBQUFBLGVBQXZPO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBQStPO0FBQUEsYUFBbFY7QUFBQTtBQUFBO0FBQUE7QUFBQSxlQUF3VjtBQUFBLFFBQVUsdUJBQUMsYUFBUSxJQUFHLFlBQVc7QUFBQSxpQ0FBQyxZQUFPO0FBQUEsbUNBQUMsUUFBRyw0QkFBSjtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUFnQjtBQUFBLFlBQUssdUJBQUMsT0FBRSxrREFBSDtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUFxQztBQUFBLGVBQWxFO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBQXNFO0FBQUEsVUFBUyx1QkFBQyxXQUFNO0FBQUE7QUFBQSxZQUFLLHVCQUFDLFlBQU8sY0FBYSxPQUFNO0FBQUEscUNBQUMsWUFBTyxPQUFNLE9BQU0scUNBQXBCO0FBQUE7QUFBQTtBQUFBO0FBQUEscUJBQXlDO0FBQUEsY0FBUyx1QkFBQyxZQUFPLE9BQU0sT0FBTSxxQ0FBcEI7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFBeUM7QUFBQSxjQUFTLHVCQUFDLFlBQU8sT0FBTSxPQUFNLDBCQUFwQjtBQUFBO0FBQUE7QUFBQTtBQUFBLHFCQUE4QjtBQUFBLGlCQUE3SjtBQUFBO0FBQUE7QUFBQTtBQUFBLG1CQUFzSztBQUFBLGVBQWxMO0FBQUE7QUFBQTtBQUFBO0FBQUEsaUJBQTJMO0FBQUEsYUFBalM7QUFBQTtBQUFBO0FBQUE7QUFBQSxlQUF5UztBQUFBLFFBQVUsdUJBQUMsYUFBUSxJQUFHLGlCQUFnQjtBQUFBLGlDQUFDLFlBQU87QUFBQSxtQ0FBQyxRQUFHLHVDQUFKO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBQTJCO0FBQUEsWUFBSyx1QkFBQyxPQUFFLDZEQUFIO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBQWdEO0FBQUEsZUFBeEY7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFBNEY7QUFBQSxVQUFTLHVCQUFDLFdBQU0sV0FBVSxjQUFhO0FBQUEsbUNBQUMsVUFBSztBQUFBLHFDQUFDLFlBQU8saUNBQVI7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFBeUI7QUFBQSxjQUFTLHVCQUFDLFdBQU0sNERBQVA7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFBbUQ7QUFBQSxpQkFBM0Y7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFBbUc7QUFBQSxZQUFPLHVCQUFDLFdBQU0sTUFBSyxZQUFXLGdCQUFjLFFBQXJDO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBQXFDO0FBQUEsZUFBN0s7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFBZ0w7QUFBQSxVQUFRLHVCQUFDLFdBQU0sV0FBVSxjQUFhO0FBQUEsbUNBQUMsVUFBSztBQUFBLHFDQUFDLFlBQU8sa0NBQVI7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFBMEI7QUFBQSxjQUFTLHVCQUFDLFdBQU0sZ0RBQVA7QUFBQTtBQUFBO0FBQUE7QUFBQSxxQkFBdUM7QUFBQSxpQkFBaEY7QUFBQTtBQUFBO0FBQUE7QUFBQSxtQkFBd0Y7QUFBQSxZQUFPLHVCQUFDLFdBQU0sTUFBSyxZQUFXLGdCQUFjLFFBQXJDO0FBQUE7QUFBQTtBQUFBO0FBQUEsbUJBQXFDO0FBQUEsZUFBbEs7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFBcUs7QUFBQSxhQUE5ZDtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBQXNlO0FBQUEsUUFBVSx1QkFBQyxZQUFPLFdBQVUsMEJBQXlCO0FBQUEsaUNBQUMsU0FBTSxNQUFNLE1BQWI7QUFBQTtBQUFBO0FBQUE7QUFBQSxpQkFBZ0I7QUFBQSxVQUFHO0FBQUEsYUFBOUQ7QUFBQTtBQUFBO0FBQUE7QUFBQSxlQUErRTtBQUFBLFdBQXJ2QztBQUFBO0FBQUE7QUFBQTtBQUFBLGFBQTh2QztBQUFBLFNBQW44QztBQUFBO0FBQUE7QUFBQTtBQUFBLFdBQXk4QztBQUFBLE9BRHA4QztBQUFBO0FBQUE7QUFBQTtBQUFBLFNBRVA7QUFDRjtBQUFDQyxLQUplRDtBQUFZLElBQUFDO0FBQUEsYUFBQUEsSUFBQSIsIm5hbWVzIjpbIkJlbGxSaW5nIiwiQ2hlY2siLCJHbG9iZTIiLCJVc2VyUm91bmQiLCJQYWdlSGVhZGVyIiwiU2V0dGluZ3NQYWdlIiwiX2MiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiU2V0dGluZ3NQYWdlLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBCZWxsUmluZywgQ2hlY2ssIEdsb2JlMiwgVXNlclJvdW5kIH0gZnJvbSBcImx1Y2lkZS1yZWFjdFwiO1xuaW1wb3J0IHsgUGFnZUhlYWRlciB9IGZyb20gXCIuLi8uLi9jb21wb25lbnRzL1BhZ2VIZWFkZXJcIjtcblxuZXhwb3J0IGZ1bmN0aW9uIFNldHRpbmdzUGFnZSgpIHtcbiAgcmV0dXJuIDxkaXYgY2xhc3NOYW1lPVwiZmVhdHVyZS1wYWdlXCI+PFBhZ2VIZWFkZXIgdGl0bGU9XCJDb25maWd1cmHDp8O1ZXNcIiBkZXNjcmlwdGlvbj1cIlByZWZlcsOqbmNpYXMgZGEgc3VhIGNvbnRhIGUgZG8gamVpdG8gY29tbyBvIEZpblRyYWNrIGNvbnZlcnNhIGNvbSB2b2PDqi5cIiAvPlxuICAgIDxkaXYgY2xhc3NOYW1lPVwic2V0dGluZ3MtbGF5b3V0XCI+PG5hdj48YSBocmVmPVwiI3Byb2ZpbGVcIiBjbGFzc05hbWU9XCJhY3RpdmVcIj48VXNlclJvdW5kIC8+UGVyZmlsPC9hPjxhIGhyZWY9XCIjY3VycmVuY3lcIj48R2xvYmUyIC8+TW9lZGE8L2E+PGEgaHJlZj1cIiNub3RpZmljYXRpb25zXCI+PEJlbGxSaW5nIC8+Tm90aWZpY2HDp8O1ZXM8L2E+PC9uYXY+PGRpdiBjbGFzc05hbWU9XCJzZXR0aW5ncy1wYW5lbHNcIj48c2VjdGlvbiBpZD1cInByb2ZpbGVcIj48aGVhZGVyPjxoMj5QZXJmaWw8L2gyPjxwPkluZm9ybWHDp8O1ZXMgdXNhZGFzIG5hIHN1YSBleHBlcmnDqm5jaWEuPC9wPjwvaGVhZGVyPjxkaXYgY2xhc3NOYW1lPVwic2V0dGluZ3MtZmllbGRzXCI+PGxhYmVsPk5vbWU8aW5wdXQgZGVmYXVsdFZhbHVlPVwiTWFyaW5hIFJpYmVpcm9cIiAvPjwvbGFiZWw+PGxhYmVsPkUtbWFpbDxpbnB1dCB0eXBlPVwiZW1haWxcIiBkZWZhdWx0VmFsdWU9XCJtYXJpbmFAZXhlbXBsby5jb21cIiBkaXNhYmxlZCAvPjxzbWFsbD5QYXJhIGFsdGVyYXIgbyBlLW1haWwsIGNvbmZpcm1lIHN1YSBpZGVudGlkYWRlLjwvc21hbGw+PC9sYWJlbD48L2Rpdj48L3NlY3Rpb24+PHNlY3Rpb24gaWQ9XCJjdXJyZW5jeVwiPjxoZWFkZXI+PGgyPk1vZWRhIHBhZHLDo288L2gyPjxwPlVzYWRhIHBhcmEgY29uc29saWRhciBvIGRhc2hib2FyZC48L3A+PC9oZWFkZXI+PGxhYmVsPk1vZWRhPHNlbGVjdCBkZWZhdWx0VmFsdWU9XCJCUkxcIj48b3B0aW9uIHZhbHVlPVwiQlJMXCI+UmVhbCBicmFzaWxlaXJvIOKAlCBCUkw8L29wdGlvbj48b3B0aW9uIHZhbHVlPVwiVVNEXCI+RMOzbGFyIGFtZXJpY2FubyDigJQgVVNEPC9vcHRpb24+PG9wdGlvbiB2YWx1ZT1cIkVVUlwiPkV1cm8g4oCUIEVVUjwvb3B0aW9uPjwvc2VsZWN0PjwvbGFiZWw+PC9zZWN0aW9uPjxzZWN0aW9uIGlkPVwibm90aWZpY2F0aW9uc1wiPjxoZWFkZXI+PGgyPk5vdGlmaWNhw6fDtWVzIHBvciBlLW1haWw8L2gyPjxwPkVzY29saGEgcXVhaXMgc2luYWlzIG1lcmVjZW0gY2hlZ2FyIGF0w6kgdm9jw6ouPC9wPjwvaGVhZGVyPjxsYWJlbCBjbGFzc05hbWU9XCJ0b2dnbGUtcm93XCI+PHNwYW4+PHN0cm9uZz5NZXRhIHVsdHJhcGFzc2FkYTwvc3Ryb25nPjxzbWFsbD5RdWFuZG8gdW1hIGNhdGVnb3JpYSBwYXNzYSBkbyBsaW1pdGUgbWVuc2FsLjwvc21hbGw+PC9zcGFuPjxpbnB1dCB0eXBlPVwiY2hlY2tib3hcIiBkZWZhdWx0Q2hlY2tlZCAvPjwvbGFiZWw+PGxhYmVsIGNsYXNzTmFtZT1cInRvZ2dsZS1yb3dcIj48c3Bhbj48c3Ryb25nPkdhc3RvIGZpeG8gcHLDs3hpbW88L3N0cm9uZz48c21hbGw+VW0gbGVtYnJldGUgYW50ZXMgZG8gdmVuY2ltZW50by48L3NtYWxsPjwvc3Bhbj48aW5wdXQgdHlwZT1cImNoZWNrYm94XCIgZGVmYXVsdENoZWNrZWQgLz48L2xhYmVsPjwvc2VjdGlvbj48YnV0dG9uIGNsYXNzTmFtZT1cInByaW1hcnktYnV0dG9uIGNvbXBhY3RcIj48Q2hlY2sgc2l6ZT17MTZ9IC8+U2FsdmFyIGFsdGVyYcOnw7VlczwvYnV0dG9uPjwvZGl2PjwvZGl2PlxuICA8L2Rpdj47XG59XG4iXSwiZmlsZSI6IkM6L1VzZXJzL3ZpbmljL0RvY3VtZW50cy9WYXVsdC9mcm9udGVuZC9zcmMvZmVhdHVyZXMvc2V0dGluZ3MvU2V0dGluZ3NQYWdlLnRzeCJ9

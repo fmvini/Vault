@@ -1,0 +1,293 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/AppShell.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=93f2479f"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import {
+  Bell,
+  ChartNoAxesCombined,
+  Leaf,
+  CreditCard,
+  House,
+  Menu,
+  Plus,
+  Search,
+  Settings,
+  Tags,
+  Target,
+  WalletCards,
+  X
+} from "/node_modules/.vite/deps/lucide-react.js?v=93f2479f";
+import __vite__cjsImport4_react from "/node_modules/.vite/deps/react.js?v=93f2479f"; const useState = __vite__cjsImport4_react["useState"];
+import { NavLink, Outlet } from "/node_modules/.vite/deps/react-router-dom.js?v=93f2479f";
+const navItems = [
+  { to: "/", label: "Visão geral", icon: House },
+  { to: "/transactions", label: "Transações", icon: WalletCards },
+  { to: "/fixed-expenses", label: "Gastos fixos", icon: CreditCard },
+  { to: "/goals", label: "Metas", icon: Target },
+  { to: "/categories", label: "Categorias", icon: Tags },
+  { to: "/reports", label: "Relatórios", icon: ChartNoAxesCombined },
+  { to: "/settings", label: "Configurações", icon: Settings }
+];
+export function AppShell() {
+  _s();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  return /* @__PURE__ */ jsxDEV("div", { className: "app-shell", children: [
+    /* @__PURE__ */ jsxDEV("aside", { className: mobileOpen ? "sidebar is-open" : "sidebar", children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "brand-block", children: [
+        /* @__PURE__ */ jsxDEV(NavLink, { className: "brand", to: "/", "aria-label": "FinTrack — início", children: [
+          /* @__PURE__ */ jsxDEV("span", { className: "brand-mark", "aria-hidden": "true", children: /* @__PURE__ */ jsxDEV(Leaf, { size: 27, fill: "currentColor", strokeWidth: 1.6 }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+            lineNumber: 56,
+            columnNumber: 61
+          }, this) }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+            lineNumber: 56,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { children: "FinTrack" }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+            lineNumber: 57,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+          lineNumber: 55,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("p", { children: "Mais vida para o seu dinheiro" }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+          lineNumber: 59,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("button", { className: "mobile-close", onClick: () => setMobileOpen(false), "aria-label": "Fechar menu", children: /* @__PURE__ */ jsxDEV(X, {}, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+          lineNumber: 60,
+          columnNumber: 106
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+          lineNumber: 60,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+        lineNumber: 54,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("nav", { className: "primary-nav", "aria-label": "Navegação principal", children: navItems.map(
+        ({ to, label, icon: Icon }) => /* @__PURE__ */ jsxDEV(
+          NavLink,
+          {
+            to,
+            onClick: () => setMobileOpen(false),
+            className: ({ isActive }) => isActive ? "nav-item active" : "nav-item",
+            children: [
+              /* @__PURE__ */ jsxDEV(Icon, { size: 18, strokeWidth: 1.8 }, void 0, false, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+                lineNumber: 70,
+                columnNumber: 15
+              }, this),
+              /* @__PURE__ */ jsxDEV("span", { children: label }, void 0, false, {
+                fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+                lineNumber: 71,
+                columnNumber: 15
+              }, this)
+            ]
+          },
+          to,
+          true,
+          {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+            lineNumber: 64,
+            columnNumber: 11
+          },
+          this
+        )
+      ) }, void 0, false, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+        lineNumber: 62,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("button", { className: "new-transaction", children: [
+        /* @__PURE__ */ jsxDEV(Plus, { size: 18 }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+          lineNumber: 75,
+          columnNumber: 45
+        }, this),
+        "Nova transação"
+      ] }, void 0, true, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+        lineNumber: 75,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "sidebar-note", children: [
+        /* @__PURE__ */ jsxDEV("span", { className: "note-rule" }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+          lineNumber: 77,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("p", { children: [
+          "Disciplina hoje.",
+          /* @__PURE__ */ jsxDEV("br", {}, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+            lineNumber: 78,
+            columnNumber: 30
+          }, this),
+          "Mais liberdade amanhã."
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+          lineNumber: 78,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+        lineNumber: 76,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+      lineNumber: 53,
+      columnNumber: 7
+    }, this),
+    mobileOpen && /* @__PURE__ */ jsxDEV("button", { className: "sidebar-scrim", "aria-label": "Fechar menu", onClick: () => setMobileOpen(false) }, void 0, false, {
+      fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+      lineNumber: 81,
+      columnNumber: 22
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "content-column", children: [
+      /* @__PURE__ */ jsxDEV("header", { className: "topbar", children: [
+        /* @__PURE__ */ jsxDEV("button", { className: "mobile-menu", onClick: () => setMobileOpen(true), "aria-label": "Abrir menu", children: /* @__PURE__ */ jsxDEV(Menu, {}, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+          lineNumber: 84,
+          columnNumber: 103
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+          lineNumber: 84,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("label", { className: "global-search", children: [
+          /* @__PURE__ */ jsxDEV(Search, { size: 17, "aria-hidden": "true" }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+            lineNumber: 86,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { className: "sr-only", children: "Buscar" }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+            lineNumber: 87,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV("input", { placeholder: "Buscar transações, contas, categorias..." }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+            lineNumber: 88,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV("kbd", { children: "⌘ K" }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+            lineNumber: 89,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+          lineNumber: 85,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "account-actions", children: [
+          /* @__PURE__ */ jsxDEV("button", { className: "icon-button notification", "aria-label": "Notificações", children: [
+            /* @__PURE__ */ jsxDEV(Bell, { size: 19 }, void 0, false, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+              lineNumber: 92,
+              columnNumber: 84
+            }, this),
+            /* @__PURE__ */ jsxDEV("span", {}, void 0, false, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+              lineNumber: 92,
+              columnNumber: 102
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+            lineNumber: 92,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { className: "avatar", "aria-hidden": "true", children: "MR" }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+            lineNumber: 93,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV("div", { className: "account-copy", children: [
+            /* @__PURE__ */ jsxDEV("strong", { children: "Marina Ribeiro" }, void 0, false, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+              lineNumber: 94,
+              columnNumber: 43
+            }, this),
+            /* @__PURE__ */ jsxDEV("small", { children: "Boa tarde!" }, void 0, false, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+              lineNumber: 94,
+              columnNumber: 74
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+            lineNumber: 94,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+          lineNumber: 91,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+        lineNumber: 83,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("main", { className: "main-content", children: /* @__PURE__ */ jsxDEV(Outlet, {}, void 0, false, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+        lineNumber: 97,
+        columnNumber: 40
+      }, this) }, void 0, false, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+        lineNumber: 97,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+      lineNumber: 82,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx",
+    lineNumber: 52,
+    columnNumber: 5
+  }, this);
+}
+_s(AppShell, "33pz4tKGxA4/1e2zOoGo8gBQzP0=");
+_c = AppShell;
+var _c;
+$RefreshReg$(_c, "AppShell");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/vinic/Documents/Vault/frontend/src/components/AppShell.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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ZWRpdENhcmQiLCJIb3VzZSIsIk1lbnUiLCJQbHVzIiwiU2VhcmNoIiwiU2V0dGluZ3MiLCJUYWdzIiwiVGFyZ2V0IiwiV2FsbGV0Q2FyZHMiLCJYIiwidXNlU3RhdGUiLCJOYXZMaW5rIiwiT3V0bGV0IiwibmF2SXRlbXMiLCJ0byIsImxhYmVsIiwiaWNvbiIsIkFwcFNoZWxsIiwiX3MiLCJtb2JpbGVPcGVuIiwic2V0TW9iaWxlT3BlbiIsIm1hcCIsIkljb24iLCJpc0FjdGl2ZSIsIl9jIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbIkFwcFNoZWxsLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyLvu79pbXBvcnQge1xuICBCZWxsLFxuICBDaGFydE5vQXhlc0NvbWJpbmVkLFxuICBMZWFmLFxuICBDcmVkaXRDYXJkLFxuICBIb3VzZSxcbiAgTWVudSxcbiAgUGx1cyxcbiAgU2VhcmNoLFxuICBTZXR0aW5ncyxcbiAgVGFncyxcbiAgVGFyZ2V0LFxuICBXYWxsZXRDYXJkcyxcbiAgWFxufSBmcm9tIFwibHVjaWRlLXJlYWN0XCI7XG5pbXBvcnQgeyB1c2VTdGF0ZSB9IGZyb20gXCJyZWFjdFwiO1xuaW1wb3J0IHsgTmF2TGluaywgT3V0bGV0IH0gZnJvbSBcInJlYWN0LXJvdXRlci1kb21cIjtcblxuY29uc3QgbmF2SXRlbXMgPSBbXG4gIHsgdG86IFwiL1wiLCBsYWJlbDogXCJWaXPDo28gZ2VyYWxcIiwgaWNvbjogSG91c2UgfSxcbiAgeyB0bzogXCIvdHJhbnNhY3Rpb25zXCIsIGxhYmVsOiBcIlRyYW5zYcOnw7Vlc1wiLCBpY29uOiBXYWxsZXRDYXJkcyB9LFxuICB7IHRvOiBcIi9maXhlZC1leHBlbnNlc1wiLCBsYWJlbDogXCJHYXN0b3MgZml4b3NcIiwgaWNvbjogQ3JlZGl0Q2FyZCB9LFxuICB7IHRvOiBcIi9nb2Fsc1wiLCBsYWJlbDogXCJNZXRhc1wiLCBpY29uOiBUYXJnZXQgfSxcbiAgeyB0bzogXCIvY2F0ZWdvcmllc1wiLCBsYWJlbDogXCJDYXRlZ29yaWFzXCIsIGljb246IFRhZ3MgfSxcbiAgeyB0bzogXCIvcmVwb3J0c1wiLCBsYWJlbDogXCJSZWxhdMOzcmlvc1wiLCBpY29uOiBDaGFydE5vQXhlc0NvbWJpbmVkIH0sXG4gIHsgdG86IFwiL3NldHRpbmdzXCIsIGxhYmVsOiBcIkNvbmZpZ3VyYcOnw7Vlc1wiLCBpY29uOiBTZXR0aW5ncyB9XG5dO1xuXG5leHBvcnQgZnVuY3Rpb24gQXBwU2hlbGwoKSB7XG4gIGNvbnN0IFttb2JpbGVPcGVuLCBzZXRNb2JpbGVPcGVuXSA9IHVzZVN0YXRlKGZhbHNlKTtcblxuICByZXR1cm4gKFxuICAgIDxkaXYgY2xhc3NOYW1lPVwiYXBwLXNoZWxsXCI+XG4gICAgICA8YXNpZGUgY2xhc3NOYW1lPXttb2JpbGVPcGVuID8gXCJzaWRlYmFyIGlzLW9wZW5cIiA6IFwic2lkZWJhclwifT5cbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJicmFuZC1ibG9ja1wiPlxuICAgICAgICAgIDxOYXZMaW5rIGNsYXNzTmFtZT1cImJyYW5kXCIgdG89XCIvXCIgYXJpYS1sYWJlbD1cIkZpblRyYWNrIOKAlCBpbsOtY2lvXCI+XG4gICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJicmFuZC1tYXJrXCIgYXJpYS1oaWRkZW49XCJ0cnVlXCI+PExlYWYgc2l6ZT17Mjd9IGZpbGw9XCJjdXJyZW50Q29sb3JcIiBzdHJva2VXaWR0aD17MS42fSAvPjwvc3Bhbj5cbiAgICAgICAgICAgIDxzcGFuPkZpblRyYWNrPC9zcGFuPlxuICAgICAgICAgIDwvTmF2TGluaz5cbiAgICAgICAgICA8cD5NYWlzIHZpZGEgcGFyYSBvIHNldSBkaW5oZWlybzwvcD5cbiAgICAgICAgICA8YnV0dG9uIGNsYXNzTmFtZT1cIm1vYmlsZS1jbG9zZVwiIG9uQ2xpY2s9eygpID0+IHNldE1vYmlsZU9wZW4oZmFsc2UpfSBhcmlhLWxhYmVsPVwiRmVjaGFyIG1lbnVcIj48WCAvPjwvYnV0dG9uPlxuICAgICAgICA8L2Rpdj5cbiAgICAgICAgPG5hdiBjbGFzc05hbWU9XCJwcmltYXJ5LW5hdlwiIGFyaWEtbGFiZWw9XCJOYXZlZ2HDp8OjbyBwcmluY2lwYWxcIj5cbiAgICAgICAgICB7bmF2SXRlbXMubWFwKCh7IHRvLCBsYWJlbCwgaWNvbjogSWNvbiB9KSA9PiAoXG4gICAgICAgICAgICA8TmF2TGlua1xuICAgICAgICAgICAgICBrZXk9e3RvfVxuICAgICAgICAgICAgICB0bz17dG99XG4gICAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IHNldE1vYmlsZU9wZW4oZmFsc2UpfVxuICAgICAgICAgICAgICBjbGFzc05hbWU9eyh7IGlzQWN0aXZlIH0pID0+IGlzQWN0aXZlID8gXCJuYXYtaXRlbSBhY3RpdmVcIiA6IFwibmF2LWl0ZW1cIn1cbiAgICAgICAgICAgID5cbiAgICAgICAgICAgICAgPEljb24gc2l6ZT17MTh9IHN0cm9rZVdpZHRoPXsxLjh9IC8+XG4gICAgICAgICAgICAgIDxzcGFuPntsYWJlbH08L3NwYW4+XG4gICAgICAgICAgICA8L05hdkxpbms+XG4gICAgICAgICAgKSl9XG4gICAgICAgIDwvbmF2PlxuICAgICAgICA8YnV0dG9uIGNsYXNzTmFtZT1cIm5ldy10cmFuc2FjdGlvblwiPjxQbHVzIHNpemU9ezE4fSAvPk5vdmEgdHJhbnNhw6fDo288L2J1dHRvbj5cbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJzaWRlYmFyLW5vdGVcIj5cbiAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJub3RlLXJ1bGVcIiAvPlxuICAgICAgICAgIDxwPkRpc2NpcGxpbmEgaG9qZS48YnIgLz5NYWlzIGxpYmVyZGFkZSBhbWFuaMOjLjwvcD5cbiAgICAgICAgPC9kaXY+XG4gICAgICA8L2FzaWRlPlxuICAgICAge21vYmlsZU9wZW4gJiYgPGJ1dHRvbiBjbGFzc05hbWU9XCJzaWRlYmFyLXNjcmltXCIgYXJpYS1sYWJlbD1cIkZlY2hhciBtZW51XCIgb25DbGljaz17KCkgPT4gc2V0TW9iaWxlT3BlbihmYWxzZSl9IC8+fVxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJjb250ZW50LWNvbHVtblwiPlxuICAgICAgICA8aGVhZGVyIGNsYXNzTmFtZT1cInRvcGJhclwiPlxuICAgICAgICAgIDxidXR0b24gY2xhc3NOYW1lPVwibW9iaWxlLW1lbnVcIiBvbkNsaWNrPXsoKSA9PiBzZXRNb2JpbGVPcGVuKHRydWUpfSBhcmlhLWxhYmVsPVwiQWJyaXIgbWVudVwiPjxNZW51IC8+PC9idXR0b24+XG4gICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT1cImdsb2JhbC1zZWFyY2hcIj5cbiAgICAgICAgICAgIDxTZWFyY2ggc2l6ZT17MTd9IGFyaWEtaGlkZGVuPVwidHJ1ZVwiIC8+XG4gICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJzci1vbmx5XCI+QnVzY2FyPC9zcGFuPlxuICAgICAgICAgICAgPGlucHV0IHBsYWNlaG9sZGVyPVwiQnVzY2FyIHRyYW5zYcOnw7VlcywgY29udGFzLCBjYXRlZ29yaWFzLi4uXCIgLz5cbiAgICAgICAgICAgIDxrYmQ+4oyYIEs8L2tiZD5cbiAgICAgICAgICA8L2xhYmVsPlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiYWNjb3VudC1hY3Rpb25zXCI+XG4gICAgICAgICAgICA8YnV0dG9uIGNsYXNzTmFtZT1cImljb24tYnV0dG9uIG5vdGlmaWNhdGlvblwiIGFyaWEtbGFiZWw9XCJOb3RpZmljYcOnw7Vlc1wiPjxCZWxsIHNpemU9ezE5fSAvPjxzcGFuIC8+PC9idXR0b24+XG4gICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJhdmF0YXJcIiBhcmlhLWhpZGRlbj1cInRydWVcIj5NUjwvc3Bhbj5cbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiYWNjb3VudC1jb3B5XCI+PHN0cm9uZz5NYXJpbmEgUmliZWlybzwvc3Ryb25nPjxzbWFsbD5Cb2EgdGFyZGUhPC9zbWFsbD48L2Rpdj5cbiAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgPC9oZWFkZXI+XG4gICAgICAgIDxtYWluIGNsYXNzTmFtZT1cIm1haW4tY29udGVudFwiPjxPdXRsZXQgLz48L21haW4+XG4gICAgICA8L2Rpdj5cbiAgICA8L2Rpdj5cbiAgKTtcbn1cblxyXG5cclxuIl0sImZpbGUiOiJDOi9Vc2Vycy92aW5pYy9Eb2N1bWVudHMvVmF1bHQvZnJvbnRlbmQvc3JjL2NvbXBvbmVudHMvQXBwU2hlbGwudHN4In0=

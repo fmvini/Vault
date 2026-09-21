@@ -1,0 +1,240 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/features/goals/GoalsPage.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=93f2479f"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+import { AlertTriangle, ArrowRight, Plus, Target } from "/node_modules/.vite/deps/lucide-react.js?v=93f2479f";
+import { PageHeader } from "/src/components/PageHeader.tsx";
+import { categories, goals } from "/src/lib/demo.ts";
+import { formatMoney } from "/src/lib/format.ts";
+export function GoalsPage() {
+  return /* @__PURE__ */ jsxDEV("div", { className: "feature-page", children: [
+    /* @__PURE__ */ jsxDEV(PageHeader, { title: "Metas do mês", description: "Limites claros para decidir com antecedência, sem culpa.", action: /* @__PURE__ */ jsxDEV("button", { className: "primary-button compact", children: [
+      /* @__PURE__ */ jsxDEV(Plus, { size: 17 }, void 0, false, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+        lineNumber: 26,
+        columnNumber: 195
+      }, this),
+      "Nova meta"
+    ] }, void 0, true, {
+      fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+      lineNumber: 26,
+      columnNumber: 152
+    }, this) }, void 0, false, {
+      fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+      lineNumber: 26,
+      columnNumber: 40
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "goal-overview", children: [
+      /* @__PURE__ */ jsxDEV("div", { children: [
+        /* @__PURE__ */ jsxDEV(Target, {}, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+          lineNumber: 27,
+          columnNumber: 41
+        }, this),
+        /* @__PURE__ */ jsxDEV("span", { children: [
+          "3 metas ativas",
+          /* @__PURE__ */ jsxDEV("strong", { children: [
+            formatMoney(14200),
+            " planejados"
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+            lineNumber: 27,
+            columnNumber: 71
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+          lineNumber: 27,
+          columnNumber: 51
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+        lineNumber: 27,
+        columnNumber: 36
+      }, this),
+      /* @__PURE__ */ jsxDEV("p", { children: "Você utilizou 43% dos limites definidos para setembro." }, void 0, false, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+        lineNumber: 27,
+        columnNumber: 132
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+      lineNumber: 27,
+      columnNumber: 5
+    }, this),
+    /* @__PURE__ */ jsxDEV("section", { className: "goal-board", children: goals.map((goal, index) => {
+      const percent = Math.round(goal.current / goal.limit * 100);
+      return /* @__PURE__ */ jsxDEV("article", { children: [
+        /* @__PURE__ */ jsxDEV("header", { children: [
+          /* @__PURE__ */ jsxDEV("span", { children: goal.name }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+            lineNumber: 28,
+            columnNumber: 164
+          }, this),
+          /* @__PURE__ */ jsxDEV("em", { children: [
+            percent,
+            "%"
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+            lineNumber: 28,
+            columnNumber: 188
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+          lineNumber: 28,
+          columnNumber: 156
+        }, this),
+        /* @__PURE__ */ jsxDEV("strong", { children: [
+          formatMoney(goal.current),
+          " ",
+          /* @__PURE__ */ jsxDEV("small", { children: [
+            "de ",
+            formatMoney(goal.limit)
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+            lineNumber: 28,
+            columnNumber: 252
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+          lineNumber: 28,
+          columnNumber: 216
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "goal-track", children: /* @__PURE__ */ jsxDEV("span", { style: { width: `${percent}%` } }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+          lineNumber: 28,
+          columnNumber: 332
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+          lineNumber: 28,
+          columnNumber: 304
+        }, this),
+        /* @__PURE__ */ jsxDEV("footer", { children: [
+          /* @__PURE__ */ jsxDEV("span", { children: index === 0 ? "Ritmo saudável" : "Dentro do planejado" }, void 0, false, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+            lineNumber: 28,
+            columnNumber: 387
+          }, this),
+          /* @__PURE__ */ jsxDEV("button", { children: [
+            "Ver movimentos ",
+            /* @__PURE__ */ jsxDEV(ArrowRight, { size: 14 }, void 0, false, {
+              fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+              lineNumber: 28,
+              columnNumber: 479
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+            lineNumber: 28,
+            columnNumber: 456
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+          lineNumber: 28,
+          columnNumber: 379
+        }, this)
+      ] }, goal.id, true, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+        lineNumber: 28,
+        columnNumber: 133
+      }, this);
+    }) }, void 0, false, {
+      fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+      lineNumber: 28,
+      columnNumber: 5
+    }, this),
+    /* @__PURE__ */ jsxDEV("section", { className: "category-limits", children: [
+      /* @__PURE__ */ jsxDEV("header", { children: [
+        /* @__PURE__ */ jsxDEV("h2", { children: "Pressão por categoria" }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+          lineNumber: 29,
+          columnNumber: 50
+        }, this),
+        /* @__PURE__ */ jsxDEV("p", { children: "Comparação entre seus gastos e a média dos três meses anteriores." }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+          lineNumber: 29,
+          columnNumber: 80
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+        lineNumber: 29,
+        columnNumber: 42
+      }, this),
+      categories.slice(0, 4).map((category, index) => /* @__PURE__ */ jsxDEV("div", { children: [
+        /* @__PURE__ */ jsxDEV("span", { className: "category-color", style: { background: category.color } }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+          lineNumber: 29,
+          columnNumber: 235
+        }, this),
+        /* @__PURE__ */ jsxDEV("strong", { children: category.name }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+          lineNumber: 29,
+          columnNumber: 309
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "comparison-track", children: /* @__PURE__ */ jsxDEV("span", { style: { width: `${[78, 62, 43, 89][index]}%` } }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+          lineNumber: 29,
+          columnNumber: 375
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+          lineNumber: 29,
+          columnNumber: 341
+        }, this),
+        /* @__PURE__ */ jsxDEV("em", { children: [
+          [78, 62, 43, 89][index],
+          "%"
+        ] }, void 0, true, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+          lineNumber: 29,
+          columnNumber: 438
+        }, this),
+        index === 3 && /* @__PURE__ */ jsxDEV(AlertTriangle, { size: 15 }, void 0, false, {
+          fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+          lineNumber: 29,
+          columnNumber: 489
+        }, this)
+      ] }, category.name, true, {
+        fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+        lineNumber: 29,
+        columnNumber: 210
+      }, this))
+    ] }, void 0, true, {
+      fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+      lineNumber: 29,
+      columnNumber: 5
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx",
+    lineNumber: 26,
+    columnNumber: 10
+  }, this);
+}
+_c = GoalsPage;
+var _c;
+$RefreshReg$(_c, "GoalsPage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/vinic/Documents/Vault/frontend/src/features/goals/GoalsPage.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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OlsiQWxlcnRUcmlhbmdsZSIsIkFycm93UmlnaHQiLCJQbHVzIiwiVGFyZ2V0IiwiUGFnZUhlYWRlciIsImNhdGVnb3JpZXMiLCJnb2FscyIsImZvcm1hdE1vbmV5IiwiR29hbHNQYWdlIiwibWFwIiwiZ29hbCIsImluZGV4IiwicGVyY2VudCIsIk1hdGgiLCJyb3VuZCIsImN1cnJlbnQiLCJsaW1pdCIsIm5hbWUiLCJ3aWR0aCIsImlkIiwic2xpY2UiLCJjYXRlZ29yeSIsImJhY2tncm91bmQiLCJjb2xvciIsIl9jIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbIkdvYWxzUGFnZS50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQWxlcnRUcmlhbmdsZSwgQXJyb3dSaWdodCwgUGx1cywgVGFyZ2V0IH0gZnJvbSBcImx1Y2lkZS1yZWFjdFwiO1xuaW1wb3J0IHsgUGFnZUhlYWRlciB9IGZyb20gXCIuLi8uLi9jb21wb25lbnRzL1BhZ2VIZWFkZXJcIjtcbmltcG9ydCB7IGNhdGVnb3JpZXMsIGdvYWxzIH0gZnJvbSBcIi4uLy4uL2xpYi9kZW1vXCI7XG5pbXBvcnQgeyBmb3JtYXRNb25leSB9IGZyb20gXCIuLi8uLi9saWIvZm9ybWF0XCI7XG5cbmV4cG9ydCBmdW5jdGlvbiBHb2Fsc1BhZ2UoKSB7XG4gIHJldHVybiA8ZGl2IGNsYXNzTmFtZT1cImZlYXR1cmUtcGFnZVwiPjxQYWdlSGVhZGVyIHRpdGxlPVwiTWV0YXMgZG8gbcOqc1wiIGRlc2NyaXB0aW9uPVwiTGltaXRlcyBjbGFyb3MgcGFyYSBkZWNpZGlyIGNvbSBhbnRlY2Vkw6puY2lhLCBzZW0gY3VscGEuXCIgYWN0aW9uPXs8YnV0dG9uIGNsYXNzTmFtZT1cInByaW1hcnktYnV0dG9uIGNvbXBhY3RcIj48UGx1cyBzaXplPXsxN30gLz5Ob3ZhIG1ldGE8L2J1dHRvbj59IC8+XG4gICAgPGRpdiBjbGFzc05hbWU9XCJnb2FsLW92ZXJ2aWV3XCI+PGRpdj48VGFyZ2V0IC8+PHNwYW4+MyBtZXRhcyBhdGl2YXM8c3Ryb25nPntmb3JtYXRNb25leSgxNDIwMCl9IHBsYW5lamFkb3M8L3N0cm9uZz48L3NwYW4+PC9kaXY+PHA+Vm9jw6ogdXRpbGl6b3UgNDMlIGRvcyBsaW1pdGVzIGRlZmluaWRvcyBwYXJhIHNldGVtYnJvLjwvcD48L2Rpdj5cbiAgICA8c2VjdGlvbiBjbGFzc05hbWU9XCJnb2FsLWJvYXJkXCI+e2dvYWxzLm1hcCgoZ29hbCwgaW5kZXgpID0+IHsgY29uc3QgcGVyY2VudCA9IE1hdGgucm91bmQoZ29hbC5jdXJyZW50IC8gZ29hbC5saW1pdCAqIDEwMCk7IHJldHVybiA8YXJ0aWNsZSBrZXk9e2dvYWwuaWR9PjxoZWFkZXI+PHNwYW4+e2dvYWwubmFtZX08L3NwYW4+PGVtPntwZXJjZW50fSU8L2VtPjwvaGVhZGVyPjxzdHJvbmc+e2Zvcm1hdE1vbmV5KGdvYWwuY3VycmVudCl9IDxzbWFsbD5kZSB7Zm9ybWF0TW9uZXkoZ29hbC5saW1pdCl9PC9zbWFsbD48L3N0cm9uZz48ZGl2IGNsYXNzTmFtZT1cImdvYWwtdHJhY2tcIj48c3BhbiBzdHlsZT17eyB3aWR0aDogYCR7cGVyY2VudH0lYCB9fSAvPjwvZGl2Pjxmb290ZXI+PHNwYW4+e2luZGV4ID09PSAwID8gXCJSaXRtbyBzYXVkw6F2ZWxcIiA6IFwiRGVudHJvIGRvIHBsYW5lamFkb1wifTwvc3Bhbj48YnV0dG9uPlZlciBtb3ZpbWVudG9zIDxBcnJvd1JpZ2h0IHNpemU9ezE0fSAvPjwvYnV0dG9uPjwvZm9vdGVyPjwvYXJ0aWNsZT47IH0pfTwvc2VjdGlvbj5cbiAgICA8c2VjdGlvbiBjbGFzc05hbWU9XCJjYXRlZ29yeS1saW1pdHNcIj48aGVhZGVyPjxoMj5QcmVzc8OjbyBwb3IgY2F0ZWdvcmlhPC9oMj48cD5Db21wYXJhw6fDo28gZW50cmUgc2V1cyBnYXN0b3MgZSBhIG3DqWRpYSBkb3MgdHLDqnMgbWVzZXMgYW50ZXJpb3Jlcy48L3A+PC9oZWFkZXI+e2NhdGVnb3JpZXMuc2xpY2UoMCw0KS5tYXAoKGNhdGVnb3J5LCBpbmRleCkgPT4gPGRpdiBrZXk9e2NhdGVnb3J5Lm5hbWV9PjxzcGFuIGNsYXNzTmFtZT1cImNhdGVnb3J5LWNvbG9yXCIgc3R5bGU9e3tiYWNrZ3JvdW5kOiBjYXRlZ29yeS5jb2xvcn19IC8+PHN0cm9uZz57Y2F0ZWdvcnkubmFtZX08L3N0cm9uZz48ZGl2IGNsYXNzTmFtZT1cImNvbXBhcmlzb24tdHJhY2tcIj48c3BhbiBzdHlsZT17e3dpZHRoOiBgJHtbNzgsNjIsNDMsODldW2luZGV4XX0lYH19IC8+PC9kaXY+PGVtPntbNzgsNjIsNDMsODldW2luZGV4XX0lPC9lbT57aW5kZXggPT09IDMgJiYgPEFsZXJ0VHJpYW5nbGUgc2l6ZT17MTV9IC8+fTwvZGl2Pil9PC9zZWN0aW9uPlxuICA8L2Rpdj47XG59XG4iXSwiZmlsZSI6IkM6L1VzZXJzL3ZpbmljL0RvY3VtZW50cy9WYXVsdC9mcm9udGVuZC9zcmMvZmVhdHVyZXMvZ29hbHMvR29hbHNQYWdlLnRzeCJ9
