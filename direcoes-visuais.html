@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FinTrack — Direções visuais</title>
+    <style>
+      :root { color-scheme: dark; font-family: Arial, sans-serif; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #151712; color: #f4f1e8; }
+      header { max-width: 1500px; margin: 0 auto; padding: 48px 28px 28px; }
+      h1 { margin: 0 0 10px; font-size: clamp(32px, 5vw, 64px); letter-spacing: -0.035em; }
+      header p { max-width: 760px; margin: 0; color: #b8b8ae; font-size: 18px; line-height: 1.55; }
+      main { max-width: 1500px; margin: 0 auto; padding: 0 28px 72px; display: grid; gap: 44px; }
+      article { background: #20231c; border: 1px solid #363a2f; border-radius: 16px; overflow: hidden; }
+      .copy { display: grid; grid-template-columns: minmax(220px, 0.6fr) 2fr; gap: 28px; align-items: end; padding: 24px 28px; }
+      h2 { margin: 0; font-size: 28px; }
+      p { margin: 0; color: #c8c8bf; line-height: 1.5; }
+      img { display: block; width: 100%; height: auto; background: #eee; }
+      @media (max-width: 700px) { header { padding-top: 28px; } .copy { grid-template-columns: 1fr; gap: 8px; } }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Escolha o mundo visual do FinTrack</h1>
+      <p>Veja os cinco comps abaixo e responda no chat com o número ou o nome da direção escolhida.</p>
+    </header>
+    <main>
+      <article>
+        <div class="copy"><h2>1. Arquivo vivo</h2><p>Fichas contemporâneas, precisão editorial e um fluxo mensal que mantém cada detalhe consultável.</p></div>
+        <img src=".impeccable/mocks/decision/assigned.png" alt="Comp da direção Arquivo vivo" />
+      </article>
+      <article>
+        <div class="copy"><h2>2. Mapa do mês</h2><p>O dinheiro organizado como um mês habitável, com contas e metas presas ao tempo real.</p></div>
+        <img src=".impeccable/mocks/decision/model-pick.png" alt="Comp da direção Mapa do mês" />
+      </article>
+      <article>
+        <div class="copy"><h2>3. Pilha pessoal</h2><p>Interface monocromática direta, com consulta e edição no mesmo objeto.</p></div>
+        <img src=".impeccable/mocks/decision/challenger-hypercard.png" alt="Comp da direção Pilha pessoal" />
+      </article>
+      <article>
+        <div class="copy"><h2>4. Margem espectral</h2><p>Uma superfície silenciosa em que faixas estreitas de cor revelam mudanças e atenção.</p></div>
+        <img src=".impeccable/mocks/decision/challenger-iridescent.png" alt="Comp da direção Margem espectral" />
+      </article>
+      <article>
+        <div class="copy"><h2>5. Dashboard padrão</h2><p>A estrutura mais familiar da categoria, executada com clareza e acabamento profissional.</p></div>
+        <img src=".impeccable/mocks/decision/canon.png" alt="Comp da direção Dashboard padrão" />
+      </article>
+    </main>
+  </body>
+</html>

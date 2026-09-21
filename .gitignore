@@ -1,0 +1,19 @@
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+
+# Backend
+backend/.venv/
+backend/.env
+backend/.pytest_cache/
+backend/.ruff_cache/
+backend/**/__pycache__/
+backend/*.db
+
+# Local tooling
+.impeccable/review/
+.impeccable/build/
+.impeccable/live/
+.DS_Store
+Thumbs.db

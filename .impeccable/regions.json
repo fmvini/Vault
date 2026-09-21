@@ -1,0 +1,23 @@
+{
+  "regions": [
+    {"id":"sidebar-brand","kind":"chrome","grid":"A0:A1","note":"FinTrack wordmark and short product line"},
+    {"id":"sidebar-navigation","kind":"chrome","grid":"A1:A7","note":"vertical navigation rail with active overview item and new transaction action"},
+    {"id":"sidebar-foot","kind":"chrome","grid":"A8:A9","note":"quiet discipline message and lower rail detail"},
+    {"id":"search","kind":"control","grid":"B0:E0","note":"wide search field for transactions, categories and insights"},
+    {"id":"account","kind":"chrome","grid":"H0:J0","note":"notification, avatar and user account controls"},
+    {"id":"page-title","kind":"text","grid":"B1:D1","note":"Visão geral page heading and supporting sentence"},
+    {"id":"period-control","kind":"control","grid":"F1:G1","note":"September 2024 period selector"},
+    {"id":"spectral-edge","kind":"chrome","grid":"B0:J1","note":"thin mint rose violet state edge joining the main field to the observation rail"},
+    {"id":"balance-summary","kind":"text","grid":"B2:C2","note":"Saldo R$ 2.460,00 and comparison annotation"},
+    {"id":"income-summary","kind":"chrome","grid":"D2:E2","note":"Receitas R$ 6.200,00 summary"},
+    {"id":"expense-summary","kind":"chrome","grid":"F2:G2","note":"Gastos R$ 3.740,00 summary"},
+    {"id":"cashflow-heading","kind":"text","grid":"B3:D3","note":"Receitas e gastos ao longo do mês heading"},
+    {"id":"cashflow-chart","kind":"chrome","grid":"B3:G5","note":"semantic data chart with income and expense lines, daily markers, axes and legend"},
+    {"id":"category-distribution","kind":"chrome","grid":"B6:E7","note":"expense distribution donut, category legend, percentages and values"},
+    {"id":"monthly-insight","kind":"chrome","grid":"F6:G7","note":"contextual monthly saving observation with two precise data statements"},
+    {"id":"transactions-ledger","kind":"chrome","grid":"B8:G9","note":"recent transaction ledger with date, description, category, value and balance"},
+    {"id":"risk-observation","kind":"chrome","grid":"H2:J2","note":"attention observation naming the overspent category and recovery context"},
+    {"id":"goals-panel","kind":"chrome","grid":"H3:J5","note":"three monthly goals with icons, exact values, progress bars and percentages"},
+    {"id":"due-panel","kind":"chrome","grid":"H6:J9","note":"upcoming fixed expenses with due dates, values and icons"}
+  ]
+}

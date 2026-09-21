@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FinTrack — Comps Margem espectral</title>
+    <style>
+      :root { color-scheme: dark; font-family: Arial, sans-serif; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: #12151a; color: #f5f7f5; }
+      header, main { width: min(1500px, calc(100% - 48px)); margin: 0 auto; }
+      header { padding: 46px 0 28px; }
+      h1 { margin: 0 0 10px; font-size: clamp(34px, 5vw, 64px); letter-spacing: -0.035em; }
+      header p { margin: 0; color: #acb3b7; font-size: 18px; line-height: 1.55; }
+      main { display: grid; gap: 42px; padding-bottom: 72px; }
+      article { overflow: hidden; border: 1px solid #303841; border-radius: 16px; background: #1a2027; }
+      .copy { padding: 22px 26px; display: grid; grid-template-columns: 0.65fr 2fr; gap: 24px; align-items: baseline; }
+      h2 { margin: 0; font-size: 26px; }
+      article p { margin: 0; color: #bec4c7; line-height: 1.45; }
+      img { display: block; width: 100%; height: auto; background: #fff; }
+      @media (max-width: 700px) { .copy { grid-template-columns: 1fr; gap: 8px; } }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Margem espectral</h1>
+      <p>Escolha a composição exata. A identidade visual permanece a mesma nas três opções.</p>
+    </header>
+    <main>
+      <article>
+        <div class="copy"><h2>A · Painel contínuo</h2><p>Navegação lateral, leitura ampla de evolução e coluna dedicada a metas e vencimentos.</p></div>
+        <img src=".impeccable/mocks/dashboard-margem-a.png" alt="Comp A, Painel contínuo" />
+      </article>
+      <article>
+        <div class="copy"><h2>B · Fita do mês</h2><p>Navegação superior, saldo incorporado à faixa de fluxo e ledger como principal área de trabalho.</p></div>
+        <img src=".impeccable/mocks/dashboard-margem-b.png" alt="Comp B, Fita do mês" />
+      </article>
+      <article>
+        <div class="copy"><h2>C · Corrente vertical</h2><p>O mês percorre uma linha vertical expressiva, com análises e compromissos organizados ao lado.</p></div>
+        <img src=".impeccable/mocks/dashboard-margem-c.png" alt="Comp C, Corrente vertical" />
+      </article>
+    </main>
+  </body>
+</html>
