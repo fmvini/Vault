@@ -41,13 +41,9 @@ async def create_fixed_expense(
     return expense
 
 
-async def owned_fixed_expense(
-    expense_id: UUID, user: CurrentUser, db: DbSession
-) -> FixedExpense:
+async def owned_fixed_expense(expense_id: UUID, user: CurrentUser, db: DbSession) -> FixedExpense:
     expense = await db.scalar(
-        select(FixedExpense).where(
-            FixedExpense.id == expense_id, FixedExpense.user_id == user.id
-        )
+        select(FixedExpense).where(FixedExpense.id == expense_id, FixedExpense.user_id == user.id)
     )
     if expense is None:
         raise HTTPException(status_code=404, detail="Gasto fixo não encontrado")

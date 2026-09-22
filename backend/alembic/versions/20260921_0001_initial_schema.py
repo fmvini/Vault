@@ -4,10 +4,10 @@ Revision ID: 20260921_0001
 Revises:
 Create Date: 2026-09-21
 """
+
 import uuid
 
 from alembic import op
-
 from app.db.base import Base
 from app.db.seed import SYSTEM_CATEGORIES
 from app.models import Category

@@ -1,6 +1,7 @@
 from collections import defaultdict
 from datetime import date
 from decimal import Decimal
+from typing import Annotated
 
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy import select
@@ -18,8 +19,8 @@ router = APIRouter(prefix="/dashboard", tags=["dashboard"])
 async def get_summary(
     user: CurrentUser,
     db: DbSession,
-    start_date: date = Query(...),
-    end_date: date = Query(...),
+    start_date: Annotated[date, Query()],
+    end_date: Annotated[date, Query()],
 ) -> DashboardSummary:
     if end_date < start_date:
         raise HTTPException(status_code=422, detail="A data final deve ser posterior à inicial")

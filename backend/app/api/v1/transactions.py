@@ -125,9 +125,7 @@ async def update_transaction(
 
 
 @router.delete("/{transaction_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_transaction(
-    transaction_id: UUID, user: CurrentUser, db: DbSession
-) -> Response:
+async def delete_transaction(transaction_id: UUID, user: CurrentUser, db: DbSession) -> Response:
     transaction = await owned_transaction(transaction_id, user, db)
     await db.delete(transaction)
     await db.commit()

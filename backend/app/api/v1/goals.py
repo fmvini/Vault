@@ -1,5 +1,4 @@
 from datetime import date
-from decimal import Decimal
 from uuid import UUID
 
 from fastapi import APIRouter, HTTPException, Response, status
@@ -92,7 +91,9 @@ async def update_goal(
             )
         )
         if duplicate:
-            raise HTTPException(status_code=409, detail="Já existe uma meta ativa para esta categoria")
+            raise HTTPException(
+                status_code=409, detail="Já existe uma meta ativa para esta categoria"
+            )
     await db.commit()
     goal = await owned_goal(goal_id, user, db)
     return await serialize_goal(goal, db)

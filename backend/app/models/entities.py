@@ -1,7 +1,7 @@
-﻿import enum
 import uuid
 from datetime import date, datetime
 from decimal import Decimal
+from enum import StrEnum
 
 from sqlalchemy import (
     Boolean,
@@ -22,7 +22,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.base import Base
 
 
-class TransactionType(str, enum.Enum):
+class TransactionType(StrEnum):
     expense = "expense"
     income = "income"
 
@@ -176,4 +176,3 @@ class ExchangeRate(Base):
     fetched_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
-

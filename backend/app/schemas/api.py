@@ -1,4 +1,4 @@
-﻿from datetime import date
+from datetime import date
 from decimal import Decimal
 from typing import Annotated, Literal
 from uuid import UUID
@@ -225,4 +225,3 @@ class NotificationPreferenceResponse(ApiModel):
 
 SortBy = Literal["transaction_date", "amount"]
 SortOrder = Literal["asc", "desc"]
-

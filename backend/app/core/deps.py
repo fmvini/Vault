@@ -22,10 +22,14 @@ async def get_current_user(
     try:
         user_id = decode_access_token(credentials.credentials)
     except (jwt.PyJWTError, ValueError):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token inválido") from None
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Token inválido"
+        ) from None
     user = await db.get(User, user_id)
     if user is None:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Usuário não encontrado")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Usuário não encontrado"
+        )
     return user
 
 

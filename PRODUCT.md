@@ -16,11 +16,11 @@ Individual users who want to organize personal finances in one place. Each perso
 
 ## Product Purpose
 
-FinTrack is a personal finance web application for quickly recording income and expenses, automating recurring fixed expenses, monitoring category budgets and understanding financial evolution over time. Success means a user can see where their money went, what is due next and whether they are still inside their monthly plan within seconds.
+Vault is a personal finance web application for quickly recording income and expenses, automating recurring fixed expenses, monitoring category budgets and understanding financial evolution over time. Success means a user can see where their money went, what is due next and whether they are still inside their monthly plan within seconds.
 
 ## Positioning
 
-FinTrack combines the financial snapshot, the monthly plan and recurring obligations in one operating view: historical activity explains the past while goals and upcoming fixed expenses make the next decision visible.
+Vault combines the financial snapshot, the monthly plan and recurring obligations in one operating view: historical activity explains the past while goals and upcoming fixed expenses make the next decision visible.
 
 ## Operating Context
 
@@ -39,7 +39,7 @@ Users primarily operate the product on desktop, with functional tablet and smart
 
 ## Brand Commitments
 
-The working product name is FinTrack and may be changed later. Product communication is in Brazilian Portuguese. Code, API fields and database identifiers use English.
+The product name is Vault. Product communication is in Brazilian Portuguese. Code, API fields and database identifiers use English.
 
 ## Evidence on Hand
 

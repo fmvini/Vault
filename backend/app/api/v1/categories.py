@@ -51,14 +51,16 @@ async def update_category(
 
 
 @router.delete("/{category_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_category(
-    category_id: UUID, user: CurrentUser, db: DbSession
-) -> Response:
+async def delete_category(category_id: UUID, user: CurrentUser, db: DbSession) -> Response:
     category = await owned_category(category_id, user, db)
     if category.is_system:
         raise HTTPException(status_code=403, detail="Categorias do sistema não podem ser excluídas")
-    if await db.scalar(select(Transaction.id).where(Transaction.category_id == category.id).limit(1)):
-        raise HTTPException(status_code=409, detail="Reatribua as transações antes de excluir a categoria")
+    if await db.scalar(
+        select(Transaction.id).where(Transaction.category_id == category.id).limit(1)
+    ):
+        raise HTTPException(
+            status_code=409, detail="Reatribua as transações antes de excluir a categoria"
+        )
     await db.delete(category)
     await db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)

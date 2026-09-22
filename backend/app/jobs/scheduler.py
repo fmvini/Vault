@@ -42,9 +42,16 @@ async def due_notification_job() -> None:
 def start_scheduler() -> None:
     if scheduler.running:
         return
-    scheduler.add_job(recurrence_job, "cron", hour=3, minute=0, id="recurrence", replace_existing=True)
     scheduler.add_job(
-        due_notification_job, "cron", hour=9, minute=0, id="due-notifications", replace_existing=True
+        recurrence_job, "cron", hour=3, minute=0, id="recurrence", replace_existing=True
+    )
+    scheduler.add_job(
+        due_notification_job,
+        "cron",
+        hour=9,
+        minute=0,
+        id="due-notifications",
+        replace_existing=True,
     )
     scheduler.start()
 

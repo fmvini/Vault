@@ -39,14 +39,18 @@ async def check_goal_after_expense(
     )
     if not goal:
         return
-    total = await current_month_spent(db, user.id, transaction.category_id, transaction.transaction_date)
+    total = await current_month_spent(
+        db, user.id, transaction.category_id, transaction.transaction_date
+    )
     before = total - transaction.amount + previous_amount
     if before <= goal.monthly_limit < total:
         preferences = await db.scalar(
             select(NotificationPreference).where(NotificationPreference.user_id == user.id)
         )
         if preferences and preferences.notify_goal_exceeded:
-            category_name = await db.scalar(select(Category.name).where(Category.id == goal.category_id))
+            category_name = await db.scalar(
+                select(Category.name).where(Category.id == goal.category_id)
+            )
             await send_goal_exceeded(
                 user.email,
                 category_name or "categoria",

@@ -1,7 +1,7 @@
 # Visão Geral do Projeto
 
 ## Nome do Projeto
-**FinTrack** (nome provisório — pode ser alterado a qualquer momento)
+**Vault**
 
 ## O que é
 Uma aplicação web de gestão financeira pessoal que permite a múltiplos usuários controlar seus gastos e receitas, visualizar seu histórico financeiro através de um dashboard, cadastrar despesas fixas recorrentes, definir metas de gastos por categoria e receber alertas quando essas metas forem ultrapassadas.

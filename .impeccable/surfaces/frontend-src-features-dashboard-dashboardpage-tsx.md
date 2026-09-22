@@ -7,7 +7,7 @@ related_targets: []
 
 # Dashboard surface brief
 
-Scope: authenticated FinTrack application shell and dashboard, with the visual system extending to transaction history, fixed expenses, goals, categories and settings. Mode: Operate.
+Scope: authenticated Vault application shell and dashboard, with the visual system extending to transaction history, fixed expenses, goals, categories and settings. Mode: Operate.
 
 Audience and job: individual users checking their financial position, recording activity and anticipating monthly risks. The task is to understand balance, movement, goals and upcoming obligations within seconds, then act without losing context.
 

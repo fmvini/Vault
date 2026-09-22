@@ -123,8 +123,23 @@
 .auth-form h2 { margin: 14px 0 5px; color: var(--ink-dark); font-size: 31px; font-weight: 400; letter-spacing: -.03em; }
 .auth-form-heading p, .auth-switch { margin: 0; color: var(--muted); font-size: 12px; }
 .form-error { margin: 0; padding: 10px 12px; border-radius: 10px; color: #963653; background: #f8e7ec; font-size: 12px; }
+.inline-form { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; margin: 4px 0 22px; padding: 18px; border: 1px solid var(--rule); border-radius: 16px; background: rgba(255,255,255,.58); }
+.inline-form label { display: grid; flex: 1 1 150px; gap: 6px; color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .04em; }
+.inline-form input, .inline-form select, .filter-control select { min-height: 38px; padding: 0 11px; border: 1px solid #d9dfe1; border-radius: 9px; color: var(--ink-dark); background: #fff; font: 12px "Basic", sans-serif; }
+.inline-form input[type="color"] { width: 64px; padding: 4px; }
+.inline-form .form-error { flex-basis: 100%; }
+.filter-control { display: inline-flex; align-items: center; gap: 7px; min-height: 38px; color: var(--muted); font-size: 11px; white-space: nowrap; }
+.filter-control select { min-height: 34px; }
+.empty-row { margin: 0; padding: 22px 12px; color: var(--muted); font-size: 12px; text-align: center; }
+.capitalize { text-transform: capitalize; }
+.demo-notice { margin: 0; padding: 10px 12px; border-radius: 10px; color: #436057; background: #e7f3ef; font-size: 11px; line-height: 1.5; }
+.forgot-link { justify-self: end; color: #6655b2; font-size: 11px; text-underline-offset: 3px; }
 .auth-switch { text-align: center; }
-.auth-switch a { color: #6655b2; }
+.auth-switch a { display: inline-flex; align-items: center; gap: 5px; color: #6655b2; }
+.auth-success { display: grid; justify-items: start; gap: 13px; padding-top: 24px; }
+.auth-success > svg { width: 34px; height: 34px; color: var(--mint-deep); }
+.auth-success h2 { margin: 4px 0 0; }
+.auth-success p { max-width: 42ch; margin: 0 0 8px; color: var(--muted); font-size: 13px; line-height: 1.6; }
 
 @media (max-width: 900px) {
   .feature-page { padding-inline: 22px; }
@@ -154,3 +169,38 @@
   .settings-fields, .field-pair { grid-template-columns: 1fr; }
   .auth-form-wrap { padding: 32px 20px; }
 }
+
+html[data-theme="dark"] .secondary-button,
+html[data-theme="dark"] .filter-strip button,
+html[data-theme="dark"] .table-search,
+html[data-theme="dark"] .entry-drawer,
+html[data-theme="dark"] .inline-form { color: var(--ink); background: var(--surface-soft); }
+html[data-theme="dark"] .feature-row { border-color: var(--rule); color: #a6b3ba; }
+html[data-theme="dark"] .feature-row-head,
+html[data-theme="dark"] .record-list > header { color: #8999a2; }
+html[data-theme="dark"] .entry-drawer { box-shadow: -18px 0 60px rgba(0,0,0,.36); }
+html[data-theme="dark"] .entry-drawer input,
+html[data-theme="dark"] .entry-drawer select,
+html[data-theme="dark"] .auth-form input,
+html[data-theme="dark"] .auth-form select,
+html[data-theme="dark"] .settings-panels input,
+html[data-theme="dark"] .settings-panels select,
+html[data-theme="dark"] .inline-form input,
+html[data-theme="dark"] .inline-form select,
+html[data-theme="dark"] .filter-control select { border-color: #34434d; color: var(--ink); background: #172129; }
+html[data-theme="dark"] input:disabled { color: #81919a; background: #141d24; }
+html[data-theme="dark"] input::placeholder { color: #7f8f98; }
+html[data-theme="dark"] .status.active { color: #98dfca; background: #193229; }
+html[data-theme="dark"] .status.pending { color: #f0a0b8; background: #382630; }
+html[data-theme="dark"] .quiet-note { color: #9cabb2; }
+html[data-theme="dark"] .goal-track,
+html[data-theme="dark"] .comparison-track { background: #29363f; }
+html[data-theme="dark"] .settings-layout > nav a { color: #a3b0b7; }
+html[data-theme="dark"] .settings-layout > nav a.active { color: #9ce1cd; background: #193229; }
+html[data-theme="dark"] .auth-story { background: #0c1217; }
+html[data-theme="dark"] .form-error { color: #ffc0d1; background: #3b2530; }
+html[data-theme="dark"] .demo-notice { color: #aee0d0; background: #193229; }
+html[data-theme="dark"] .forgot-link,
+html[data-theme="dark"] .auth-switch a,
+html[data-theme="dark"] .section-title-row button,
+html[data-theme="dark"] .goal-board footer button { color: #b9adf0; }

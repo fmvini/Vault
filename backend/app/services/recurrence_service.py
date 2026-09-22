@@ -45,9 +45,7 @@ async def generate_monthly_transactions(
                 amount=expense.amount,
                 currency=expense.currency,
                 description=expense.description,
-                transaction_date=monthly_due_date(
-                    reference.year, reference.month, expense.due_day
-                ),
+                transaction_date=monthly_due_date(reference.year, reference.month, expense.due_day),
                 is_paid=False,
             )
         )
