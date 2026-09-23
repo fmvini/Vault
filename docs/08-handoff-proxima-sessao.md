@@ -2,6 +2,13 @@
 
 Data da última revisão: 23/09/2026
 
+## Atualização posterior — README do projeto
+
+- Foi criado `README.md` na raiz, em português, com recursos do Vault, tecnologias, estrutura, instalação local com SQLite em PowerShell e macOS/Linux, PostgreSQL opcional, variáveis de ambiente, URLs, testes e links para a documentação detalhada.
+- `backend/.env.example` passou a usar SQLite local, `FRONTEND_URL=http://127.0.0.1:5173`, `SCHEDULER_ENABLED=false` e remetente de exemplo com nome Vault. `frontend/.env.example` passou a apontar para `http://127.0.0.1:8000/api/v1` e `VITE_DEMO_MODE=false`. Assim, copiar os exemplos inicia o app com API real e origens compatíveis.
+- O README distingue as verificações locais dos itens pendentes de produção e informa que o E2E exige API e frontend já iniciados. Nenhum teste funcional novo foi necessário nesta atualização de documentação e exemplos de ambiente.
+- Antes desta atualização, o commit `d641cff` já havia sido enviado para `origin/main`. As alterações de README e `.env.example` desta rodada ainda não foram commitadas.
+
 ## Estado atual
 
 O checklist de QA foi revisado e os fluxos que podiam ser comprovados localmente foram implementados e testados. A aplicação agora usa a API real por padrão, mantém os dados no backend e passou nos testes automatizados de backend, frontend e navegador.
@@ -185,3 +192,35 @@ Endereços locais usados nesta revisão:
 - `docs/07-relatorio-qa.md`: resultado de QA e limites da validação local.
 - `docs/CHANGELOG-TECNICO.md`: histórico técnico resumido.
 - `logos/preview.html`: comparação visual dos conceitos de logo.
+
+## Publicação Vercel + Supabase em 23/09/2026
+
+O usuário solicitou publicar o Vault online, com Vercel para frontend/API e Supabase para PostgreSQL, e pediu a configuração do Resend. O frontend e a API estão publicados e funcionais:
+
+- Frontend: `https://vault-web-alpha.vercel.app` (projeto Vercel `fmvini-projects/vault-web`, Root Directory `frontend`, framework Vite).
+- API: `https://vault-api-khaki.vercel.app` (projeto Vercel `fmvini-projects/vault-api`, Root Directory `backend`, framework FastAPI). `/health` e `/docs` usam essa origem.
+- Supabase: projeto `zrdnfxvazofbcouuekgp`. As URIs com senha estão **somente** em `backend/.env.deploy.local` (ignorado pelo Git) e a URI de produção está como variável secreta `DATABASE_URL` na Vercel. Não imprimir ou versionar esse arquivo. A senha contém caractere especial que foi codificado na URI.
+- Variáveis da API na Vercel Production: `ENVIRONMENT=production`, `DATABASE_URL` (secreta), `JWT_SECRET_KEY` (gerada aleatoriamente e secreta), `FRONTEND_URL=https://vault-web-alpha.vercel.app`, `SCHEDULER_ENABLED=false` e `CRON_SECRET` (gerada aleatoriamente e secreta). Frontend: `VITE_API_BASE_URL=https://vault-api-khaki.vercel.app/api/v1` e `VITE_DEMO_MODE=false`.
+- `EMAIL_PROVIDER_API_KEY` e `EMAIL_FROM` **não** foram configurados na Vercel. O usuário criou conta Resend, mas não possui domínio remetente verificável. A chave Resend foi compartilhada na conversa; recomendar revogá-la e gerar outra antes de usar. Sem provedor, a recuperação de senha em produção retorna 503 com mensagem clara. Não marcar itens de entrega de e-mail como concluídos.
+
+### Alterações de código e configuração
+
+- `backend/pyproject.toml`: dependência `psycopg[binary]` e entrypoint FastAPI da Vercel. `backend/app/db/session.py`: conexão SSL, um slot por instância e prepared statements desativados para o pool de transações do Supabase.
+- `backend/app/core/config.py`: `CRON_SECRET` e validação das variáveis obrigatórias de produção. `backend/app/api/v1/jobs.py` e `backend/app/main.py`: rotas de cron protegidas por Bearer token; `backend/vercel.json`: três agendamentos UTC diários. `SCHEDULER_ENABLED` permanece falso em serverless.
+- `backend/alembic/env.py`: SSL nas migrações via Psycopg, escape de `%` na URI e event loop compatível com Windows. `backend/app/api/v1/auth.py`: resposta 503 na recuperação sem e-mail em produção. `backend/.vercelignore`, `frontend/.vercelignore` e `.gitignore`: segredos e artefatos locais fora de Git/deploy.
+- `frontend/vercel.json`: fallback para `index.html` em rotas internas. README criado e ampliado com execução local e implantação; exemplos `.env` de backend/frontend atualizados. Testes novos em `backend/tests/test_api.py` e `backend/tests/test_config.py`.
+- Na primeira tentativa de deploy da API, a Vercel aplicou `backend` duas vezes como Root Directory e recusou o build. Para o deploy por CLI a configuração foi temporariamente limpa; depois de publicar, `backend` foi restaurado. O mesmo procedimento foi usado para republicar o frontend após ajustar a URL real da API. Ambos os projetos estão com Root Directory correto para Git.
+
+### Evidências verificadas
+
+- Migração Alembic `20260921_0001` aplicada no Supabase: 8 tabelas públicas e 11 categorias do sistema. A conexão de produção pelo Transaction pooler (6543) e a de migração pelo Session pooler (5432) passaram com SSL.
+- API `/health` 200 via HTTPS; preflight CORS 200 para a origem do frontend. Frontend `/` e `/login` 200, e o bundle contém a URL correta da API.
+- Teste real na API publicada: cadastro 201, login 200, categorias 200, transação criada 201 e excluída 204. A conta fictícia foi removida; consulta final mostrou 0 usuários. Login inexistente 401, cron sem segredo 401 e recuperação sem remetente 503.
+- `vercel cron ls` mostrou recorrência `0 3 * * *`, avisos `0 9 * * *` e câmbio `0 2 * * *`. Os três foram acionados pela CLI; os logs mostram recorrência criando 0 registros, esperado sem usuários, e câmbio consultando a Frankfurter com HTTP 200. O Supabase armazenou 6 pares com data UTC de 23/09/2026 18:21. A entrega de aviso por e-mail não foi testada.
+- Verificações locais: `ruff` aprovado; `pytest` 15 testes aprovados, com 2 avisos de depreciação em dependências de teste; lint e build frontend aprovados, com aviso do chunk JS de aproximadamente 889 kB. A checklist passou a 62/70 após comprovação do HTTPS. O relatório de QA foi atualizado.
+
+### Próximos passos
+
+- Conferir `git status`, revisar o diff, fazer commit com descrição clara e push para `origin/main`. Vincular os dois projetos Vercel ao repositório GitHub `fmvini/Vault` para deploy automático a cada push. Esses passos ainda estavam pendentes ao registrar esta seção.
+- Para e-mails reais, providenciar domínio próprio, verificá-lo no Resend, revogar a chave compartilhada, criar nova chave, configurar `EMAIL_PROVIDER_API_KEY` e `EMAIL_FROM` no projeto da API e republicar. Validar recebimento de recuperação, alerta de meta e aviso de vencimento.
+- Confirmar a primeira execução **automática** dos cron jobs nos horários UTC programados. Testar expiração real de token, fluxo completo de 10 passos e carga com 10.000 transações, se ainda exigidos.

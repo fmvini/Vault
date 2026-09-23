@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "app/main.py": {
+      "maxDuration": 60,
+      "excludeFiles": "{tests/**,alembic/**,*.db}"
+    }
+  },
+  "crons": [
+    { "path": "/api/v1/jobs/recurrence", "schedule": "0 3 * * *" },
+    { "path": "/api/v1/jobs/due-notifications", "schedule": "0 9 * * *" },
+    { "path": "/api/v1/jobs/exchange-rates", "schedule": "0 2 * * *" }
+  ]
+}

@@ -9,6 +9,9 @@ frontend/node_modules/
 test-results/
 .env
 **/.env
+**/.env.local
+**/.env.*.local
+**/.vercel/
 .impeccable/**/chrome-profile*/
 .impeccable/chrome-profile*/
 *.log

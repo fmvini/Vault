@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-from pydantic import Field
+from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -16,12 +16,27 @@ class Settings(BaseSettings):
     exchange_rate_api_key: str | None = None
     frontend_url: str = "http://localhost:5173"
     scheduler_enabled: bool = False
+    cron_secret: str | None = None
 
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
         extra="ignore",
     )
+
+    @model_validator(mode="after")
+    def validate_production(self) -> "Settings":
+        if self.environment != "production":
+            return self
+        if not self.database_url.startswith("postgresql+psycopg://"):
+            raise ValueError("Production DATABASE_URL must use PostgreSQL with Psycopg")
+        if self.jwt_secret_key == "development-only-change-me" or len(self.jwt_secret_key) < 32:
+            raise ValueError("Production JWT_SECRET_KEY must be a unique secret of 32+ characters")
+        if not self.frontend_url.startswith("https://"):
+            raise ValueError("Production FRONTEND_URL must use HTTPS")
+        if not self.cron_secret or len(self.cron_secret) < 16:
+            raise ValueError("Production CRON_SECRET must have at least 16 characters")
+        return self
 
 
 @lru_cache

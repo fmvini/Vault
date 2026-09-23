@@ -104,7 +104,7 @@ Estado em 23/09/2026: `[x]` indica validação local por teste de API ou E2E em 
 
 ## 11. Segurança Básica
 
-- [ ] A aplicação em produção roda sob HTTPS (cadeado no navegador).
+- [x] A aplicação em produção roda sob HTTPS (cadeado no navegador).
 - [ ] Token expira conforme configurado e força novo login (testar deixando a sessão expirar, se possível).
 - [x] Tentar acessar diretamente uma URL de API sem token retorna erro de não autorizado, não os dados.
 - [x] Tentar acessar/manipular um recurso (transação, meta, gasto fixo) de outro usuário via chamada direta à API (ex: alterando o ID na URL) retorna erro e não expõe nem permite alterar o dado.

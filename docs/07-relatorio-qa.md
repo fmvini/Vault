@@ -25,7 +25,7 @@ A aplicação passou nos fluxos automatizados locais cobertos pelo checklist. O 
 - `npm run lint`: aprovado.
 - `npm run test:e2e`: 5 cenários aprovados em Chromium, desktop e viewports 390 × 844 e 768 × 1024.
 - `python -m ruff check .`: aprovado.
-- `python -m pytest -q`: 12 cenários aprovados, cobrindo autenticação, reset, isolamento entre usuários, CRUDs, paginação, filtros, recorrência, metas, preferências, dashboard e multi-moeda.
+- `python -m pytest -q`: 15 cenários aprovados, cobrindo autenticação, reset, isolamento entre usuários, CRUDs, paginação, filtros, recorrência, metas, preferências, dashboard, multi-moeda, configuração de produção e autenticação dos cron jobs.
 
 ## Continuação da verificação em 23/09/2026
 
@@ -45,18 +45,26 @@ Os itens marcados em `06-checklist-testes-qa.md` têm evidência em testes locai
 - A tela de categorias foi corrigida para desenhar o ícone configurado. O E2E confirma ícone `food`, cor `#123456` e ausência dos botões de editar/excluir em uma categoria do sistema. A API agora acrescenta ID como critério final de ordenação para que a paginação seja estável quando data e criação empatam.
 - O bloco de metas do dashboard agora diz “Metas deste mês”: o progresso mensal continua referente ao mês atual mesmo quando os cards e gráficos mostram outro período, como definido para metas mensais nos requisitos.
 
-Última execução: 12 testes de backend e 5 cenários E2E aprovados; `ruff`, lint e build aprovados. O build continua avisando sobre o chunk JavaScript de aproximadamente 889 kB antes de gzip. Há dois avisos de depreciação nas dependências do `pytest`.
+Última execução: 15 testes de backend e 5 cenários E2E aprovados; `ruff`, lint e build aprovados. O build continua avisando sobre o chunk JavaScript de aproximadamente 889 kB antes de gzip. Há dois avisos de depreciação nas dependências do `pytest`.
 
-Permanecem para verificação integrada/manual mais detalhada: o fluxo completo de 10 passos da checklist e os casos de borda de telas não cobertos pelo E2E. A checklist pede que metas acompanhem a troca do período do dashboard, mas RF23/RF31 definem metas mensais; o produto mostra explicitamente “Metas deste mês” enquanto cards e gráficos seguem o período selecionado. O teste automatizado usa mocks para entrega de e-mail, taxa de câmbio e estado visual da recorrência; não comprova entrega em caixa postal ou acesso à Frankfurter no deploy.
+Permanecem para verificação integrada/manual mais detalhada: o fluxo completo de 10 passos da checklist e os casos de borda de telas não cobertos pelo E2E. A checklist pede que metas acompanhem a troca do período do dashboard, mas RF23/RF31 definem metas mensais; o produto mostra explicitamente “Metas deste mês” enquanto cards e gráficos seguem o período selecionado. Os testes locais usam mocks para entrega de e-mail, taxa de câmbio e estado visual da recorrência; o acesso à Frankfurter foi confirmado separadamente no deploy, mas a entrega em caixa postal ainda não foi comprovada.
+
+## Verificações no ambiente publicado em 23/09/2026
+
+- Frontend `https://vault-web-alpha.vercel.app` e API `https://vault-api-khaki.vercel.app` publicados na Vercel. `GET /` e acesso direto a `/login` no frontend responderam 200. O bundle publicado contém a URL correta da API.
+- `GET /health` respondeu 200 por HTTPS, com certificado aceito pelo cliente HTTP e cabeçalho `Strict-Transport-Security`. O preflight CORS para a origem do frontend respondeu 200 e a origem esperada. O item de HTTPS foi marcado na checklist: agora são 62 de 70 itens com evidência.
+- O Supabase recebeu a revisão Alembic `20260921_0001`: oito tabelas no esquema público e 11 categorias de sistema. O pool de transações e o pool de sessão aceitaram conexões com SSL.
+- Um fluxo de produção com conta fictícia fez cadastro 201, login 200, listagem de categorias 200, criação de transação 201 e exclusão 204. A conta fictícia foi excluída em seguida; o banco terminou com zero usuários.
+- Uma chamada de login inexistente retornou 401 após consultar o banco. O endpoint de cron sem segredo retornou 401. Recuperação de senha sem remetente configurado retornou 503 com mensagem clara, em vez de sugerir envio inexistente.
+- A Vercel listou os três cron jobs diários (recorrência às 03:00, avisos às 09:00 e câmbio às 02:00, todos em UTC). As três rotas foram acionadas uma vez pela CLI. O job de recorrência criou zero registros, esperado sem usuários. O job de câmbio consultou a Frankfurter com respostas 200 e gravou seis pares no Supabase. O job de aviso foi invocado sem usuários, portanto não comprova entrega de e-mail.
+- Antes do deploy, `ruff` e `pytest` passaram (15 testes); lint e build do frontend passaram. O build publicado ainda avisa sobre um chunk JavaScript de aproximadamente 889 kB antes de gzip.
 
 ## Verificações dependentes de ambiente de produção
 
 Os itens abaixo não podem ser certificados apenas no ambiente local e devem ser confirmados no deploy:
 
-- HTTPS e certificado do domínio.
 - Chave e domínio verificado do provedor Resend, recebimento real e reputação antispam.
-- `SCHEDULER_ENABLED=true` no processo responsável pelos jobs.
-- Acesso de rede à API pública Frankfurter.
+- Execução automática dos cron jobs no horário agendado e entrega real de avisos; a invocação manual já foi verificada. `SCHEDULER_ENABLED=false` permanece correto na Vercel.
 - Expiração real da sessão após o tempo configurado.
 - Teste de carga com 10.000 transações por usuário.
 

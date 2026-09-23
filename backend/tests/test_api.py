@@ -32,6 +32,36 @@ def transaction_payload(category_id, **overrides):
     return payload
 
 
+def test_cron_routes_require_secret_and_run_job(client, monkeypatch):
+    from app.api.v1 import jobs
+
+    monkeypatch.setattr(jobs.settings, 'cron_secret', 'test-cron-secret-long-enough')
+    called = []
+
+    async def fake_job():
+        called.append(True)
+
+    monkeypatch.setattr(jobs, 'recurrence_job', fake_job)
+    path = '/api/v1/jobs/recurrence'
+    assert client.get(path).status_code == 401
+    assert client.get(path, headers={'Authorization': 'Bearer wrong'}).status_code == 401
+    assert called == []
+    response = client.get(path, headers={'Authorization': 'Bearer test-cron-secret-long-enough'})
+    assert response.status_code == 200
+    assert response.json() == {'status': 'ok'}
+    assert called == [True]
+
+
+def test_password_recovery_reports_unavailable_email_in_production(client, monkeypatch):
+    from app.api.v1 import auth
+
+    monkeypatch.setattr(auth.settings, 'environment', 'production')
+    monkeypatch.setattr(auth.settings, 'email_provider_api_key', None)
+    response = client.post('/api/v1/auth/forgot-password', json={'email': 'person@example.com'})
+    assert response.status_code == 503
+    assert response.json()['detail'] == 'Recuperação por e-mail temporariamente indisponível.'
+
+
 def test_auth_validation_duplicate_and_password_reset(client, monkeypatch):
     user, headers = account(client, 'auth')
     assert client.post('/api/v1/auth/register', json=user).status_code == 400

@@ -9,6 +9,7 @@ from app.api.v1 import (
     dashboard,
     fixed_expenses,
     goals,
+    jobs,
     notification_preferences,
     transactions,
 )
@@ -52,6 +53,7 @@ for router in (
     goals.router,
     dashboard.router,
     notification_preferences.router,
+    jobs.router,
 ):
     app.include_router(router, prefix=prefix)
 

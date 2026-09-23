@@ -58,6 +58,11 @@ async def login(payload: UserLogin, db: DbSession) -> TokenResponse:
 
 @router.post('/forgot-password', response_model=MessageResponse)
 async def forgot_password(payload: ForgotPasswordRequest, db: DbSession) -> MessageResponse:
+    if settings.environment == 'production' and not settings.email_provider_api_key:
+        raise HTTPException(
+            status_code=503,
+            detail='Recuperação por e-mail temporariamente indisponível.',
+        )
     user = await db.scalar(select(User).where(User.email == payload.email.lower()))
     if user is not None:
         token = create_password_reset_token(user.id)
