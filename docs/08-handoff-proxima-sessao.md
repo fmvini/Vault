@@ -221,6 +221,6 @@ O usuário solicitou publicar o Vault online, com Vercel para frontend/API e Sup
 
 ### Próximos passos
 
-- Conferir `git status`, revisar o diff, fazer commit com descrição clara e push para `origin/main`. Vincular os dois projetos Vercel ao repositório GitHub `fmvini/Vault` para deploy automático a cada push. Esses passos ainda estavam pendentes ao registrar esta seção.
+- O commit `34b0046` (`feat(deploy): publicar Vault com Vercel e Supabase`) foi enviado para `origin/main`. Os projetos Vercel `vault-api` e `vault-web` foram conectados por `vercel git connect https://github.com/fmvini/Vault.git`; ambos mantêm seus Root Directories (`backend` e `frontend`). Verificar os deploys disparados pela integração Git após o próximo push.
 - Para e-mails reais, providenciar domínio próprio, verificá-lo no Resend, revogar a chave compartilhada, criar nova chave, configurar `EMAIL_PROVIDER_API_KEY` e `EMAIL_FROM` no projeto da API e republicar. Validar recebimento de recuperação, alerta de meta e aviso de vencimento.
 - Confirmar a primeira execução **automática** dos cron jobs nos horários UTC programados. Testar expiração real de token, fluxo completo de 10 passos e carga com 10.000 transações, se ainda exigidos.
