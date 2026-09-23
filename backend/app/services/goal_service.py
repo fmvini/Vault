@@ -7,12 +7,33 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import Category, Goal, NotificationPreference, Transaction, TransactionType, User
 from app.services.email_service import send_goal_exceeded
+from app.services.exchange_rate_service import convert_amount
 
 
 async def current_month_spent(
-    db: AsyncSession, user_id: UUID, category_id: UUID, reference_date: date | None = None
+    db: AsyncSession,
+    user_id: UUID,
+    category_id: UUID,
+    reference_date: date | None = None,
+    target_currency: str | None = None,
 ) -> Decimal:
     reference = reference_date or date.today()
+    if target_currency:
+        rows = (
+            await db.execute(
+                select(Transaction.amount, Transaction.currency).where(
+                    Transaction.user_id == user_id,
+                    Transaction.category_id == category_id,
+                    Transaction.type == TransactionType.expense,
+                    extract('year', Transaction.transaction_date) == reference.year,
+                    extract('month', Transaction.transaction_date) == reference.month,
+                )
+            )
+        ).all()
+        total = Decimal('0')
+        for amount, currency in rows:
+            total += await convert_amount(db, amount, currency, target_currency)
+        return total
     value = await db.scalar(
         select(func.coalesce(func.sum(Transaction.amount), 0)).where(
             Transaction.user_id == user_id,
@@ -26,7 +47,11 @@ async def current_month_spent(
 
 
 async def check_goal_after_expense(
-    db: AsyncSession, user: User, transaction: Transaction, previous_amount: Decimal = Decimal("0")
+    db: AsyncSession,
+    user: User,
+    transaction: Transaction,
+    previous_amount: Decimal = Decimal("0"),
+    previous_currency: str | None = None,
 ) -> None:
     if transaction.type != TransactionType.expense:
         return
@@ -40,9 +65,15 @@ async def check_goal_after_expense(
     if not goal:
         return
     total = await current_month_spent(
-        db, user.id, transaction.category_id, transaction.transaction_date
+        db, user.id, transaction.category_id, transaction.transaction_date, goal.currency
     )
-    before = total - transaction.amount + previous_amount
+    current_amount = await convert_amount(
+        db, transaction.amount, transaction.currency, goal.currency
+    )
+    previous = await convert_amount(
+        db, previous_amount, previous_currency or transaction.currency, goal.currency
+    )
+    before = total - current_amount + previous
     if before <= goal.monthly_limit < total:
         preferences = await db.scalar(
             select(NotificationPreference).where(NotificationPreference.user_id == user.id)

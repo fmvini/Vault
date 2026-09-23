@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 512" role="img" aria-labelledby="title desc">
+  <title id="title">Vault</title>
+  <desc id="desc">Marca Vault com monograma V protegido por um escudo de cantos suaves e fecho central.</desc>
+
+  <g id="icon">
+    <path
+      fill="#172241"
+      d="M224 58C181 84 134 93 91 96c-9 1-16 8-16 17v118c0 91 54 160 141 202a18 18 0 0 0 16 0c87-42 141-111 141-202V113c0-9-7-16-16-17-43-3-90-12-133-38Z"
+    />
+    <path
+      fill="#9ADBC5"
+      d="M224 91c-37 19-78 28-116 32v108c0 71 40 126 116 165 76-39 116-94 116-165V123c-38-4-79-13-116-32Z"
+    />
+    <path
+      fill="none"
+      stroke="#172241"
+      stroke-width="32"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="m152 168 72 143 72-143"
+    />
+    <circle cx="224" cy="235" r="23" fill="#279A7D"/>
+    <circle cx="224" cy="235" r="8" fill="#DFA8B8"/>
+  </g>
+
+  <g id="wordmark">
+    <text
+      x="424"
+      y="309"
+      fill="#172241"
+      font-family="Helvetica, Arial, sans-serif"
+      font-size="154"
+      font-weight="700"
+      letter-spacing="-6"
+    >Vault</text>
+  </g>
+</svg>

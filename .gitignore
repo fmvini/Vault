@@ -1,22 +1,16 @@
-# Frontend
-frontend/node_modules/
-frontend/dist/
-frontend/.env
-
-# Backend
 backend/.venv/
-backend/.env
+backend/*.db
+backend/*.egg-info/
 backend/.pytest_cache/
 backend/.ruff_cache/
 backend/**/__pycache__/
-backend/*.db
+frontend/dist/
+frontend/node_modules/
+test-results/
+.env
+**/.env
+.impeccable/**/chrome-profile*/
+.impeccable/chrome-profile*/
+*.log
 
-# Local tooling
-.impeccable/review/
-.impeccable/build/
-.impeccable/live/
-.DS_Store
-Thumbs.db
-
-# Arquivos do impeccable
-.impeccable/*
+.impeccable

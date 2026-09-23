@@ -2,7 +2,6 @@
   Bell,
   ChartNoAxesCombined,
   ChevronDown,
-  Leaf,
   CreditCard,
   House,
   LogOut,
@@ -103,7 +102,10 @@ export function AppShell() {
       <aside className={mobileOpen ? "sidebar is-open" : "sidebar"}>
         <div className="brand-block">
           <NavLink className="brand" to="/" aria-label="Vault — início">
-            <span className="brand-mark" aria-hidden="true"><Leaf size={27} fill="currentColor" strokeWidth={1.6} /></span>
+            <span className="brand-mark" aria-hidden="true">
+              <img className="brand-mark-light" src="/vault-icon.svg" alt="" />
+              <img className="brand-mark-dark" src="/vault-icon-dark.svg" alt="" />
+            </span>
             <span>Vault</span>
           </NavLink>
           <p>Mais vida para o seu dinheiro</p>

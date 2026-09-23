@@ -2,7 +2,8 @@ export const formatMoney = (value: number, currency = "BRL") =>
   new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency,
-    minimumFractionDigits: 2
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
   }).format(value);
 
 export const formatShortDate = (date: string) =>

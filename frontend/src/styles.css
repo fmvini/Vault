@@ -62,8 +62,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .app-shell { min-height: 100vh; display: grid; grid-template-columns: 224px minmax(0, 1fr); background: var(--cloud); }
 .sidebar { position: fixed; inset: 0 auto 0 0; z-index: 30; width: 224px; display: flex; flex-direction: column; padding: 25px 20px 24px; border-right: 1px solid var(--rule); background: rgba(246, 247, 247, .96); }
 .brand-block { position: relative; padding: 0 7px 26px; }
-.brand { display: inline-flex; align-items: center; gap: 9px; color: var(--ink-dark); text-decoration: none; font-size: 23px; letter-spacing: -.025em; }
-.brand-mark { display: grid; place-items: center; color: #69c7ad; }
+.brand { display: inline-flex; align-items: center; gap: 9px; color: var(--ink-dark); text-decoration: none; font-size: 23px; font-weight: 700; letter-spacing: -.025em; }
+.brand-mark { position: relative; display: block; width: 31px; height: 31px; flex: 0 0 31px; }
+.brand-mark img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; transition: opacity .18s ease; }
+.brand-mark-dark { opacity: 0; }
 .brand-block p { margin: 5px 0 0 33px; color: var(--muted); font-size: 10px; white-space: nowrap; }
 .mobile-close { display: none; }
 .primary-nav { display: grid; gap: 4px; }
@@ -267,6 +269,8 @@ html[data-theme="dark"] ::selection { color: #10171d; background: #b7aaf0; }
 html[data-theme="dark"] ::-webkit-scrollbar-track { background: #111a21; }
 html[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #4a5861; border-color: #111a21; }
 html[data-theme="dark"] .sidebar { background: rgba(16,23,29,.97); }
+html[data-theme="dark"] .brand-mark-light { opacity: 0; }
+html[data-theme="dark"] .brand-mark-dark { opacity: 1; }
 html[data-theme="dark"] .topbar { border-bottom-color: var(--rule); background: rgba(16,23,29,.9); }
 html[data-theme="dark"] .global-search { color: var(--muted); background: var(--control); }
 html[data-theme="dark"] .global-search input::placeholder { color: #81919a; }

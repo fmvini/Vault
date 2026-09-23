@@ -16,10 +16,11 @@
 .ledger-summary > span { display: flex; flex-direction: column; justify-content: center; gap: 5px; color: var(--muted); font-size: 12px; }
 .ledger-summary > span + span { padding-left: 24px; border-left: 1px solid var(--rule); }
 .ledger-summary strong { color: var(--ink-dark); font: 400 27px "Spline Sans Mono", monospace; }
+.ledger-summary strong.multi-currency-total { display: flex; flex-direction: column; gap: 4px; font-size: 17px; line-height: 1.25; overflow-wrap: anywhere; }
 .positive { color: var(--mint-deep) !important; }
 .negative { color: var(--rose-deep) !important; }
 .feature-table { min-width: 710px; }
-.feature-row { display: grid; grid-template-columns: 95px minmax(220px, 1.8fr) minmax(130px, 1fr) 100px 130px; align-items: center; min-height: 54px; border-bottom: 1px solid #e7eaeb; color: #697480; font-size: 12px; }
+.feature-row { display: grid; grid-template-columns: 95px minmax(190px, 1.7fr) minmax(120px, 1fr) 105px 125px 72px; align-items: center; min-height: 54px; border-bottom: 1px solid #e7eaeb; color: #697480; font-size: 12px; }
 .feature-row strong { color: var(--ink); font-weight: 500; }
 .feature-row > :last-child { text-align: right; font-family: "Spline Sans Mono", monospace; }
 .feature-row-head { min-height: 36px; color: #929ba4; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; }

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 512" role="img" aria-labelledby="title description">
+  <title id="title">Vault — Portal seguro</title>
+  <desc id="description">Versão da marca Vault para fundos claros.</desc>
+  <g id="icon">
+    <path fill="#172241" fill-rule="evenodd" d="M52 416V236C52 129.96 137.96 44 244 44s192 85.96 192 192v180h-88V236c0-57.44-46.56-104-104-104s-104 46.56-104 104v180H52Z"/>
+    <path fill="#279A7D" fill-rule="evenodd" d="M244 222a74 74 0 1 1 0 148 74 74 0 0 1 0-148Zm-38 92 18 18 40-40 18 18 20-56-56 20 18 18-40 40-18-18Z"/>
+    <path fill="#9C8FD8" d="M220 44h48v44h-48z"/>
+  </g>
+  <g id="wordmark">
+    <text x="480" y="338" fill="#172241" font-family="Helvetica, Arial, sans-serif" font-size="170" font-weight="700" letter-spacing="-7">Vault</text>
+  </g>
+</svg>

@@ -4,7 +4,7 @@ from fastapi import APIRouter, HTTPException, Response, status
 from sqlalchemy import or_, select
 
 from app.core.deps import CurrentUser, DbSession
-from app.models import Category, Transaction, TransactionType
+from app.models import Category, FixedExpense, Goal, Transaction, TransactionType
 from app.schemas import CategoryCreate, CategoryResponse, CategoryUpdate
 
 router = APIRouter(prefix="/categories", tags=["categories"])
@@ -60,6 +60,15 @@ async def delete_category(category_id: UUID, user: CurrentUser, db: DbSession) -
     ):
         raise HTTPException(
             status_code=409, detail="Reatribua as transações antes de excluir a categoria"
+        )
+    if await db.scalar(
+        select(FixedExpense.id).where(FixedExpense.category_id == category.id).limit(1)
+    ) or await db.scalar(
+        select(Goal.id).where(Goal.category_id == category.id).limit(1)
+    ):
+        raise HTTPException(
+            status_code=409,
+            detail="Reatribua os gastos fixos e remova as metas antes de excluir a categoria",
         )
     await db.delete(category)
     await db.commit()

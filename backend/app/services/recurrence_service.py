@@ -27,6 +27,9 @@ async def generate_monthly_transactions(
     ).all()
     created = 0
     for expense in expenses:
+        due_date = monthly_due_date(reference.year, reference.month, expense.due_day)
+        if due_date < expense.start_date or (expense.end_date and due_date > expense.end_date):
+            continue
         exists = await db.scalar(
             select(Transaction.id).where(
                 Transaction.fixed_expense_id == expense.id,
@@ -45,7 +48,7 @@ async def generate_monthly_transactions(
                 amount=expense.amount,
                 currency=expense.currency,
                 description=expense.description,
-                transaction_date=monthly_due_date(reference.year, reference.month, expense.due_day),
+                transaction_date=due_date,
                 is_paid=False,
             )
         )

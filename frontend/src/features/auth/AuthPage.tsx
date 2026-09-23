@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { ArrowLeft, ArrowRight, CircleDollarSign, Leaf, MailCheck } from "lucide-react";
+import { ArrowLeft, ArrowRight, CircleDollarSign, MailCheck } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
@@ -74,7 +74,10 @@ export function AuthPage({ mode }: { mode: "login" | "register" | "forgot" }) {
   return (
     <main className="auth-page">
       <section className="auth-story">
-        <Link className="auth-brand" to="/"><Leaf fill="currentColor" />Vault</Link>
+        <Link className="auth-brand" to="/">
+          <span className="brand-mark" aria-hidden="true"><img src="/vault-icon-dark.svg" alt="" /></span>
+          Vault
+        </Link>
         <div>
           <span className="auth-spectrum" />
           <h1>Seu dinheiro fica mais leve quando cada escolha encontra o seu lugar.</h1>

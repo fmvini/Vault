@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title description">
+  <title id="title">Vault — modo escuro</title>
+  <desc id="description">Ícone Vault para fundos escuros.</desc>
+  <g id="icon">
+    <path fill="#F1F5F5" fill-rule="evenodd" d="M64 442V252C64 145.96 149.96 60 256 60s192 85.96 192 192v190h-88V252c0-57.44-46.56-104-104-104s-104 46.56-104 104v190H64Z"/>
+    <path fill="#68D0B3" fill-rule="evenodd" d="M256 238a74 74 0 1 1 0 148 74 74 0 0 1 0-148Zm-38 92 18 18 40-40 18 18 20-56-56 20 18 18-40 40-18-18Z"/>
+    <path fill="#ACA0E5" d="M232 60h48v44h-48z"/>
+  </g>
+</svg>

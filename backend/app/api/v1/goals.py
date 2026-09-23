@@ -15,7 +15,9 @@ router = APIRouter(prefix="/goals", tags=["goals"])
 
 
 async def serialize_goal(goal: Goal, db: DbSession) -> GoalResponse:
-    spent = await current_month_spent(db, goal.user_id, goal.category_id, date.today())
+    spent = await current_month_spent(
+        db, goal.user_id, goal.category_id, date.today(), goal.currency
+    )
     return GoalResponse(
         id=goal.id,
         category_id=goal.category_id,

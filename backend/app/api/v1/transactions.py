@@ -41,6 +41,7 @@ def serialize(transaction: Transaction) -> TransactionResponse:
 async def list_transactions(
     user: CurrentUser,
     db: DbSession,
+    q: str | None = Query(None, min_length=1, max_length=200),
     start_date: date | None = None,
     end_date: date | None = None,
     type: TransactionType | None = None,
@@ -51,6 +52,8 @@ async def list_transactions(
     sort_order: SortOrder = "desc",
 ) -> TransactionPage:
     filters = [Transaction.user_id == user.id]
+    if q:
+        filters.append(Transaction.description.ilike(f'%{q.strip()}%'))
     if start_date:
         filters.append(Transaction.transaction_date >= start_date)
     if end_date:
@@ -66,7 +69,7 @@ async def list_transactions(
         select(Transaction)
         .options(selectinload(Transaction.category))
         .where(*filters)
-        .order_by(order, Transaction.created_at.desc())
+        .order_by(order, Transaction.created_at.desc(), Transaction.id.desc())
         .offset((page - 1) * page_size)
         .limit(page_size)
     )
@@ -112,6 +115,10 @@ async def update_transaction(
 ) -> TransactionResponse:
     transaction = await owned_transaction(transaction_id, user, db)
     previous_amount = Decimal(transaction.amount)
+    previous_currency = transaction.currency
+    previous_category_id = transaction.category_id
+    previous_type = transaction.type
+    previous_date = transaction.transaction_date
     values = payload.model_dump(exclude_unset=True)
     category_id = values.get("category_id", transaction.category_id)
     transaction_type = values.get("type", transaction.type)
@@ -120,7 +127,19 @@ async def update_transaction(
         setattr(transaction, field, value)
     await db.commit()
     transaction = await owned_transaction(transaction_id, user, db)
-    await check_goal_after_expense(db, user, transaction, previous_amount)
+    same_goal_month = (
+        previous_type == TransactionType.expense
+        and previous_category_id == transaction.category_id
+        and (previous_date.year, previous_date.month)
+        == (transaction.transaction_date.year, transaction.transaction_date.month)
+    )
+    await check_goal_after_expense(
+        db,
+        user,
+        transaction,
+        previous_amount if same_goal_month else Decimal('0'),
+        previous_currency,
+    )
     return serialize(transaction)
 
 

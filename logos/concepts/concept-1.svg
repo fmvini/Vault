@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 512" role="img" aria-labelledby="title description">
+  <title id="title">Vault</title>
+  <desc id="description">Combination mark with a circular vault door forming the letter V.</desc>
+
+  <g id="icon">
+    <circle cx="250" cy="256" r="154" fill="#172241"/>
+    <circle cx="250" cy="256" r="118" fill="#9ADBC5"/>
+    <path
+      d="M178 196 L250 318 L322 196"
+      fill="none"
+      stroke="#172241"
+      stroke-width="34"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <circle cx="250" cy="318" r="17" fill="#279A7D"/>
+  </g>
+
+  <g id="wordmark">
+    <text
+      x="446"
+      y="303"
+      fill="#172241"
+      font-family="Helvetica, Arial, sans-serif"
+      font-size="132"
+      font-weight="700"
+      letter-spacing="-6"
+    >Vault</text>
+  </g>
+</svg>

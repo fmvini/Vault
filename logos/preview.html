@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vault — Portal seguro</title>
+  <style>
+    * { box-sizing: border-box; }
+    :root { font-family: Inter, system-ui, sans-serif; color: #172241; background: #eef2f1; }
+    body { max-width: 1120px; margin: 0 auto; padding: 48px 24px 72px; }
+    h1 { margin: 0; font-size: clamp(30px, 5vw, 54px); letter-spacing: -.035em; }
+    .intro { max-width: 680px; margin: 12px 0 34px; color: #5d6873; line-height: 1.65; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+    .card { overflow: hidden; border: 1px solid #d8dfde; border-radius: 16px; background: #fff; }
+    .card.dark { border-color: #2c3942; background: #10171d; color: #f1f5f5; }
+    .canvas { min-height: 310px; display: grid; place-items: center; padding: 52px; }
+    .canvas img { width: 100%; height: auto; display: block; }
+    .label { display: flex; justify-content: space-between; gap: 16px; padding: 16px 18px; border-top: 1px solid currentColor; border-color: rgba(124,134,149,.25); }
+    .label strong { font-size: 14px; }
+    .label span { color: #7c8695; font-size: 12px; }
+    .dark .label span { color: #9aa8b1; }
+    h2 { margin: 48px 0 18px; font-size: 20px; }
+    .sizes { display: flex; gap: 30px; flex-wrap: wrap; }
+    .size-set { padding: 18px; border: 1px solid #d8dfde; border-radius: 14px; background: #fff; }
+    .size-set.dark { border-color: #2c3942; background: #10171d; color: #f1f5f5; }
+    .size-set strong { display: block; margin-bottom: 14px; font-size: 13px; }
+    .size-row { display: flex; align-items: end; gap: 18px; }
+    figure { margin: 0; text-align: center; }
+    figcaption { margin-top: 5px; color: #7c8695; font-size: 10px; }
+    @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } .canvas { min-height: 220px; padding: 34px; } }
+  </style>
+</head>
+<body>
+  <h1>Vault — Portal seguro</h1>
+  <p class="intro">Identidade escolhida e refinada para manter contraste e legibilidade nos dois temas do produto. O portal representa proteção; a moeda e o recorte ascendente comunicam evolução financeira.</p>
+  <section class="grid" aria-label="Variações finais">
+    <article class="card">
+      <div class="canvas"><img src="iterations/iteration-1.svg" alt="Marca Vault para fundos claros"></div>
+      <div class="label"><strong>Modo claro</strong><span>iteration-1.svg</span></div>
+    </article>
+    <article class="card dark">
+      <div class="canvas"><img src="iterations/iteration-2.svg" alt="Marca Vault para fundos escuros"></div>
+      <div class="label"><strong>Modo escuro</strong><span>iteration-2.svg</span></div>
+    </article>
+  </section>
+  <h2>Teste de legibilidade do ícone</h2>
+  <section class="sizes">
+    <div class="size-set">
+      <strong>Modo claro</strong>
+      <div class="size-row">
+        <figure><img src="export/icon.svg" width="64" height="64" alt=""><figcaption>64 px</figcaption></figure>
+        <figure><img src="export/icon.svg" width="32" height="32" alt=""><figcaption>32 px</figcaption></figure>
+        <figure><img src="export/icon.svg" width="16" height="16" alt=""><figcaption>16 px</figcaption></figure>
+      </div>
+    </div>
+    <div class="size-set dark">
+      <strong>Modo escuro</strong>
+      <div class="size-row">
+        <figure><img src="export/icon-dark.svg" width="64" height="64" alt=""><figcaption>64 px</figcaption></figure>
+        <figure><img src="export/icon-dark.svg" width="32" height="32" alt=""><figcaption>32 px</figcaption></figure>
+        <figure><img src="export/icon-dark.svg" width="16" height="16" alt=""><figcaption>16 px</figcaption></figure>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

@@ -2,6 +2,7 @@
 import { AppShell } from "./components/AppShell";
 import { Outlet, useLocation } from "react-router-dom";
 import { AuthPage } from "./features/auth/AuthPage";
+import { ResetPasswordPage } from './features/auth/ResetPasswordPage';
 import { CategoriesPage } from "./features/categories/CategoriesPage";
 import { DashboardPage } from "./features/dashboard/DashboardPage";
 import { FixedExpensesPage } from "./features/fixed-expenses/FixedExpensesPage";
@@ -24,6 +25,7 @@ export default function App() {
       <Route path="/login" element={<AuthPage mode="login" />} />
       <Route path="/register" element={<AuthPage mode="register" />} />
       <Route path="/forgot-password" element={<AuthPage mode="forgot" />} />
+      <Route path='/reset-password' element={<ResetPasswordPage />} />
       <Route element={<RequireAuth />}>
         <Route element={<AppShell />}>
           <Route index element={<DashboardPage />} />

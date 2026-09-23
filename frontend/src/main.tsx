@@ -8,6 +8,7 @@ import App from "./App";
 import { initializeTheme } from "./lib/theme";
 import "./styles.css";
 import "./feature.css";
+import './enhancements.css';
 
 initializeTheme();
 

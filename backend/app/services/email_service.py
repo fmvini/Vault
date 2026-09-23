@@ -41,6 +41,16 @@ async def send_goal_exceeded(to: str, category_name: str, spent: str, limit: str
     )
 
 
+async def send_password_reset(to: str, reset_url: str) -> bool:
+    return await send_email(
+        to,
+        'Redefina sua senha do Vault',
+        f'<p>Recebemos um pedido para redefinir sua senha.</p>'
+        f'<p><a href="{reset_url}">Criar uma nova senha</a></p>'
+        '<p>O link expira em 30 minutos. Se você não fez o pedido, ignore este e-mail.</p>',
+    )
+
+
 async def send_fixed_expense_due(to: str, description: str, due_day: int) -> bool:
     return await send_email(
         to,
