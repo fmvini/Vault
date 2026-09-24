@@ -27,6 +27,7 @@ def serialize(transaction: Transaction) -> TransactionResponse:
         id=transaction.id,
         category_id=transaction.category_id,
         category_name=transaction.category.name,
+        category_icon=transaction.category.icon,
         fixed_expense_id=transaction.fixed_expense_id,
         type=transaction.type,
         amount=transaction.amount,

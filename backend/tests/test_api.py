@@ -197,6 +197,9 @@ def test_transactions_crud_filters_sort_and_pagination(client):
         payload = transaction_payload(expense['id'] if index % 2 == 0 else income['id'], type='expense' if index % 2 == 0 else 'income', amount=str(index + 1), description=f"{'Café' if index < 3 else 'Item'} {index:02d}")
         response = client.post('/api/v1/transactions', headers=headers, json=payload)
         assert response.status_code == 201, response.text
+        assert response.json()['category_icon'] == (
+            expense['icon'] if index % 2 == 0 else income['icon']
+        )
         created_ids.append(response.json()['id'])
     first = client.get('/api/v1/transactions?page=1&page_size=5&sort_by=amount&sort_order=asc', headers=headers)
     assert first.status_code == 200 and first.json()['total'] == 12 and len(first.json()['items']) == 5

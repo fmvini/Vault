@@ -47,6 +47,7 @@ export interface ApiTransaction {
   id: string;
   category_id: string;
   category_name: string;
+  category_icon: string | null;
   fixed_expense_id: string | null;
   type: TransactionType;
   amount: number;

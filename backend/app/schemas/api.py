@@ -120,6 +120,7 @@ class TransactionResponse(ApiModel):
     id: UUID
     category_id: UUID
     category_name: str
+    category_icon: str | None
     fixed_expense_id: UUID | None
     type: TransactionType
     amount: Decimal

@@ -1,5 +1,39 @@
 import { expect, test } from '@playwright/test';
 
+test('transações recentes usam ícones da categoria e verde para receitas', async ({ page, request }) => {
+  const apiBase = 'http://127.0.0.1:8000/api/v1';
+  const email = `icones-${Date.now()}@example.com`;
+  const password = 'senha-segura-123';
+  expect((await request.post(`${apiBase}/auth/register`, { data: {
+    name: 'QA Ícones', email, password, default_currency: 'BRL'
+  } })).status()).toBe(201);
+  const login = await request.post(`${apiBase}/auth/login`, { data: { email, password } });
+  const token = (await login.json()).access_token as string;
+  const headers = { Authorization: `Bearer ${token}` };
+  const categories = await request.get(`${apiBase}/categories`, { headers });
+  const items = await categories.json() as { id: string; icon: string; type: string }[];
+  const today = new Date().toISOString().slice(0, 10);
+  for (const [icon, type] of [['utensils', 'expense'], ['car', 'expense'], ['wallet', 'income']]) {
+    const selected = items.find((item) => item.icon === icon && item.type === type);
+    expect(selected).toBeDefined();
+    const response = await request.post(`${apiBase}/transactions`, { headers, data: {
+      category_id: selected!.id, type, amount: '50.00', currency: 'BRL',
+      description: `Ícone ${icon}`, transaction_date: today
+    } });
+    expect(response.status()).toBe(201);
+  }
+  await page.addInitScript((value) => localStorage.setItem('fintrack-token', value), token);
+  await page.goto('/');
+  const recent = page.locator('.transactions-section');
+  await expect(recent.locator('.transaction-row').filter({ hasText: 'Ícone utensils' }).locator('.lucide-utensils')).toBeVisible();
+  await expect(recent.locator('.transaction-row').filter({ hasText: 'Ícone car' }).locator('.lucide-car')).toBeVisible();
+  const income = recent.locator('.transaction-row').filter({ hasText: 'Ícone wallet' });
+  await expect(income.locator('.lucide-wallet')).toBeVisible();
+  await expect(income.locator('.mini-icon')).toHaveCSS('color', 'rgb(32, 126, 102)');
+  await page.getByRole('button', { name: 'Ativar modo escuro' }).click();
+  await expect(income.locator('.mini-icon')).toHaveCSS('color', 'rgb(137, 225, 191)');
+});
+
 test('fluxo principal persiste dados e funciona em desktop e mobile', async ({ page }) => {
   const suffix = Date.now();
   const email = `qa-${suffix}@example.com`;

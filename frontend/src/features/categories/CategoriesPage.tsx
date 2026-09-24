@@ -1,22 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import { BookOpen, Briefcase, Car, Heart, Home, Pencil, Plus, Tag, Trash2, Utensils, Wallet, X } from 'lucide-react';
+import { Pencil, Plus, Trash2, X } from 'lucide-react';
 import { FormEvent, useState } from 'react';
+import { CategoryIcon } from '../../components/CategoryIcon';
 import { PageHeader } from '../../components/PageHeader';
 import { api } from '../../lib/api';
 import type { ApiCategory, TransactionType } from '../../types';
 
 const initialForm = { name: '', type: 'expense' as TransactionType, color: '#6fc5ad', icon: 'tag' };
-const categoryIcons: Record<string, typeof Tag> = {
-  tag: Tag, food: Utensils, car: Car, house: Home, heart: Heart,
-  study: BookOpen, work: Briefcase, wallet: Wallet
-};
-
-function CategoryIcon({ icon }: { icon: string | null }) {
-  const Icon = categoryIcons[icon ?? 'tag'] ?? Tag;
-  return <Icon size={14} aria-hidden='true' />;
-}
-
 export function CategoriesPage() {
   const client = useQueryClient();
   const [open, setOpen] = useState(false);
@@ -52,6 +43,6 @@ export function CategoriesPage() {
     {query.isError && <p className='form-error' role='alert'>Não foi possível carregar as categorias.</p>}
     {query.isFetching && <p className='empty-row' role='status'>Carregando categorias...</p>}
     {remove.isPending && <p className='empty-row' role='status'>Excluindo categoria...</p>}
-    <div className='category-columns' aria-busy={query.isLoading}>{groups.map((group) => { const items = (query.data ?? []).filter((item) => item.type === group.type); return <section key={group.type}><header><h2>{group.title}</h2><span>{items.length} categorias</span></header>{items.map((category) => <article key={category.id}><span className='category-swatch' style={{ background: category.color ?? '#aeb8bd' }} /><div><strong><CategoryIcon icon={category.icon} />{category.name}</strong><small>{category.is_system ? 'Categoria do sistema' : `Personalizada · ${category.icon || 'tag'}`}</small></div><em>{category.type === 'expense' ? 'Gasto' : 'Receita'}</em>{category.is_system ? <span className='system-lock'>Protegida</span> : <span className='row-actions'><button aria-label={`Editar ${category.name}`} onClick={() => openEdit(category)}><Pencil size={16} /></button><button aria-label={`Excluir ${category.name}`} disabled={remove.isPending} onClick={() => removeCategory(category)}><Trash2 size={16} /></button></span>}</article>)}{!query.isLoading && items.length === 0 && <p className='empty-row'>Nenhuma categoria cadastrada.</p>}</section>; })}</div>
+    <div className='category-columns' aria-busy={query.isLoading}>{groups.map((group) => { const items = (query.data ?? []).filter((item) => item.type === group.type); return <section key={group.type}><header><h2>{group.title}</h2><span>{items.length} categorias</span></header>{items.map((category) => <article key={category.id}><span className='category-swatch' style={{ background: category.color ?? '#aeb8bd' }} /><div><strong><CategoryIcon icon={category.icon} type={category.type} />{category.name}</strong><small>{category.is_system ? 'Categoria do sistema' : `Personalizada · ${category.icon || 'tag'}`}</small></div><em>{category.type === 'expense' ? 'Gasto' : 'Receita'}</em>{category.is_system ? <span className='system-lock'>Protegida</span> : <span className='row-actions'><button aria-label={`Editar ${category.name}`} onClick={() => openEdit(category)}><Pencil size={16} /></button><button aria-label={`Excluir ${category.name}`} disabled={remove.isPending} onClick={() => removeCategory(category)}><Trash2 size={16} /></button></span>}</article>)}{!query.isLoading && items.length === 0 && <p className='empty-row'>Nenhuma categoria cadastrada.</p>}</section>; })}</div>
   </div>;
 }

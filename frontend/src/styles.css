@@ -173,7 +173,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .transaction-row { display: grid; grid-template-columns: 72px minmax(180px, 1.7fr) minmax(100px, 1fr) 110px; min-height: 34px; align-items: center; border-top: 1px solid #e7eaeb; color: #626d79; font-size: 11px; }
 .transaction-row span:nth-child(2) { display: flex; align-items: center; gap: 7px; color: var(--ink); }
 .transaction-head { min-height: 28px; border-top: 0; color: #929ba5; }
-.mini-icon { display: grid; place-items: center; width: 23px; height: 23px; border-radius: 8px; color: #b65372; background: #f7e8ed; }
+.mini-icon { display: grid; flex: 0 0 23px; place-items: center; width: 23px; height: 23px; border-radius: 8px; color: #b65372; background: #f7e8ed; }
+.transaction-row .mini-icon.income { color: #207e66; background: #e4f4ee; }
 .transaction-row > strong { font: 400 11px "Spline Sans Mono", monospace; text-align: right; }
 .transaction-row .expense { color: var(--rose-deep); }
 .transaction-row .income { color: var(--mint-deep); }
@@ -295,6 +296,7 @@ html[data-theme="dark"] .transaction-row,
 html[data-theme="dark"] .goal-item + .goal-item,
 html[data-theme="dark"] .due-item + .due-item { border-color: var(--rule); color: #aab7bd; }
 html[data-theme="dark"] .mini-icon { color: #ef8eac; background: #382630; }
+html[data-theme="dark"] .transaction-row .mini-icon.income { color: #89e1bf; background: #214b3c; }
 html[data-theme="dark"] .round-icon { border-color: #34434d; color: #c2b8ef; background: #1a242c; }
 html[data-theme="dark"] .progress { background: #2a3740; }
 html[data-theme="dark"] .recharts-default-tooltip { background: var(--surface-elevated) !important; border-color: var(--rule) !important; }
