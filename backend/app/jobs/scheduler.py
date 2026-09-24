@@ -43,7 +43,9 @@ async def due_notification_job() -> None:
             if due_date < expense.start_date or (expense.end_date and due_date > expense.end_date):
                 continue
             if (due_date - today).days == preference.fixed_expense_due_days_before:
-                await send_fixed_expense_due(user.email, expense.description, expense.due_day)
+                await send_fixed_expense_due(
+                    user.email, expense.description, expense.due_day, user.name
+                )
 
 
 async def exchange_rate_job() -> None:

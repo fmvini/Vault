@@ -141,6 +141,8 @@ Depois de configurar as variáveis, publique ambos os projetos e teste `https://
 
 Para usar o Gmail, ative a verificação em duas etapas da conta `vault.support.admin@gmail.com` e crie uma [senha de app do Google](https://support.google.com/mail/answer/185833). Na Vercel, abra **o projeto da API → Settings → Environment Variables**, cadastre `EMAIL_PROVIDER`, `EMAIL_FROM`, `GMAIL_ADDRESS` e `GMAIL_APP_PASSWORD` para Production e faça um novo deploy da API. Não use a senha normal da conta, não cole a senha de app no frontend e não a envie pelo chat. O Gmail envia por `smtp.gmail.com:465`; o endereço de `EMAIL_FROM` precisa ser o mesmo de `GMAIL_ADDRESS`. Depois do deploy, teste a recuperação de senha com uma conta cadastrada e confirme o recebimento. Sem configuração completa, a recuperação de senha retorna 503 em produção; os alertas também não são entregues.
 
+Os e-mails transacionais usam a imagem pública `frontend/public/email-vault-hero.png`, servida pela URL definida em `FRONTEND_URL`. Publique o frontend com esse arquivo antes de usar o novo template na API. As mensagens incluem texto simples e continuam legíveis quando o cliente de e-mail bloqueia imagens.
+
 ### PostgreSQL opcional
 
 O `docker-compose.yml` sobe **somente o banco PostgreSQL**, não a aplicação completa:

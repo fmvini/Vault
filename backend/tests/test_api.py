@@ -120,8 +120,8 @@ def test_auth_validation_duplicate_and_password_reset(client, monkeypatch):
     assert client.get('/api/v1/auth/me', headers=headers).json()['email'] == user['email']
     delivered = []
 
-    async def fake_send(to, url):
-        delivered.append((to, url))
+    async def fake_send(to, url, name):
+        delivered.append((to, url, name))
         return True
 
     monkeypatch.setattr('app.api.v1.auth.send_password_reset', fake_send)
@@ -130,6 +130,7 @@ def test_auth_validation_duplicate_and_password_reset(client, monkeypatch):
     assert known.status_code == unknown.status_code == 200
     assert known.json() == unknown.json()
     assert len(delivered) == 1
+    assert delivered[0][2] == user['name']
     token = parse_qs(urlparse(delivered[0][1]).query)['token'][0]
     assert client.get('/api/v1/auth/me', headers={'Authorization': f'Bearer {token}'}).status_code == 401
     assert client.post('/api/v1/auth/reset-password', json={'token': token, 'new_password': 'senha-nova-456'}).status_code == 200

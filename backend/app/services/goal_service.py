@@ -87,4 +87,5 @@ async def check_goal_after_expense(
                 category_name or "categoria",
                 f"{total:.2f} {goal.currency}",
                 f"{goal.monthly_limit:.2f} {goal.currency}",
+                user.name,
             )

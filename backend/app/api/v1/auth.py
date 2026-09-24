@@ -67,7 +67,7 @@ async def forgot_password(payload: ForgotPasswordRequest, db: DbSession) -> Mess
     if user is not None:
         token = create_password_reset_token(user.id)
         reset_url = f'{settings.frontend_url}/reset-password?token={quote(token)}'
-        await send_password_reset(user.email, reset_url)
+        await send_password_reset(user.email, reset_url, user.name)
     return MessageResponse(message='Se o e-mail existir, um link de recuperação será enviado.')
 
 
