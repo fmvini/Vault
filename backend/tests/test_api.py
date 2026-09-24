@@ -32,6 +32,50 @@ def transaction_payload(category_id, **overrides):
     return payload
 
 
+def test_savings_goals_deposits_completion_and_cancellation_restore_balance(client):
+    _, owner = account(client, 'savings')
+    _, stranger = account(client, 'savings-stranger')
+    income = category(client, owner, 'income')
+    today = date.today().isoformat()
+    assert client.post('/api/v1/transactions', headers=owner, json=transaction_payload(
+        income['id'], type='income', amount='500.00', transaction_date=today,
+    )).status_code == 201
+    summary_path = f'/api/v1/dashboard/summary?start_date={today}&end_date={today}'
+    assert Decimal(client.get(summary_path, headers=owner).json()['balance']) == 500
+
+    blank = client.post('/api/v1/savings-goals', headers=owner, json={
+        'name': '  ', 'target_amount': '200.00', 'currency': 'BRL',
+    })
+    assert blank.status_code == 422
+    created = client.post('/api/v1/savings-goals', headers=owner, json={
+        'name': ' Carro ', 'target_amount': '200.00', 'currency': 'BRL',
+    })
+    assert created.status_code == 201, created.text
+    goal_id = created.json()['id']
+    assert created.json()['name'] == 'Carro'
+    assert Decimal(created.json()['saved_amount']) == 0
+    assert client.get('/api/v1/savings-goals', headers=stranger).json() == []
+    assert client.post(f'/api/v1/savings-goals/{goal_id}/deposits', headers=stranger, json={'amount': '1'}).status_code == 404
+    assert client.post(f'/api/v1/savings-goals/{goal_id}/cancel', headers=stranger).status_code == 404
+
+    first = client.post(f'/api/v1/savings-goals/{goal_id}/deposits', headers=owner, json={'amount': '100.00'})
+    assert first.status_code == 200 and Decimal(first.json()['saved_amount']) == 100
+    assert Decimal(client.get(summary_path, headers=owner).json()['balance']) == 400
+    assert client.post(f'/api/v1/savings-goals/{goal_id}/deposits', headers=owner, json={'amount': '100.01'}).status_code == 409
+    second = client.post(f'/api/v1/savings-goals/{goal_id}/deposits', headers=owner, json={'amount': '100.00'})
+    assert second.status_code == 200 and second.json()['status'] == 'completed'
+    assert Decimal(client.get(summary_path, headers=owner).json()['balance']) == 300
+    assert client.post(f'/api/v1/savings-goals/{goal_id}/deposits', headers=owner, json={'amount': '1'}).status_code == 409
+
+    cancelled = client.post(f'/api/v1/savings-goals/{goal_id}/cancel', headers=owner)
+    assert cancelled.status_code == 200 and cancelled.json()['status'] == 'cancelled'
+    assert Decimal(cancelled.json()['saved_amount']) == 0
+    summary = client.get(summary_path, headers=owner).json()
+    assert Decimal(summary['balance']) == 500
+    assert Decimal(summary['savings_movement']) == 0
+    assert client.post(f'/api/v1/savings-goals/{goal_id}/cancel', headers=owner).status_code == 409
+
+
 def test_cron_routes_require_secret_and_run_job(client, monkeypatch):
     from app.api.v1 import jobs
 

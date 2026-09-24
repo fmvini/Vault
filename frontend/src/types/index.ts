@@ -86,6 +86,15 @@ export interface ApiGoal {
   is_active: boolean;
 }
 
+export interface ApiSavingsGoal {
+  id: string;
+  name: string;
+  target_amount: number;
+  saved_amount: number;
+  currency: string;
+  status: 'active' | 'completed' | 'cancelled';
+}
+
 export interface ExpenseByCategory {
   category_id: string;
   category_name: string;
@@ -103,6 +112,7 @@ export interface DashboardSummary {
   total_income: number;
   total_expense: number;
   balance: number;
+  savings_movement: number;
   currency: string;
   expenses_by_category: ExpenseByCategory[];
   timeline: TimelinePoint[];

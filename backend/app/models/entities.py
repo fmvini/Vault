@@ -49,6 +49,7 @@ class User(TimestampMixin, Base):
     transactions: Mapped[list["Transaction"]] = relationship(back_populates="user")
     fixed_expenses: Mapped[list["FixedExpense"]] = relationship(back_populates="user")
     goals: Mapped[list["Goal"]] = relationship(back_populates="user")
+    savings_goals: Mapped[list["SavingsGoal"]] = relationship(back_populates="user")
     notification_preference: Mapped["NotificationPreference | None"] = relationship(
         back_populates="user", uselist=False, cascade="all, delete-orphan"
     )
@@ -147,6 +148,43 @@ class Goal(TimestampMixin, Base):
 
     user: Mapped[User] = relationship(back_populates="goals")
     category: Mapped[Category] = relationship()
+
+
+class SavingsGoal(TimestampMixin, Base):
+    __tablename__ = "savings_goals"
+    __table_args__ = (CheckConstraint("target_amount > 0", name="ck_savings_goal_positive_target"),)
+
+    id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), index=True, nullable=False
+    )
+    name: Mapped[str] = mapped_column(String(100), nullable=False)
+    target_amount: Mapped[Decimal] = mapped_column(Numeric(12, 2), nullable=False)
+    saved_amount: Mapped[Decimal] = mapped_column(Numeric(12, 2), default=0, nullable=False)
+    currency: Mapped[str] = mapped_column(String(3), nullable=False)
+    status: Mapped[str] = mapped_column(String(20), default="active", nullable=False)
+
+    user: Mapped[User] = relationship(back_populates="savings_goals")
+    movements: Mapped[list["SavingsMovement"]] = relationship(back_populates="goal")
+
+
+class SavingsMovement(Base):
+    __tablename__ = "savings_movements"
+    __table_args__ = (CheckConstraint("amount != 0", name="ck_savings_movement_nonzero"),)
+
+    id: Mapped[uuid.UUID] = mapped_column(Uuid(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    goal_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid(as_uuid=True),
+        ForeignKey("savings_goals.id", ondelete="CASCADE"),
+        index=True,
+        nullable=False,
+    )
+    amount: Mapped[Decimal] = mapped_column(Numeric(12, 2), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+
+    goal: Mapped[SavingsGoal] = relationship(back_populates="movements")
 
 
 class NotificationPreference(Base):

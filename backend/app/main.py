@@ -11,6 +11,7 @@ from app.api.v1 import (
     goals,
     jobs,
     notification_preferences,
+    savings_goals,
     transactions,
 )
 from app.core.config import settings
@@ -51,6 +52,7 @@ for router in (
     transactions.router,
     fixed_expenses.router,
     goals.router,
+    savings_goals.router,
     dashboard.router,
     notification_preferences.router,
     jobs.router,

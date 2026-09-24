@@ -131,7 +131,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .money-summary + .money-summary { padding-left: 24px; border-left: 1px solid var(--rule); }
 .money-summary > span { color: var(--muted); font-size: 12px; }
 .money-summary strong { margin-top: 4px; color: var(--ink-dark); font: 400 30px/1.1 "Spline Sans Mono", monospace; letter-spacing: -.035em; }
-.money-summary:first-child > span { display: none; }
+.money-summary:first-child > span { display: block; }
 .money-summary:first-child { transform: translate(-6px, 6px); }
 .money-summary:first-child strong { font-size: 30px; letter-spacing: -.045em; }
 .money-summary.ink small { color: #58b99f; }

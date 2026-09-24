@@ -13,6 +13,7 @@
   Sun,
   Tags,
   Target,
+  PiggyBank,
   WalletCards,
   X
 } from "lucide-react";
@@ -29,7 +30,8 @@ const navItems = [
   { to: "/", label: "Visão geral", icon: House },
   { to: "/transactions", label: "Transações", icon: WalletCards },
   { to: "/fixed-expenses", label: "Gastos fixos", icon: CreditCard },
-  { to: "/goals", label: "Metas", icon: Target },
+  { to: "/limits", label: "Limites", icon: Target },
+  { to: "/goals", label: "Metas", icon: PiggyBank },
   { to: "/categories", label: "Categorias", icon: Tags },
   { to: "/reports", label: "Relatórios", icon: ChartNoAxesCombined },
   { to: "/settings", label: "Configurações", icon: Settings }

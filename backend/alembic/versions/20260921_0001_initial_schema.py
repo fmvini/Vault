@@ -10,7 +10,15 @@ import uuid
 from alembic import op
 from app.db.base import Base
 from app.db.seed import SYSTEM_CATEGORIES
-from app.models import Category
+from app.models import (
+    Category,
+    ExchangeRate,
+    FixedExpense,
+    Goal,
+    NotificationPreference,
+    Transaction,
+    User,
+)
 
 revision = "20260921_0001"
 down_revision = None
@@ -20,7 +28,14 @@ depends_on = None
 
 def upgrade() -> None:
     bind = op.get_bind()
-    Base.metadata.create_all(bind=bind)
+    Base.metadata.create_all(
+        bind=bind,
+        tables=[
+            User.__table__, Category.__table__, FixedExpense.__table__,
+            Transaction.__table__, Goal.__table__, NotificationPreference.__table__,
+            ExchangeRate.__table__,
+        ],
+    )
     bind.execute(
         Category.__table__.insert(),
         [

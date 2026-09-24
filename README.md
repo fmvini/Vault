@@ -12,9 +12,10 @@ O projeto é um monorepo com uma interface React e uma API FastAPI. O frontend u
 - **Transações:** receitas e gastos em BRL, USD ou EUR, com edição, exclusão, busca, filtros, ordenação e paginação.
 - **Categorias:** opções padrão protegidas e categorias personalizadas com nome, tipo, cor e ícone.
 - **Gastos fixos:** cadastro e edição de recorrências, geração mensal de transações por job, data final, desativação e status pago/pendente.
-- **Metas mensais:** limite por categoria, acompanhamento do progresso e alerta quando o gasto ultrapassa o valor definido.
-- **Dashboard:** receitas, gastos e saldo por período, evolução temporal, distribuição por categoria e conversão para a moeda padrão.
-- **Notificações:** preferências para e-mails de meta ultrapassada e de gasto fixo próximo do vencimento.
+- **Limites mensais:** teto por categoria, acompanhamento do gasto e alerta quando ultrapassa o valor definido.
+- **Metas de poupança:** objetivo com nome e valor desejado, aportes até a conquista e devolução do valor reservado ao cancelar.
+- **Dashboard:** receitas, gastos e saldo disponível por período, incluindo aportes e cancelamentos de metas, além de evolução temporal, distribuição por categoria e conversão para a moeda padrão.
+- **Notificações:** preferências para e-mails de limite ultrapassado e de gasto fixo próximo do vencimento.
 - **Interface responsiva:** layouts para desktop, tablet e smartphone, com tema claro e escuro.
 
 ## Tecnologias e estrutura

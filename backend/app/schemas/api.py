@@ -194,6 +194,24 @@ class GoalResponse(ApiModel):
     is_active: bool
 
 
+class SavingsGoalCreate(CurrencyMixin):
+    name: Annotated[str, Field(min_length=1, max_length=100)]
+    target_amount: PositiveMoney
+
+
+class SavingsDeposit(BaseModel):
+    amount: PositiveMoney
+
+
+class SavingsGoalResponse(ApiModel):
+    id: UUID
+    name: str
+    target_amount: Decimal
+    saved_amount: Decimal
+    currency: str
+    status: Literal["active", "completed", "cancelled"]
+
+
 class ExpenseByCategory(BaseModel):
     category_id: UUID
     category_name: str
@@ -211,6 +229,7 @@ class DashboardSummary(BaseModel):
     total_income: Decimal
     total_expense: Decimal
     balance: Decimal
+    savings_movement: Decimal = Decimal("0")
     currency: str
     expenses_by_category: list[ExpenseByCategory]
     timeline: list[TimelinePoint]

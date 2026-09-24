@@ -63,8 +63,8 @@ test('fluxo principal persiste dados e funciona em desktop e mobile', async ({ p
   await page.getByRole('button', { name: 'Reativar Assinatura QA' }).click();
   await expect(fixedRow).toContainText('Ativo');
 
-  await page.getByRole('link', { name: 'Metas' }).click();
-  await page.getByRole('button', { name: 'Nova meta' }).click();
+  await page.getByRole('link', { name: 'Limites' }).click();
+  await page.getByRole('button', { name: 'Novo limite' }).click();
   const goalForm = page.locator('.inline-form');
   await goalForm.getByLabel('Categoria').selectOption({ label: 'Compras QA' });
   await goalForm.getByLabel('Limite mensal').fill('100');
@@ -97,26 +97,46 @@ test('fluxo principal persiste dados e funciona em desktop e mobile', async ({ p
   await expect(page.locator('.money-summary.rose strong')).toContainText('159,90');
   await page.locator('.period-controls select').selectOption('three-months');
   await expect(page.locator('.period-controls small')).toHaveText('Últimos 3 meses');
-  await expect(page.getByText('1 meta(s) ultrapassada(s) neste mês.')).toBeVisible();
+  await expect(page.getByText('1 limite(s) ultrapassado(s) neste mês.')).toBeVisible();
   await expect(page.locator('.goal-item').filter({ hasText: 'Compras QA' })).toContainText('160%');
   await page.screenshot({ path: '../test-results/dashboard-desktop.png', fullPage: true });
 
-  await page.getByRole('link', { name: 'Metas' }).click();
+  await page.getByRole('link', { name: 'Limites' }).click();
   const goalCard = page.locator('.goal-board article').filter({ hasText: 'Compras QA' });
   await expect(goalCard).toHaveClass(/exceeded/);
   await expect(goalCard).toContainText('Limite ultrapassado');
-  await page.getByRole('button', { name: 'Editar meta de Compras QA' }).click();
+  await page.getByRole('button', { name: 'Editar limite de Compras QA' }).click();
   await goalForm.getByLabel('Limite mensal').fill('200');
   await goalForm.getByRole('button', { name: 'Salvar alterações' }).click();
   await expect(goalCard).toContainText('Dentro do planejado');
   await page.getByRole('link', { name: 'Visão geral' }).click();
-  await expect(page.getByText('0 meta(s) ultrapassada(s) neste mês.')).toBeVisible();
-  await page.getByRole('link', { name: 'Metas' }).click();
+  await expect(page.getByText('0 limite(s) ultrapassado(s) neste mês.')).toBeVisible();
+  await page.getByRole('link', { name: 'Limites' }).click();
   page.once('dialog', (dialog) => dialog.accept());
-  await page.getByRole('button', { name: 'Excluir meta de Compras QA' }).click();
+  await page.getByRole('button', { name: 'Excluir limite de Compras QA' }).click();
   await expect(page.locator('.goal-board article').filter({ hasText: 'Compras QA' })).toHaveCount(0);
   await page.getByRole('link', { name: 'Visão geral' }).click();
-  await expect(page.getByText('Sem metas ativas.')).toBeVisible();
+  await expect(page.getByText('Sem limites ativos.')).toBeVisible();
+
+  const balanceBeforeSaving = await page.locator('.money-summary.ink strong').innerText();
+  await page.getByRole('link', { name: 'Metas' }).click();
+  await page.getByRole('button', { name: 'Nova meta' }).click();
+  await page.getByLabel('Nome da meta').fill('Carro QA');
+  await page.getByLabel('Valor desejado').fill('200');
+  await page.getByRole('button', { name: 'Criar meta' }).click();
+  const savingsCard = page.locator('.savings-card').filter({ hasText: 'Carro QA' });
+  await savingsCard.getByRole('button', { name: 'Adicionar dinheiro' }).click();
+  await savingsCard.getByLabel('Valor para guardar').fill('100');
+  await savingsCard.getByRole('button', { name: 'Confirmar aporte' }).click();
+  await expect(savingsCard).toContainText('50% da meta alcançada');
+  await page.getByRole('link', { name: 'Visão geral' }).click();
+  await expect(page.getByText(/Reservas para metas no período:.*100,00/)).toBeVisible();
+  await page.getByRole('link', { name: 'Metas' }).click();
+  page.once('dialog', (dialog) => dialog.accept());
+  await savingsCard.getByRole('button', { name: 'Cancelar meta' }).click();
+  await expect(savingsCard).toHaveCount(0);
+  await page.getByRole('link', { name: 'Visão geral' }).click();
+  await expect(page.locator('.money-summary.ink strong')).toHaveText(balanceBeforeSaving);
 
   await page.getByRole('link', { name: 'Configurações' }).click();
   await page.getByLabel('Nome').fill('QA Vault Persistido');

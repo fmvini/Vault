@@ -8,7 +8,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
 from app.core.deps import CurrentUser, DbSession
-from app.models import Transaction, TransactionType
+from app.models import SavingsGoal, SavingsMovement, Transaction, TransactionType
 from app.schemas import DashboardSummary, ExpenseByCategory, TimelinePoint
 from app.services.exchange_rate_service import convert_amount
 
@@ -54,6 +54,20 @@ async def get_summary(
             expense += amount
             by_category[(item.category_id, item.category.name)] += amount
             by_day[item.transaction_date]["expense"] += amount
+    savings_movements = (await db.execute(
+        select(SavingsMovement, SavingsGoal.currency)
+        .join(SavingsGoal, SavingsMovement.goal_id == SavingsGoal.id)
+        .where(SavingsGoal.user_id == user.id)
+    )).all()
+    reserved = Decimal("0")
+    for movement, movement_currency in savings_movements:
+        if start_date <= movement.created_at.date() <= end_date:
+            try:
+                reserved += await convert_amount(
+                    db, movement.amount, movement_currency, user.default_currency
+                )
+            except ValueError as exc:
+                raise HTTPException(status_code=503, detail=str(exc)) from exc
     categories = [
         ExpenseByCategory(
             category_id=category_id,
@@ -76,7 +90,8 @@ async def get_summary(
     return DashboardSummary(
         total_income=income,
         total_expense=expense,
-        balance=income - expense,
+        balance=income - expense - reserved,
+        savings_movement=reserved,
         currency=user.default_currency,
         expenses_by_category=categories,
         timeline=timeline,
