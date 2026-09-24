@@ -46,3 +46,19 @@ def test_gmail_requires_password_and_matching_sender(monkeypatch):
     monkeypatch.setattr(settings, "gmail_app_password", "example-app-password")
     monkeypatch.setattr(settings, "email_from", "Vault <other@gmail.com>")
     assert settings.email_configured is False
+
+
+def test_limit_alert_uses_current_name(monkeypatch):
+    sent = []
+
+    async def fake_send(to, subject, html):
+        sent.append((to, subject, html))
+        return True
+
+    monkeypatch.setattr(email_service, "send_email", fake_send)
+    result = asyncio.run(
+        email_service.send_goal_exceeded("pessoa@example.com", "Alimentação", "2.00 BRL", "1.00 BRL")
+    )
+    assert result is True
+    assert sent[0][1] == "Limite de Alimentação ultrapassado"
+    assert "1.00 BRL" in sent[0][2]

@@ -70,7 +70,7 @@ async def _send_resend(to: str, subject: str, html: str) -> bool:
 async def send_goal_exceeded(to: str, category_name: str, spent: str, limit: str) -> bool:
     return await send_email(
         to,
-        f"Meta de {category_name} ultrapassada",
+        f"Limite de {category_name} ultrapassado",
         f"<p>Você gastou <strong>{spent}</strong> em {category_name}. "
         f"O limite mensal configurado é <strong>{limit}</strong>.</p>",
     )
