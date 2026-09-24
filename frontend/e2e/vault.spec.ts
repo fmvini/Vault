@@ -8,10 +8,20 @@ test('recuperação de senha volta ao formulário de login após o envio', async
   await page.getByLabel('E-mail').fill('pessoa@example.com');
   await page.getByRole('button', { name: 'Enviar instruções' }).click();
   await expect(page.getByRole('heading', { name: 'Confira seu e-mail' })).toBeVisible();
+  await expect(page.getByText('Verifique também a caixa de spam ou lixo eletrônico.', { exact: false })).toBeVisible();
   await page.getByRole('link', { name: 'Voltar para o login' }).click();
   await expect(page).toHaveURL(/\/login$/);
   await expect(page.getByRole('heading', { name: 'Que bom ter você de volta' })).toBeVisible();
   await expect(page.getByLabel('Senha')).toBeVisible();
+});
+
+test('ícone da marca permanece pequeno na página de redefinição', async ({ page }) => {
+  await page.goto('/reset-password?token=teste');
+  const mark = page.locator('.auth-brand .brand-mark img');
+  await expect(mark).toBeVisible();
+  const bounds = await mark.boundingBox();
+  expect(bounds?.width).toBeLessThanOrEqual(40);
+  expect(bounds?.height).toBeLessThanOrEqual(40);
 });
 
 test('transações recentes usam ícones da categoria e verde para receitas', async ({ page, request }) => {

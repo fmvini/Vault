@@ -162,6 +162,8 @@
 .auth-success > svg { width: 34px; height: 34px; color: var(--mint-deep); }
 .auth-success h2 { margin: 4px 0 0; }
 .auth-success p { max-width: 42ch; margin: 0 0 8px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.auth-success .auth-spam-hint { margin-top: 2px; padding: 12px 14px; border-radius: 11px; color: #275e54; background: #e4f3ee; }
+html[data-theme="dark"] .auth-success .auth-spam-hint { color: #98dfca; background: #193229; }
 
 @media (max-width: 900px) {
   .feature-page { padding-inline: 22px; }

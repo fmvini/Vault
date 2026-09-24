@@ -87,7 +87,7 @@ export function AuthPage({ mode }: { mode: "login" | "register" | "forgot" }) {
       </section>
       <section className="auth-form-wrap">
         <form className="auth-form" onSubmit={handleSubmit(onSubmit)} noValidate>
-          {recoverySent ? <div className="auth-success" role="status"><MailCheck /><h2>Confira seu e-mail</h2><p>Se existir uma conta para esse endereço, você receberá as instruções de recuperação.</p><Link className="secondary-button" to="/login"><ArrowLeft size={16} />Voltar para o login</Link></div> : <>
+          {recoverySent ? <div className="auth-success" role="status"><MailCheck /><h2>Confira seu e-mail</h2><p>Se existir uma conta para esse endereço, você receberá as instruções de recuperação.</p><p className="auth-spam-hint">Não encontrou o e-mail? Verifique também a caixa de spam ou lixo eletrônico.</p><Link className="secondary-button" to="/login"><ArrowLeft size={16} />Voltar para o login</Link></div> : <>
             <div className="auth-form-heading"><CircleDollarSign /><h2>{isForgot ? "Recupere seu acesso" : isRegister ? "Crie sua conta" : "Que bom ter você de volta"}</h2><p>{isForgot ? "Enviaremos instruções seguras para o seu e-mail." : isRegister ? "Comece organizando o mês atual." : "Entre para continuar de onde parou."}</p></div>
             {isDemoMode && !isForgot && <p className="demo-notice">Ambiente demonstrativo: use qualquer e-mail e uma senha com 8 caracteres.</p>}
             {isRegister && <label>Nome<input autoComplete="name" {...register("name")} />{errors.name && <small>{errors.name.message}</small>}</label>}
