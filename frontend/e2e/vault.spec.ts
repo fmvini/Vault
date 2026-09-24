@@ -1,5 +1,19 @@
 import { expect, test } from '@playwright/test';
 
+test('recuperação de senha volta ao formulário de login após o envio', async ({ page }) => {
+  await page.route('**/auth/forgot-password', (route) =>
+    route.fulfill({ status: 200, contentType: 'application/json', body: '{"message":"ok"}' })
+  );
+  await page.goto('/forgot-password');
+  await page.getByLabel('E-mail').fill('pessoa@example.com');
+  await page.getByRole('button', { name: 'Enviar instruções' }).click();
+  await expect(page.getByRole('heading', { name: 'Confira seu e-mail' })).toBeVisible();
+  await page.getByRole('link', { name: 'Voltar para o login' }).click();
+  await expect(page).toHaveURL(/\/login$/);
+  await expect(page.getByRole('heading', { name: 'Que bom ter você de volta' })).toBeVisible();
+  await expect(page.getByLabel('Senha')).toBeVisible();
+});
+
 test('transações recentes usam ícones da categoria e verde para receitas', async ({ page, request }) => {
   const apiBase = 'http://127.0.0.1:8000/api/v1';
   const email = `icones-${Date.now()}@example.com`;
