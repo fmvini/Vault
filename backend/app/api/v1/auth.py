@@ -58,7 +58,7 @@ async def login(payload: UserLogin, db: DbSession) -> TokenResponse:
 
 @router.post('/forgot-password', response_model=MessageResponse)
 async def forgot_password(payload: ForgotPasswordRequest, db: DbSession) -> MessageResponse:
-    if settings.environment == 'production' and not settings.email_provider_api_key:
+    if settings.environment == 'production' and not settings.email_configured:
         raise HTTPException(
             status_code=503,
             detail='Recuperação por e-mail temporariamente indisponível.',

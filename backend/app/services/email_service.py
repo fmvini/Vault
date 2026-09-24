@@ -1,5 +1,7 @@
 import asyncio
 import logging
+import smtplib
+from email.message import EmailMessage
 
 import httpx
 
@@ -10,10 +12,43 @@ logger = logging.getLogger(__name__)
 
 async def send_email(to: str, subject: str, html: str) -> bool:
     """Send transactional email with bounded retries and safe logging."""
-    if not settings.email_provider_api_key:
-        logger.info("Email skipped because the provider key is not configured: %s", subject)
+    if not settings.email_configured:
+        logger.info(
+            "Email skipped because %s is not configured: %s", settings.email_provider, subject
+        )
         return False
 
+    if settings.email_provider == "gmail":
+        return await _send_gmail(to, subject, html)
+
+    return await _send_resend(to, subject, html)
+
+
+async def _send_gmail(to: str, subject: str, html: str) -> bool:
+    message = EmailMessage()
+    message["From"] = settings.email_from
+    message["To"] = to
+    message["Subject"] = subject
+    message.set_content("Esta mensagem contém conteúdo HTML. Abra-a em um leitor compatível.")
+    message.add_alternative(html, subtype="html")
+
+    def deliver() -> None:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=10) as smtp:
+            smtp.login(settings.gmail_address, settings.gmail_app_password)
+            smtp.send_message(message)
+
+    try:
+        await asyncio.to_thread(deliver)
+        return True
+    except smtplib.SMTPAuthenticationError:
+        logger.error("Gmail authentication failed for subject %s", subject)
+        return False
+    except (smtplib.SMTPException, OSError):
+        logger.exception("Gmail delivery failed for subject %s", subject)
+        return False
+
+
+async def _send_resend(to: str, subject: str, html: str) -> bool:
     payload = {"from": settings.email_from, "to": [to], "subject": subject, "html": html}
     headers = {"Authorization": f"Bearer {settings.email_provider_api_key}"}
     for attempt in range(1, 4):

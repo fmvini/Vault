@@ -1,4 +1,6 @@
+from email.utils import parseaddr
 from functools import lru_cache
+from typing import Literal
 
 from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -11,8 +13,11 @@ class Settings(BaseSettings):
     jwt_secret_key: str = Field(default="development-only-change-me", min_length=16)
     jwt_algorithm: str = "HS256"
     jwt_expiration_minutes: int = 60
+    email_provider: Literal["resend", "gmail"] = "resend"
     email_provider_api_key: str | None = None
     email_from: str = "FinTrack <notificacoes@example.com>"
+    gmail_address: str | None = None
+    gmail_app_password: str | None = None
     exchange_rate_api_key: str | None = None
     frontend_url: str = "http://localhost:5173"
     scheduler_enabled: bool = False
@@ -23,6 +28,16 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         extra="ignore",
     )
+
+    @property
+    def email_configured(self) -> bool:
+        if self.email_provider == "gmail":
+            return bool(
+                self.gmail_address
+                and self.gmail_app_password
+                and parseaddr(self.email_from)[1].lower() == self.gmail_address.lower()
+            )
+        return bool(self.email_provider_api_key)
 
     @model_validator(mode="after")
     def validate_production(self) -> "Settings":

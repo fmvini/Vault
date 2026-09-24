@@ -100,6 +100,8 @@ def test_password_recovery_reports_unavailable_email_in_production(client, monke
     from app.api.v1 import auth
 
     monkeypatch.setattr(auth.settings, 'environment', 'production')
+    monkeypatch.setattr(auth.settings, 'email_provider', 'gmail')
+    monkeypatch.setattr(auth.settings, 'gmail_app_password', None)
     monkeypatch.setattr(auth.settings, 'email_provider_api_key', None)
     response = client.post('/api/v1/auth/forgot-password', json={'email': 'person@example.com'})
     assert response.status_code == 503

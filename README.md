@@ -4,7 +4,7 @@ Vault é uma aplicação web de finanças pessoais para registrar receitas e gas
 
 O projeto é um monorepo com uma interface React e uma API FastAPI. O frontend usa a API real por padrão; os dados ficam no banco configurado para o backend.
 
-**Ambiente online:** [abrir o Vault](https://vault-web-alpha.vercel.app) · [saúde da API](https://vault-api-khaki.vercel.app/health) · [documentação da API](https://vault-api-khaki.vercel.app/docs). O banco de produção é PostgreSQL no Supabase. O envio real de e-mails ainda depende de um domínio remetente verificado no Resend.
+**Ambiente online:** [abrir o Vault](https://vault-web-alpha.vercel.app) · [saúde da API](https://vault-api-khaki.vercel.app/health) · [documentação da API](https://vault-api-khaki.vercel.app/docs). O banco de produção é PostgreSQL no Supabase. O envio de e-mails exige configurar as credenciais do provedor escolhido na API.
 
 ## O que o aplicativo oferece
 
@@ -25,7 +25,7 @@ O projeto é um monorepo com uma interface React e uma API FastAPI. O frontend u
 | Frontend | React, TypeScript, Vite, React Router, TanStack Query, Recharts |
 | Backend | Python, FastAPI, SQLAlchemy assíncrono, Pydantic, Alembic |
 | Banco | SQLite para desenvolvimento local; PostgreSQL no Supabase para produção |
-| Serviços externos | Resend para e-mail e Frankfurter para câmbio |
+| Serviços externos | Gmail SMTP ou Resend para e-mail; Frankfurter para câmbio |
 | Testes | Pytest e Ruff no backend; ESLint, build TypeScript e Playwright no frontend |
 
 ```text
@@ -94,13 +94,15 @@ Abra a aplicação, crie uma conta e registre uma transação para ver os dados 
 | `JWT_SECRET_KEY` | `backend/.env` | Assina os tokens de acesso e de redefinição de senha. Defina um segredo próprio. |
 | `JWT_EXPIRATION_MINUTES` | `backend/.env` | Tempo de validade do token de acesso; padrão de 60 minutos. |
 | `FRONTEND_URL` | `backend/.env` | Origem permitida pelo CORS e base do link de redefinição de senha. |
-| `EMAIL_PROVIDER_API_KEY` e `EMAIL_FROM` | `backend/.env` | Habilitam o envio real via Resend; o remetente precisa pertencer a um domínio verificado. |
+| `EMAIL_PROVIDER` e `EMAIL_FROM` | `backend/.env` | Escolhem `gmail` ou `resend` e definem o remetente. |
+| `GMAIL_ADDRESS` e `GMAIL_APP_PASSWORD` | `backend/.env` | Credenciais SMTP quando `EMAIL_PROVIDER=gmail`; `EMAIL_FROM` deve usar o mesmo endereço. |
+| `EMAIL_PROVIDER_API_KEY` | `backend/.env` | Chave da API quando `EMAIL_PROVIDER=resend`; requer domínio remetente verificado. |
 | `SCHEDULER_ENABLED` | `backend/.env` | Ativa os jobs de recorrência, aviso de vencimento e atualização de câmbio. |
 | `CRON_SECRET` | Ambiente da API na Vercel | Protege os endpoints chamados pelos cron jobs da Vercel. |
 | `VITE_API_BASE_URL` | `frontend/.env` | Endereço da API, incluindo `/api/v1`. |
 | `VITE_DEMO_MODE` | `frontend/.env` | Ativa explicitamente o modo demonstração quando vale `true`. |
 
-Mantenha os arquivos `.env` fora do Git. Sem chave do Resend, a aplicação funciona localmente, mas não entrega e-mails. A conversão entre moedas consulta a API pública Frankfurter sob demanda e guarda as taxas no banco; ela depende de acesso à rede quando ainda não existe uma taxa em cache.
+Mantenha os arquivos `.env` fora do Git. Sem as credenciais do provedor escolhido, a aplicação funciona localmente, mas não entrega e-mails. A conversão entre moedas consulta a API pública Frankfurter sob demanda e guarda as taxas no banco; ela depende de acesso à rede quando ainda não existe uma taxa em cache.
 
 Um gasto fixo cadastrado **não gera imediatamente** uma transação. O job de recorrência cria o lançamento do mês quando o scheduler está ativo e o job executa. Para habilitá-lo, defina `SCHEDULER_ENABLED=true` no processo responsável pelos jobs. Evite iniciar múltiplos schedulers para a mesma implantação.
 
@@ -122,7 +124,11 @@ Variáveis do **projeto da API** na Vercel, para o ambiente Production:
 | `FRONTEND_URL` | URL HTTPS final do projeto frontend, sem barra final |
 | `SCHEDULER_ENABLED` | `false` (os agendamentos são os cron jobs da Vercel) |
 | `CRON_SECRET` | Outro segredo aleatório, com pelo menos 16 caracteres |
-| `EMAIL_PROVIDER_API_KEY`, `EMAIL_FROM` | Configure quando houver domínio remetente verificado no Resend |
+| `EMAIL_PROVIDER` | `gmail` para usar a conta de suporte; `resend` para usar a API do Resend |
+| `EMAIL_FROM` | `Vault <vault.support.admin@gmail.com>` para o Gmail; deve corresponder a `GMAIL_ADDRESS` |
+| `GMAIL_ADDRESS` | `vault.support.admin@gmail.com` quando usar Gmail |
+| `GMAIL_APP_PASSWORD` | Senha de app do Google, guardada somente como variável de ambiente da API |
+| `EMAIL_PROVIDER_API_KEY` | Chave do Resend somente quando `EMAIL_PROVIDER=resend` |
 
 Variáveis do **projeto frontend** na Vercel, para Production:
 
@@ -133,7 +139,7 @@ Variáveis do **projeto frontend** na Vercel, para Production:
 
 Depois de configurar as variáveis, publique ambos os projetos e teste `https://<api>/health`, cadastro, login e criação de uma transação em `https://<frontend>`. Confirme a URL final do frontend em `FRONTEND_URL` e faça um novo deploy da API se ela mudou. Os endpoints de jobs exigem `Authorization: Bearer <CRON_SECRET>`; a Vercel inclui esse cabeçalho automaticamente quando a variável `CRON_SECRET` existe no projeto da API. Não ative `SCHEDULER_ENABLED` na função serverless.
 
-Sem domínio remetente verificado, deixe `EMAIL_PROVIDER_API_KEY` vazio. O aplicativo abre, mas não entrega recuperação de senha nem alertas por e-mail; esses itens devem continuar pendentes no QA até um teste real de recebimento.
+Para usar o Gmail, ative a verificação em duas etapas da conta `vault.support.admin@gmail.com` e crie uma [senha de app do Google](https://support.google.com/mail/answer/185833). Na Vercel, abra **o projeto da API → Settings → Environment Variables**, cadastre `EMAIL_PROVIDER`, `EMAIL_FROM`, `GMAIL_ADDRESS` e `GMAIL_APP_PASSWORD` para Production e faça um novo deploy da API. Não use a senha normal da conta, não cole a senha de app no frontend e não a envie pelo chat. O Gmail envia por `smtp.gmail.com:465`; o endereço de `EMAIL_FROM` precisa ser o mesmo de `GMAIL_ADDRESS`. Depois do deploy, teste a recuperação de senha com uma conta cadastrada e confirme o recebimento. Sem configuração completa, a recuperação de senha retorna 503 em produção; os alertas também não são entregues.
 
 ### PostgreSQL opcional
 
