@@ -72,7 +72,8 @@ export function AuthPage({ mode }: { mode: "login" | "register" | "forgot" }) {
   };
 
   return (
-    <main className="auth-page">
+    <main className={mode === 'login' ? 'auth-page auth-page-with-preview' : 'auth-page'}>
+      {mode === 'login' && <Link className="secondary-button auth-preview-entry" to="/preview">Explorar demonstração<ArrowRight size={16} aria-hidden="true" /></Link>}
       <section className="auth-story">
         <Link className="auth-brand" to="/">
           <span className="brand-mark" aria-hidden="true"><img src="/vault-icon-dark.svg" alt="" /></span>

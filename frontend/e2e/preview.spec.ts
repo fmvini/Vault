@@ -12,6 +12,32 @@ async function session(page: Page) {
   }, previewKey);
 }
 
+test('login oferece link no canto superior direito para explorar sem preencher credenciais', async ({ page }) => {
+  await page.goto('/login');
+  const link = page.getByRole('link', { name: 'Explorar demonstração' });
+  await expect(link).toHaveAttribute('href', '/preview');
+  await expect(link).toBeVisible();
+  await expect(page.getByLabel('E-mail', { exact: true })).toHaveValue('');
+  await expect(page.getByLabel('Senha', { exact: false })).toHaveValue('');
+  for (const width of [1280, 390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    const bounds = await link.boundingBox();
+    const logo = await page.locator('.auth-brand .brand-mark').boundingBox();
+    expect(bounds).not.toBeNull();
+    expect(logo).not.toBeNull();
+    expect(bounds!.y).toBeLessThan(80);
+    expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(width);
+    expect(bounds!.x > logo!.x + logo!.width || bounds!.y + bounds!.height <= logo!.y).toBe(true);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  }
+  await link.focus();
+  await expect(link).toBeFocused();
+  await link.press('Enter');
+  await expect(page).toHaveURL(/\/preview$/);
+  await expect(banner(page)).toBeVisible();
+  expect(await page.evaluate(() => localStorage.getItem('fintrack-token'))).toBeNull();
+});
+
 test('preview público navega pelas telas reais, mantém deep links e recarga sem login', async ({ page }) => {
   const bootstrapHeaders: (string | undefined)[] = [];
   let bootstraps = 0;
@@ -78,7 +104,7 @@ test('CRUD de categoria e transação no preview usa API real e restaura dados i
   const dialog = page.getByRole('dialog');
   await dialog.getByLabel('Descrição').fill('Transação Preview QA');
   await dialog.getByLabel('Valor', { exact: true }).fill('149.90');
-  await dialog.getByLabel('Categoria', { exact: true }).selectOption({ label: 'Compras Preview Editada' });
+  await dialog.getByRole('combobox', { name: 'Categoria', exact: true }).selectOption({ label: 'Compras Preview Editada' });
   await dialog.getByRole('button', { name: 'Salvar transação' }).click();
   await expect(dialog).not.toBeVisible();
   await page.getByLabel('Buscar por descrição').fill('Transação Preview QA');
@@ -172,6 +198,8 @@ test('preview permite gastos fixos, limites e metas de poupança pela API real',
 
 test('conta real e preview isolam tokens, perfil, preferências, dados e cache', async ({ page, request }) => {
   test.setTimeout(90_000);
+  let bootstraps = 0;
+  page.on('request', (request) => { if (request.url().endsWith('/preview/session')) bootstraps++; });
   const email = `preview-isolation-${Date.now()}@example.com`;
   const password = 'senha-qa-preview-123';
   expect((await request.post(`${apiBase}/auth/register`, { data: { name: 'Conta Real QA', email, password, default_currency: 'BRL' } })).status()).toBe(201);
@@ -198,6 +226,7 @@ test('conta real e preview isolam tokens, perfil, preferências, dados e cache',
     // Push a SPA route to exercise an already populated account QueryClient.
     await page.evaluate(() => { window.history.pushState({}, '', '/preview/categories'); window.dispatchEvent(new PopStateEvent('popstate')); });
     await expect(banner(page)).toBeVisible();
+    expect(bootstraps).toBe(1);
     await expect(page.getByText('Somente Conta Real', { exact: true })).toHaveCount(0);
     expect((await session(page)).access_token).not.toBe(accountToken);
     await page.getByRole('button', { name: 'Nova categoria' }).click();
@@ -214,6 +243,7 @@ test('conta real e preview isolam tokens, perfil, preferências, dados e cache',
     await expect(page.getByText('Somente Preview', { exact: true })).toHaveCount(0);
     expect(await page.evaluate(() => ({ ...localStorage }))).toEqual(before);
     expect(await page.evaluate((key) => sessionStorage.getItem(key), previewKey)).toBeNull();
+    expect(bootstraps).toBe(1); // Leaving must not silently create another demo.
     const after = await (await request.get(`${apiBase}/categories`, { headers })).json();
     expect(after).toEqual(accountData);
   } finally {

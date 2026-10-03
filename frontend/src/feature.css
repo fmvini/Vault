@@ -129,6 +129,9 @@
 .empty-analysis h2 { margin: 20px 0 8px; color: var(--ink-dark); font-size: 24px; font-weight: 400; }
 .empty-analysis p { max-width: 500px; margin: 0 0 20px; color: var(--muted); font-size: 13px; line-height: 1.6; }
 .auth-page { min-height: 100vh; display: grid; grid-template-columns: minmax(380px, 1.05fr) minmax(440px, .95fr); background: var(--cloud); }
+.auth-page-with-preview { position: relative; }
+.auth-preview-entry { position: absolute; top: 32px; right: 32px; z-index: 2; min-height: 44px; gap: 10px; font-size: 14px; }
+.auth-page-with-preview .auth-form-wrap { padding-top: 108px; }
 .auth-story { position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: 100vh; padding: 42px 52px; overflow: hidden; color: #f6f7f7; background: #29343d; }
 .auth-story::after { content: ""; position: absolute; right: -35%; bottom: -28%; width: 90%; aspect-ratio: 1; border: 1px solid rgba(154,219,197,.25); border-radius: 50%; box-shadow: 0 0 90px rgba(156,143,216,.22), inset 0 0 90px rgba(223,168,184,.12); }
 .auth-brand { display: flex; align-items: center; gap: 9px; color: #f6f7f7; text-decoration: none; font-size: 24px; }
@@ -173,6 +176,9 @@ html[data-theme="dark"] .auth-success .auth-spam-hint { color: #98dfca; backgrou
   .category-columns > section + section { padding-left: 0; border-top: 1px solid var(--rule); border-left: 0; }
   .category-columns > section:first-child { padding-right: 0; }
   .auth-page { grid-template-columns: 1fr; }
+  .auth-page-with-preview .auth-story { padding-top: 96px; }
+  .auth-page-with-preview .auth-form-wrap { padding-top: 32px; }
+  .auth-preview-entry { top: 24px; right: 24px; max-width: calc(100% - 48px); color: #f6f7f7; border-color: #9fb0b5; background: #29343d; }
   .auth-story { min-height: 46vh; padding: 30px; }
   .auth-story h1 { font-size: clamp(38px, 8vw, 58px); }
   .auth-story blockquote { display: none; }

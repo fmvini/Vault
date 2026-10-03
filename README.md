@@ -37,7 +37,7 @@ logos/     conceitos e arquivos vetoriais da marca
 
 ## Preview para recrutadores
 
-A rota `/preview` permite explorar o Vault sem cadastro ou login manual. Depois de publicar esta alteração, compartilhe `https://vault-web-alpha.vercel.app/preview`. Também é possível abrir diretamente `/preview/transactions`, `/preview/goals` e as demais telas do preview.
+A rota `/preview` permite explorar o Vault sem cadastro ou login manual. Compartilhe `https://vault-web-alpha.vercel.app/preview` ou use **Explorar demonstração** no canto superior direito da página de login. Também é possível abrir diretamente `/preview/transactions`, `/preview/goals` e as demais telas do preview.
 
 Cada visitante recebe uma sessão de 30 minutos com dados fictícios próprios, armazenados pela API no banco real. É possível testar transações, categorias, gastos fixos, limites e metas de poupança. O banner identifica a demonstração e oferece restauração dos dados e saída. Perfil e notificações são somente leitura; contas de demonstração não recebem e-mails nem participam dos jobs de recorrência. A página de relatórios mantém o estado informativo já existente no produto.
 
@@ -45,7 +45,7 @@ O preview usa `sessionStorage`, cliente HTTP e cache separados da conta normal. 
 
 **Antes de publicar a API**, execute `python -m alembic upgrade head` com a conexão de migração do banco para aplicar `20261003_0003`, que adiciona `users.preview_expires_at` e seu índice. Publique a API atualizada antes do frontend. Confirme `VITE_API_BASE_URL`, `FRONTEND_URL` e a abertura direta de `/preview` após os deploys; a configuração SPA existente em `frontend/vercel.json` já cobre essa rota.
 
-Para executar somente os oito cenários E2E de preview em portas diferentes das usadas por outros projetos, mantenha ambos os servidores do Vault ativos e rode em `frontend/`:
+Para executar somente os nove cenários E2E de preview em portas diferentes das usadas por outros projetos, mantenha ambos os servidores do Vault ativos e rode em `frontend/`:
 
 ```powershell
 $env:E2E_BASE_URL = 'http://127.0.0.1:5188'

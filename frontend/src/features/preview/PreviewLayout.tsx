@@ -23,7 +23,11 @@ function PreviewWorkspace({ session }: { session: PreviewSession }) {
 export function PreviewLayout() {
   const { session, status, error, start, expire, leave } = usePreviewStore();
   const accountToken = useAuthStore((state) => state.token);
-  useEffect(() => { if (status === 'idle') void start(); }, [status, start]);
+  useEffect(() => {
+    // Entering the route starts a demo. Leaving must not start one again while
+    // the Link is still navigating away after the store becomes idle.
+    if (usePreviewStore.getState().status === 'idle') void start();
+  }, [start]);
   useEffect(() => {
     const previewTheme = sessionStorage.getItem('vault-preview-theme');
     applyTheme(previewTheme === 'light' || previewTheme === 'dark' ? previewTheme : getStoredTheme());

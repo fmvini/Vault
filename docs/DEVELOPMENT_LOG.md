@@ -1,3 +1,33 @@
+## 2026-10-03 — Preview recuperado em produção e acesso pelo login
+
+### Implementado
+- Link **Explorar demonstração** no canto superior direito do login, direcionando para `/preview` sem preencher credenciais; layout e navegação por teclado verificados em 1280, 390 e 320 px.
+- Correção da saída do preview: o início automático ocorre na montagem da rota, evitando criar outra sessão quando a saída limpa o estado antes de concluir a navegação.
+- Recuperação do preview publicado pela aplicação explícita da migração existente `20261003_0003` ao banco de produção.
+- Teste do link de login, ajuste do seletor acessível de categoria e regressão que verifica ausência de bootstrap e token após sair da demonstração.
+
+### Arquivos principais alterados
+- `frontend/src/features/auth/AuthPage.tsx`, `frontend/src/feature.css`.
+- `frontend/src/features/preview/PreviewLayout.tsx`, `frontend/e2e/preview.spec.ts`.
+- `README.md`, `docs/DEVELOPMENT_LOG.md`.
+- Migração existente aplicada: `backend/alembic/versions/20261003_0003_preview_expiration.py` (sem alteração do arquivo).
+
+### Decisões técnicas
+- Logs Vercel confirmaram `UndefinedColumn: users.preview_expires_at`: API nova publicada com banco ainda na revisão `20260924_0002`. O POST 500 sem cabeçalho CORS era consequência dessa exceção.
+- Agente Banco de Dados aplicou somente `20261003_0003`, com precondições, TLS e limites de espera, em transação PostgreSQL. Coluna nullable sem default e índice válido foram confirmados por nova conexão somente leitura; a conta normal existente foi preservada.
+- Nenhuma migração automática no startup, alteração de segredo ou novo deploy da API foi necessária. Cada agente manteve documentação e commit centralizados no Maestro, usando a skill Maestri.
+
+### Estado atual
+- Produção: POST `/api/v1/preview/session` 201 com `Cache-Control: no-store` e CORS da origem frontend; GET `auth/me`, categorias, transações e resumo do dashboard 200 usando exclusivamente sessão sintética própria. Seed de 42 transações confirmado.
+- Maestro confirmou o POST publicado e verificou no portal o dashboard e as transações; abertura direta de `/preview/goals` em 390 px carregou três metas, sem overflow ou mensagem de indisponibilidade. Frontend, API e PostgreSQL estão se comunicando nesses fluxos verificados.
+- Nove testes Playwright aprovados contra Vite real em 5191 e API SQLite isolada em 8014, incluindo CRUD, restauração, conta normal isolada, falha/retry, expiração e mobile. Dois cenários inicialmente falhos foram corrigidos e a suíte completa repetida com sucesso.
+- ESLint e `npm run build` aprovados; permanece apenas o aviso conhecido de chunk JavaScript acima de 500 kB. Backend não sofreu alterações nesta etapa; sua suíte anterior permanece registrada abaixo.
+- A recuperação do banco já está em produção. O botão de login e a correção de saída ainda dependem da publicação deste novo commit local. Nenhum push ou deploy foi executado pelos agentes nesta etapa.
+
+### Próximos passos
+- Após o push pelo usuário e deploy do frontend, abrir `/login`, acionar **Explorar demonstração** e confirmar a saída sem recriar sessão.
+- Compartilhar `https://vault-web-alpha.vercel.app/preview`; manter a aplicação explícita de migrações antes de futuras publicações da API que alterem o schema.
+
 ## 2026-10-03 — Validação final e commit local do preview
 
 ### Implementado
