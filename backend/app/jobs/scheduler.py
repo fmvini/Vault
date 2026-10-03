@@ -4,6 +4,7 @@ from datetime import date
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from sqlalchemy import select
 
+from app.db.preview import cleanup_expired_preview_sessions
 from app.db.session import SessionLocal
 from app.models import FixedExpense, NotificationPreference, User
 from app.services.email_service import send_fixed_expense_due
@@ -16,8 +17,10 @@ scheduler = AsyncIOScheduler(timezone="UTC")
 
 async def recurrence_job() -> None:
     async with SessionLocal() as db:
+        removed = await cleanup_expired_preview_sessions(db)
         created = await generate_monthly_transactions(db)
         logger.info("Recurring transaction job created %s records", created)
+        logger.info("Preview cleanup removed %s expired sessions", removed)
 
 
 async def due_notification_job() -> None:
@@ -29,6 +32,7 @@ async def due_notification_job() -> None:
                 .join(User, User.id == FixedExpense.user_id)
                 .join(NotificationPreference, NotificationPreference.user_id == User.id)
                 .where(
+                    User.preview_expires_at.is_(None),
                     FixedExpense.is_active.is_(True),
                     NotificationPreference.notify_fixed_expense_due.is_(True),
                 )

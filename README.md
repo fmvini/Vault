@@ -35,6 +35,26 @@ docs/      requisitos, arquitetura, API e relatórios de QA
 logos/     conceitos e arquivos vetoriais da marca
 ```
 
+## Preview para recrutadores
+
+A rota `/preview` permite explorar o Vault sem cadastro ou login manual. Depois de publicar esta alteração, compartilhe `https://vault-web-alpha.vercel.app/preview`. Também é possível abrir diretamente `/preview/transactions`, `/preview/goals` e as demais telas do preview.
+
+Cada visitante recebe uma sessão de 30 minutos com dados fictícios próprios, armazenados pela API no banco real. É possível testar transações, categorias, gastos fixos, limites e metas de poupança. O banner identifica a demonstração e oferece restauração dos dados e saída. Perfil e notificações são somente leitura; contas de demonstração não recebem e-mails nem participam dos jobs de recorrência. A página de relatórios mantém o estado informativo já existente no produto.
+
+O preview usa `sessionStorage`, cliente HTTP e cache separados da conta normal. Não exige `VITE_DEMO_MODE=true`; mantenha essa variável em `false` para validar o fluxo real. A expiração é verificada pela API em cada acesso, e a limpeza de dados expirados ocorre em lotes ao criar demonstrações e no job de recorrência.
+
+**Antes de publicar a API**, execute `python -m alembic upgrade head` com a conexão de migração do banco para aplicar `20261003_0003`, que adiciona `users.preview_expires_at` e seu índice. Publique a API atualizada antes do frontend. Confirme `VITE_API_BASE_URL`, `FRONTEND_URL` e a abertura direta de `/preview` após os deploys; a configuração SPA existente em `frontend/vercel.json` já cobre essa rota.
+
+Para executar somente os oito cenários E2E de preview em portas diferentes das usadas por outros projetos, mantenha ambos os servidores do Vault ativos e rode em `frontend/`:
+
+```powershell
+$env:E2E_BASE_URL = 'http://127.0.0.1:5188'
+$env:E2E_API_BASE_URL = 'http://127.0.0.1:8012/api/v1'
+npm run test:e2e -- e2e/preview.spec.ts
+```
+
+Consulte `docs/DEVELOPMENT_LOG.md` para as evidências de validação e as verificações ainda pendentes desta alteração.
+
 ## Executar localmente com SQLite
 
 Requisitos: **Python 3.11 ou superior**, **Node.js com npm** e Git. O SQLite já é suportado pelo backend; Docker e PostgreSQL não são necessários para começar.

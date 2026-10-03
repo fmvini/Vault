@@ -3,23 +3,22 @@ import axios from 'axios';
 import { CalendarClock, Check, PauseCircle, Pencil, PlayCircle, Plus, X } from 'lucide-react';
 import { FormEvent, useMemo, useState } from 'react';
 import { PageHeader } from '../../components/PageHeader';
-import { api } from '../../lib/api';
+import { useWorkspace } from '../../lib/workspace';
 import { formatMoney } from '../../lib/format';
 import type { ApiCategory, ApiFixedExpense } from '../../types';
-import { useAuthStore } from '../auth/store';
 
 const today = new Date().toISOString().slice(0, 10);
 const emptyForm = { description: '', amount: '', category_id: '', currency: 'BRL', due_day: '10', start_date: today, end_date: '' };
 
 export function FixedExpensesPage() {
+  const { api, user } = useWorkspace();
   const client = useQueryClient();
-  const user = useAuthStore((state) => state.user);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<ApiFixedExpense | null>(null);
   const [error, setError] = useState('');
   const [form, setForm] = useState({ ...emptyForm, currency: user?.default_currency ?? 'BRL' });
-  const expenses = useQuery({ queryKey: ['fixed-expenses'], queryFn: async () => (await api.get<ApiFixedExpense[]>('/fixed-expenses')).data });
-  const categories = useQuery({ queryKey: ['categories'], queryFn: async () => (await api.get<ApiCategory[]>('/categories')).data });
+  const expenses = useQuery({ queryKey: ['fixed-expenses'], queryFn: async ({ signal }) => (await api.get<ApiFixedExpense[]>('/fixed-expenses', { signal })).data });
+  const categories = useQuery({ queryKey: ['categories'], queryFn: async ({ signal }) => (await api.get<ApiCategory[]>('/categories', { signal })).data });
   const expenseCategories = (categories.data ?? []).filter((category) => category.type === 'expense');
   const invalidate = async () => Promise.all([client.invalidateQueries({ queryKey: ['fixed-expenses'] }), client.invalidateQueries({ queryKey: ['dashboard'] }), client.invalidateQueries({ queryKey: ['transactions'] })]);
   const save = useMutation({

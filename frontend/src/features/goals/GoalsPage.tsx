@@ -3,22 +3,21 @@ import axios from 'axios';
 import { ArrowRight, Pencil, Plus, Target, Trash2, X } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 import { PageHeader } from '../../components/PageHeader';
-import { api } from '../../lib/api';
+import { useWorkspace } from '../../lib/workspace';
 import { formatMoney } from '../../lib/format';
 import type { ApiCategory, ApiGoal } from '../../types';
-import { useAuthStore } from '../auth/store';
 
 export function GoalsPage() {
+  const { api, user } = useWorkspace();
   const client = useQueryClient();
-  const user = useAuthStore((state) => state.user);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<ApiGoal | null>(null);
   const [categoryId, setCategoryId] = useState('');
   const [limit, setLimit] = useState('');
   const [currency, setCurrency] = useState(user?.default_currency ?? 'BRL');
   const [error, setError] = useState('');
-  const goals = useQuery({ queryKey: ['goals'], queryFn: async () => (await api.get<ApiGoal[]>('/goals')).data });
-  const categories = useQuery({ queryKey: ['categories'], queryFn: async () => (await api.get<ApiCategory[]>('/categories')).data });
+  const goals = useQuery({ queryKey: ['goals'], queryFn: async ({ signal }) => (await api.get<ApiGoal[]>('/goals', { signal })).data });
+  const categories = useQuery({ queryKey: ['categories'], queryFn: async ({ signal }) => (await api.get<ApiCategory[]>('/categories', { signal })).data });
   const available = (categories.data ?? []).filter((category) => category.type === 'expense' && !(goals.data ?? []).some((goal) => goal.is_active && goal.category_id === category.id));
   const invalidate = async () => Promise.all([client.invalidateQueries({ queryKey: ['goals'] }), client.invalidateQueries({ queryKey: ['dashboard'] })]);
   const save = useMutation({

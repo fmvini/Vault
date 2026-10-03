@@ -20,9 +20,9 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { useAuthStore } from "../features/auth/store";
-import { api, isDemoMode } from "../lib/api";
-import { getStoredTheme, saveTheme } from "../lib/theme";
+import { useWorkspace } from '../lib/workspace';
+import { PreviewBanner } from '../features/preview/PreviewBanner';
+import { applyTheme, getStoredTheme, saveTheme } from "../lib/theme";
 import type { Theme } from "../lib/theme";
 import type { UserProfile } from "../types";
 
@@ -48,27 +48,30 @@ function getInitials(name: string) {
 }
 
 export function AppShell() {
+  const { api, user: storedUser, setUser, logout, isPreview, demoMode: isDemoMode, path } = useWorkspace();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [globalSearch, setGlobalSearch] = useState("");
-  const [theme, setTheme] = useState<Theme>(getStoredTheme);
+  const [theme, setTheme] = useState<Theme>(() => {
+    const previewTheme = isPreview ? sessionStorage.getItem('vault-preview-theme') : null;
+    return previewTheme === 'light' || previewTheme === 'dark' ? previewTheme : getStoredTheme();
+  });
   const searchRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const storedUser = useAuthStore((state) => state.user);
-  const setUser = useAuthStore((state) => state.setUser);
-  const logout = useAuthStore((state) => state.logout);
   const userQuery = useQuery({
     queryKey: ["current-user"],
-    queryFn: async () => (await api.get<UserProfile>("/auth/me")).data,
+    queryFn: async ({ signal }) => (await api.get<UserProfile>("/auth/me", { signal })).data,
     enabled: !isDemoMode,
     initialData: !isDemoMode && storedUser ? storedUser : undefined,
     retry: false
   });
   const currentUser = isDemoMode ? storedUser ?? demoUser : userQuery.data ?? storedUser;
 
+  useEffect(() => { if (isPreview) applyTheme(theme); }, [isPreview, theme]);
+
   useEffect(() => {
     if (userQuery.data && !isDemoMode) setUser(userQuery.data);
-  }, [setUser, userQuery.data]);
+  }, [isDemoMode, setUser, userQuery.data]);
 
   useEffect(() => {
     const focusSearch = (event: KeyboardEvent) => {
@@ -84,26 +87,29 @@ export function AppShell() {
   const submitSearch = (event: FormEvent) => {
     event.preventDefault();
     const term = globalSearch.trim();
-    navigate(term ? `/transactions?q=${encodeURIComponent(term)}` : "/transactions");
+    navigate(path(term ? `/transactions?q=${encodeURIComponent(term)}` : "/transactions"));
   };
 
   const handleLogout = () => {
     queryClient.clear();
     logout();
-    navigate("/login", { replace: true });
+    navigate(isPreview ? '/' : '/login', { replace: true });
   };
 
   const toggleTheme = () => {
     const nextTheme = theme === "light" ? "dark" : "light";
     setTheme(nextTheme);
-    saveTheme(nextTheme);
+    if (isPreview) {
+      sessionStorage.setItem('vault-preview-theme', nextTheme);
+      applyTheme(nextTheme);
+    } else saveTheme(nextTheme);
   };
 
   return (
     <div className="app-shell">
       <aside className={mobileOpen ? "sidebar is-open" : "sidebar"}>
         <div className="brand-block">
-          <NavLink className="brand" to="/" aria-label="Vault — início">
+          <NavLink className="brand" to={path('/')} aria-label="Vault — início">
             <span className="brand-mark" aria-hidden="true">
               <img className="brand-mark-light" src="/vault-icon.svg" alt="" />
               <img className="brand-mark-dark" src="/vault-icon-dark.svg" alt="" />
@@ -117,7 +123,8 @@ export function AppShell() {
           {navItems.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
-              to={to}
+              to={path(to)}
+              end={to === '/'}
               onClick={() => setMobileOpen(false)}
               className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
             >
@@ -126,7 +133,7 @@ export function AppShell() {
             </NavLink>
           ))}
         </nav>
-        <NavLink className="new-transaction" to="/transactions?new=1" onClick={() => setMobileOpen(false)}><Plus size={18} />Nova transação</NavLink>
+        <NavLink className="new-transaction" to={path('/transactions?new=1')} onClick={() => setMobileOpen(false)}><Plus size={18} />Nova transação</NavLink>
         <div className="sidebar-note">
           <span className="note-rule" />
           <p>Disciplina hoje.<br />Mais liberdade amanhã.</p>
@@ -165,12 +172,13 @@ export function AppShell() {
                 <ChevronDown size={15} aria-hidden="true" />
               </summary>
               <div className="account-popover">
-                <NavLink to="/settings"><Settings size={16} />Configurações</NavLink>
-                <button onClick={handleLogout}><LogOut size={16} />Sair da conta</button>
+                <NavLink to={path('/settings')}><Settings size={16} />Configurações</NavLink>
+                <button onClick={handleLogout}><LogOut size={16} />{isPreview ? 'Sair da demonstração' : 'Sair da conta'}</button>
               </div>
             </details>
           </div>
         </header>
+        {isPreview && <PreviewBanner />}
         {!isDemoMode && userQuery.isError && <div className="session-warning" role="alert"><span>Não foi possível atualizar os dados da sua conta.</span><button onClick={() => userQuery.refetch()}>Tentar novamente</button></div>}
         <main className="main-content"><Outlet /></main>
       </div>

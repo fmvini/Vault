@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from decimal import Decimal
 from typing import Annotated, Literal
 from uuid import UUID
@@ -61,6 +61,12 @@ class UserResponse(ApiModel):
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
+
+
+class PreviewSessionResponse(TokenResponse):
+    expires_at: datetime
+    is_preview: Literal[True] = True
+    user: UserResponse
 
 
 class ForgotPasswordRequest(BaseModel):

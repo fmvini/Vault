@@ -1,0 +1,14 @@
+.preview-banner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px 24px; padding: 18px 28px; background: var(--surface-soft); color: var(--ink-dark); border-bottom: 1px solid var(--rule); font-size: 14px; }
+.preview-banner p { margin: 5px 0 0; max-width: 68ch; color: var(--ink); line-height: 1.5; }
+.preview-banner-actions, .preview-state-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 20px; }
+.preview-banner-actions a, .preview-banner-actions button { padding: 6px 0; color: var(--ink-dark); font: inherit; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.preview-banner-actions button { border: 0; background: transparent; }
+.preview-banner-actions a:hover, .preview-banner-actions button:hover { text-decoration-thickness: 2px; }
+.preview-state { max-width: 760px; margin: 0 auto; padding: 72px 28px; color: var(--ink); }
+.preview-state h1 { margin: 48px 0 12px; font-size: clamp(28px, 5vw, 40px); color: var(--ink-dark); }
+.preview-state p { max-width: 65ch; line-height: 1.6; }
+.preview-state-actions { margin-top: 28px; }
+.preview-readonly { color: var(--ink); line-height: 1.5; margin-bottom: 24px; }
+.settings-panels fieldset { display: contents; }
+.settings-panels fieldset:disabled input, .settings-panels fieldset:disabled select { opacity: .75; cursor: not-allowed; }
+@media (max-width: 640px) { .preview-banner { padding: 16px 20px; } .preview-state { padding: 36px 20px; } }

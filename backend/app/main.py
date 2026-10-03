@@ -11,6 +11,7 @@ from app.api.v1 import (
     goals,
     jobs,
     notification_preferences,
+    preview,
     savings_goals,
     transactions,
 )
@@ -48,6 +49,7 @@ app.add_middleware(
 prefix = "/api/v1"
 for router in (
     auth.router,
+    preview.router,
     categories.router,
     transactions.router,
     fixed_expenses.router,

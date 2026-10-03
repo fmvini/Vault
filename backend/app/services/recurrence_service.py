@@ -4,7 +4,7 @@ from datetime import date
 from sqlalchemy import extract, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import FixedExpense, Transaction, TransactionType
+from app.models import FixedExpense, Transaction, TransactionType, User
 
 
 def monthly_due_date(year: int, month: int, due_day: int) -> date:
@@ -18,7 +18,8 @@ async def generate_monthly_transactions(
     reference = reference_date or date.today()
     expenses = (
         await db.scalars(
-            select(FixedExpense).where(
+            select(FixedExpense).join(User, User.id == FixedExpense.user_id).where(
+                User.preview_expires_at.is_(None),
                 FixedExpense.is_active.is_(True),
                 FixedExpense.start_date <= reference,
                 (FixedExpense.end_date.is_(None)) | (FixedExpense.end_date >= reference),

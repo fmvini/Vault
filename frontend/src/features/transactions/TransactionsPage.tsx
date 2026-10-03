@@ -9,10 +9,9 @@ import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 import { z } from 'zod';
 import { PageHeader } from '../../components/PageHeader';
-import { api } from '../../lib/api';
+import { useWorkspace } from '../../lib/workspace';
 import { formatMoney, formatShortDate } from '../../lib/format';
 import type { ApiCategory, ApiTransaction, TransactionPage, TransactionType } from '../../types';
-import { useAuthStore } from '../auth/store';
 
 const transactionSchema = z.object({
   description: z.string().min(2, 'Descreva a transação'),
@@ -37,9 +36,9 @@ function monthStart(offset = 0) {
 }
 
 export function TransactionsPage() {
+  const { api, user } = useWorkspace();
   const [searchParams, setSearchParams] = useSearchParams();
   const queryClient = useQueryClient();
-  const user = useAuthStore((state) => state.user);
   const requestedSearch = searchParams.get('q') ?? '';
   const shouldOpenNew = searchParams.get('new') === '1';
   const [drawerOpen, setDrawerOpen] = useState(shouldOpenNew);
@@ -58,11 +57,11 @@ export function TransactionsPage() {
 
   const categoriesQuery = useQuery({
     queryKey: ['categories'],
-    queryFn: async () => (await api.get<ApiCategory[]>('/categories')).data
+    queryFn: async ({ signal }) => (await api.get<ApiCategory[]>('/categories', { signal })).data
   });
   const transactionsQuery = useQuery({
     queryKey: ['transactions', { search, typeFilter, categoryFilter, startDate, endDate, sort, page }],
-    queryFn: async () => (await api.get<TransactionPage>('/transactions', { params: {
+    queryFn: async ({ signal }) => (await api.get<TransactionPage>('/transactions', { signal, params: {
       q: search.trim() || undefined,
       type: typeFilter === 'all' ? undefined : typeFilter,
       category_id: categoryFilter === 'all' ? undefined : categoryFilter,

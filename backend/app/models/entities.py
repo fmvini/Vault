@@ -44,6 +44,8 @@ class User(TimestampMixin, Base):
     email: Mapped[str] = mapped_column(String(255), unique=True, index=True, nullable=False)
     password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
     default_currency: Mapped[str] = mapped_column(String(3), default="BRL", nullable=False)
+    # NULL denotes a regular account; preview access must stop at this deadline.
+    preview_expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), index=True)
 
     categories: Mapped[list["Category"]] = relationship(back_populates="user")
     transactions: Mapped[list["Transaction"]] = relationship(back_populates="user")

@@ -3,25 +3,25 @@ import axios from 'axios';
 import { PiggyBank, Plus, X } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 import { PageHeader } from '../../components/PageHeader';
-import { api } from '../../lib/api';
+import { useWorkspace } from '../../lib/workspace';
 import { formatMoney } from '../../lib/format';
 import type { ApiSavingsGoal } from '../../types';
-import { useAuthStore } from '../auth/store';
 
 function errorMessage(cause: unknown, fallback: string) {
   return axios.isAxiosError<{ detail?: string }>(cause) ? cause.response?.data?.detail ?? fallback : fallback;
 }
 
 export function SavingsGoalsPage() {
+  const { api, user } = useWorkspace();
   const client = useQueryClient();
-  const currency = useAuthStore((state) => state.user?.default_currency ?? 'BRL');
+  const currency = user?.default_currency ?? 'BRL';
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
   const [target, setTarget] = useState('');
   const [depositId, setDepositId] = useState<string | null>(null);
   const [amount, setAmount] = useState('');
   const [error, setError] = useState('');
-  const goals = useQuery({ queryKey: ['savings-goals'], queryFn: async () => (await api.get<ApiSavingsGoal[]>('/savings-goals')).data });
+  const goals = useQuery({ queryKey: ['savings-goals'], queryFn: async ({ signal }) => (await api.get<ApiSavingsGoal[]>('/savings-goals', { signal })).data });
   const refresh = async () => Promise.all([
     client.invalidateQueries({ queryKey: ['savings-goals'] }),
     client.invalidateQueries({ queryKey: ['dashboard'] })

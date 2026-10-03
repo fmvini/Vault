@@ -12,12 +12,17 @@ import { ReportsPage } from "./features/reports/ReportsPage";
 import { SettingsPage } from "./features/settings/SettingsPage";
 import { TransactionsPage } from "./features/transactions/TransactionsPage";
 import { useAuthStore } from "./features/auth/store";
+import { useMemo } from 'react';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { createWorkspaceQueryClient } from './lib/queryClient';
+import { PreviewLayout } from './features/preview/PreviewLayout';
 
 function RequireAuth() {
   const token = useAuthStore((state) => state.token);
   const location = useLocation();
+  const client = useMemo(() => token ? createWorkspaceQueryClient() : null, [token]);
 
-  return token ? <Outlet /> : <Navigate to="/login" replace state={{ from: location }} />;
+  return token && client ? <QueryClientProvider client={client}><Outlet /></QueryClientProvider> : <Navigate to="/login" replace state={{ from: location }} />;
 }
 
 export default function App() {
@@ -27,6 +32,17 @@ export default function App() {
       <Route path="/register" element={<AuthPage key="register" mode="register" />} />
       <Route path="/forgot-password" element={<AuthPage key="forgot" mode="forgot" />} />
       <Route path='/reset-password' element={<ResetPasswordPage />} />
+      <Route path="/preview" element={<PreviewLayout />}>
+        <Route index element={<DashboardPage />} />
+        <Route path="transactions" element={<TransactionsPage />} />
+        <Route path="fixed-expenses" element={<FixedExpensesPage />} />
+        <Route path="limits" element={<GoalsPage />} />
+        <Route path="goals" element={<SavingsGoalsPage />} />
+        <Route path="categories" element={<CategoriesPage />} />
+        <Route path="reports" element={<ReportsPage />} />
+        <Route path="settings" element={<SettingsPage />} />
+        <Route path="*" element={<Navigate to="/preview" replace />} />
+      </Route>
       <Route element={<RequireAuth />}>
         <Route element={<AppShell />}>
           <Route index element={<DashboardPage />} />

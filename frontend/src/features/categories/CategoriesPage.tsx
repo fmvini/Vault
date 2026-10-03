@@ -4,17 +4,18 @@ import { Pencil, Plus, Trash2, X } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 import { CategoryIcon } from '../../components/CategoryIcon';
 import { PageHeader } from '../../components/PageHeader';
-import { api } from '../../lib/api';
+import { useWorkspace } from '../../lib/workspace';
 import type { ApiCategory, TransactionType } from '../../types';
 
 const initialForm = { name: '', type: 'expense' as TransactionType, color: '#6fc5ad', icon: 'tag' };
 export function CategoriesPage() {
+  const { api } = useWorkspace();
   const client = useQueryClient();
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<ApiCategory | null>(null);
   const [form, setForm] = useState(initialForm);
   const [error, setError] = useState('');
-  const query = useQuery({ queryKey: ['categories'], queryFn: async () => (await api.get<ApiCategory[]>('/categories')).data });
+  const query = useQuery({ queryKey: ['categories'], queryFn: async ({ signal }) => (await api.get<ApiCategory[]>('/categories', { signal })).data });
   const save = useMutation({
     mutationFn: async () => editing
       ? api.patch(`/categories/${editing.id}`, { name: form.name.trim(), color: form.color, icon: form.icon })

@@ -32,6 +32,8 @@ router = APIRouter(prefix='/auth', tags=['auth'])
 @router.post('/register', response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 async def register(payload: UserRegister, db: DbSession) -> User:
     email = payload.email.lower()
+    if email.endswith('@preview.vault.example'):
+        raise HTTPException(status_code=400, detail='E-mail reservado para demonstração')
     if await db.scalar(select(User.id).where(User.email == email)):
         raise HTTPException(status_code=400, detail='E-mail já cadastrado')
     user = User(
@@ -51,7 +53,11 @@ async def register(payload: UserRegister, db: DbSession) -> User:
 @router.post('/login', response_model=TokenResponse)
 async def login(payload: UserLogin, db: DbSession) -> TokenResponse:
     user = await db.scalar(select(User).where(User.email == payload.email.lower()))
-    if user is None or not verify_password(payload.password, user.password_hash):
+    if (
+        user is None
+        or user.preview_expires_at is not None
+        or not verify_password(payload.password, user.password_hash)
+    ):
         raise HTTPException(status_code=401, detail='Credenciais inválidas')
     return TokenResponse(access_token=create_access_token(user.id))
 
@@ -64,7 +70,7 @@ async def forgot_password(payload: ForgotPasswordRequest, db: DbSession) -> Mess
             detail='Recuperação por e-mail temporariamente indisponível.',
         )
     user = await db.scalar(select(User).where(User.email == payload.email.lower()))
-    if user is not None:
+    if user is not None and user.preview_expires_at is None:
         token = create_password_reset_token(user.id)
         reset_url = f'{settings.frontend_url}/reset-password?token={quote(token)}'
         await send_password_reset(user.email, reset_url, user.name)
@@ -80,7 +86,7 @@ async def reset_password(payload: ResetPasswordRequest, db: DbSession) -> Messag
             status_code=400, detail='Link de recuperação inválido ou expirado'
         ) from None
     user = await db.get(User, user_id)
-    if user is None:
+    if user is None or user.preview_expires_at is not None:
         raise HTTPException(status_code=400, detail='Link de recuperação inválido ou expirado')
     user.password_hash = hash_password(payload.new_password)
     await db.commit()

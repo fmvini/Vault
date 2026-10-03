@@ -27,8 +27,17 @@ def _create_token(user_id: UUID, token_type: str, expires_at: datetime) -> str:
     return jwt.encode(payload, settings.jwt_secret_key, algorithm=settings.jwt_algorithm)
 
 
+def _token_payload(token: str) -> dict:
+    return jwt.decode(
+        token,
+        settings.jwt_secret_key,
+        algorithms=[settings.jwt_algorithm],
+        options={'require': ['sub', 'type', 'exp', 'iat']},
+    )
+
+
 def _decode_token(token: str, expected_type: str) -> UUID:
-    payload = jwt.decode(token, settings.jwt_secret_key, algorithms=[settings.jwt_algorithm])
+    payload = _token_payload(token)
     if payload.get('type') != expected_type:
         raise ValueError('Tipo de token inválido')
     return UUID(payload['sub'])
@@ -41,6 +50,18 @@ def create_access_token(user_id: UUID) -> str:
 
 def decode_access_token(token: str) -> UUID:
     return _decode_token(token, 'access')
+
+
+def create_preview_token(user_id: UUID, expires_at: datetime) -> str:
+    return _create_token(user_id, 'preview', expires_at)
+
+
+def decode_session_token(token: str) -> tuple[UUID, str]:
+    payload = _token_payload(token)
+    token_type = payload.get('type')
+    if token_type not in ('access', 'preview'):
+        raise ValueError('Tipo de token inválido')
+    return UUID(payload['sub']), token_type
 
 
 def create_password_reset_token(user_id: UUID) -> str:
