@@ -23,6 +23,7 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useWorkspace } from '../lib/workspace';
 import { PreviewBanner } from '../features/preview/PreviewBanner';
 import { applyTheme, getStoredTheme, saveTheme } from "../lib/theme";
+import { LegalFooter } from "../features/legal/LegalFooter";
 import type { Theme } from "../lib/theme";
 import type { UserProfile } from "../types";
 
@@ -181,6 +182,7 @@ export function AppShell() {
         {isPreview && <PreviewBanner />}
         {!isDemoMode && userQuery.isError && <div className="session-warning" role="alert"><span>Não foi possível atualizar os dados da sua conta.</span><button onClick={() => userQuery.refetch()}>Tentar novamente</button></div>}
         <main className="main-content"><Outlet /></main>
+        <LegalFooter />
       </div>
     </div>
   );

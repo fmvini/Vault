@@ -1,3 +1,4 @@
+from datetime import UTC, datetime
 from urllib.parse import quote
 
 import jwt
@@ -41,6 +42,8 @@ async def register(payload: UserRegister, db: DbSession) -> User:
         email=email,
         password_hash=hash_password(payload.password),
         default_currency=payload.default_currency,
+        legal_accepted_at=datetime.now(UTC),
+        legal_version=payload.legal_version,
     )
     db.add(user)
     await db.flush()
@@ -59,6 +62,9 @@ async def login(payload: UserLogin, db: DbSession) -> TokenResponse:
         or not verify_password(payload.password, user.password_hash)
     ):
         raise HTTPException(status_code=401, detail='Credenciais inválidas')
+    user.legal_accepted_at = datetime.now(UTC)
+    user.legal_version = payload.legal_version
+    await db.commit()
     return TokenResponse(access_token=create_access_token(user.id))
 
 

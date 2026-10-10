@@ -26,7 +26,7 @@ def preview_session(client):
 
 
 def real_account(client):
-    payload = {'name': 'Conta real de teste', 'email': f'real-{uuid4().hex}@example.com', 'password': 'senha-real-123'}
+    payload = {'terms_accepted': True, 'privacy_accepted': True, 'legal_version': '2026-10-10', 'name': 'Conta real de teste', 'email': f'real-{uuid4().hex}@example.com', 'password': 'senha-real-123'}
     response = client.post('/api/v1/auth/register', json=payload)
     assert response.status_code == 201, response.text
     user = response.json()
@@ -142,14 +142,14 @@ def test_preview_cannot_login_reset_or_register_reserved_domain(client, monkeypa
         pytest.fail('Preview login must be refused before verifying its password')
 
     monkeypatch.setattr('app.api.v1.auth.verify_password', forbidden_verify)
-    response = client.post('/api/v1/auth/login', json={'email': session['user']['email'], 'password': 'qualquer-senha'})
+    response = client.post('/api/v1/auth/login', json={'terms_accepted': True, 'privacy_accepted': True, 'legal_version': '2026-10-10', 'email': session['user']['email'], 'password': 'qualquer-senha'})
     assert response.status_code == 401
     token = create_password_reset_token(UUID(session['user']['id']))
     response = client.post('/api/v1/auth/reset-password', json={'token': token, 'new_password': 'nova-senha-123'})
     assert response.status_code == 400
     for token in (session['access_token'], create_access_token(UUID(session['user']['id']))):
         assert client.post('/api/v1/auth/reset-password', json={'token': token, 'new_password': 'nova-senha-123'}).status_code == 400
-    response = client.post('/api/v1/auth/register', json={'name': 'Conta reservada', 'email': 'novo@PREVIEW.VAULT.EXAMPLE', 'password': 'nova-senha-123'})
+    response = client.post('/api/v1/auth/register', json={'terms_accepted': True, 'privacy_accepted': True, 'legal_version': '2026-10-10', 'name': 'Conta reservada', 'email': 'novo@PREVIEW.VAULT.EXAMPLE', 'password': 'nova-senha-123'})
     assert response.status_code == 400
 
 

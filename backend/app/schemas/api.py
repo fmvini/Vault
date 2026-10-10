@@ -3,8 +3,9 @@ from decimal import Decimal
 from typing import Annotated, Literal
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, StrictBool, field_validator
 
+from app.core.legal import LEGAL_VERSION
 from app.models import TransactionType
 
 Currency = Annotated[str, Field(min_length=3, max_length=3)]
@@ -24,7 +25,29 @@ class CurrencyMixin(BaseModel):
         return value.upper()
 
 
-class UserRegister(BaseModel):
+class LegalAcceptance(BaseModel):
+    terms_accepted: StrictBool
+    privacy_accepted: StrictBool
+    legal_version: str
+
+    @field_validator("terms_accepted", "privacy_accepted")
+    @classmethod
+    def require_acceptance(cls, value: bool) -> bool:
+        if not value:
+            raise ValueError(
+                "O aceite dos Termos de Uso e da Política de Privacidade é obrigatório"
+            )
+        return value
+
+    @field_validator("legal_version")
+    @classmethod
+    def require_current_version(cls, value: str) -> str:
+        if value != LEGAL_VERSION:
+            raise ValueError("Leia e aceite a versão atual dos documentos")
+        return value
+
+
+class UserRegister(LegalAcceptance):
     name: Annotated[str, Field(min_length=2, max_length=255)]
     email: EmailStr
     password: Annotated[str, Field(min_length=8, max_length=128)]
@@ -36,7 +59,7 @@ class UserRegister(BaseModel):
         return value.upper()
 
 
-class UserLogin(BaseModel):
+class UserLogin(LegalAcceptance):
     email: EmailStr
     password: str
 

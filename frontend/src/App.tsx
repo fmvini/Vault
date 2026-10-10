@@ -16,6 +16,9 @@ import { useMemo } from 'react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { createWorkspaceQueryClient } from './lib/queryClient';
 import { PreviewLayout } from './features/preview/PreviewLayout';
+import { CookieBanner } from './features/legal/CookieBanner';
+import { LegalPage } from './features/legal/LegalPage';
+import { NotFoundPage } from './features/legal/NotFoundPage';
 
 function RequireAuth() {
   const token = useAuthStore((state) => state.token);
@@ -27,7 +30,11 @@ function RequireAuth() {
 
 export default function App() {
   return (
+    <>
     <Routes>
+      <Route path="/termos-de-uso" element={<LegalPage key="terms" kind="terms" />} />
+      <Route path="/politica-de-privacidade" element={<LegalPage key="privacy" kind="privacy" />} />
+      <Route path="/politica-de-cookies" element={<LegalPage key="cookies" kind="cookies" />} />
       <Route path="/login" element={<AuthPage key="login" mode="login" />} />
       <Route path="/register" element={<AuthPage key="register" mode="register" />} />
       <Route path="/forgot-password" element={<AuthPage key="forgot" mode="forgot" />} />
@@ -41,8 +48,8 @@ export default function App() {
         <Route path="categories" element={<CategoriesPage />} />
         <Route path="reports" element={<ReportsPage />} />
         <Route path="settings" element={<SettingsPage />} />
-        <Route path="*" element={<Navigate to="/preview" replace />} />
       </Route>
+      <Route path="/preview/*" element={<NotFoundPage preview />} />
       <Route element={<RequireAuth />}>
         <Route element={<AppShell />}>
           <Route index element={<DashboardPage />} />
@@ -55,7 +62,9 @@ export default function App() {
           <Route path="settings" element={<SettingsPage />} />
         </Route>
       </Route>
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
+    <CookieBanner />
+    </>
   );
 }

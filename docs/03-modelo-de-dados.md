@@ -25,8 +25,12 @@ ExchangeRate (tabela independente, sem FK para User)
 | email | VARCHAR(255) | NOT NULL, UNIQUE | E-mail (usado para login) |
 | password_hash | VARCHAR(255) | NOT NULL | Hash da senha (bcrypt) |
 | default_currency | VARCHAR(3) | NOT NULL, DEFAULT 'BRL' | Moeda padrão (código ISO 4217) |
+| legal_accepted_at | TIMESTAMP WITH TIME ZONE | NULLABLE | Data UTC do último aceite bem-sucedido dos termos e da privacidade |
+| legal_version | VARCHAR(32) | NULLABLE | Versão dos dois documentos aceita no cadastro ou login |
 | created_at | TIMESTAMP | NOT NULL, DEFAULT now() | Data de criação |
 | updated_at | TIMESTAMP | NOT NULL, DEFAULT now() | Data de atualização |
+
+Os campos de aceite são adicionados pela migração `20261010_0004`. Contas existentes e sessões de preview permanecem com valores nulos até um cadastro/login normal com aceite; não há preenchimento retroativo nem histórico imutável de todos os aceites.
 
 ### 2.2 `categories`
 | Campo | Tipo | Restrições | Descrição |

@@ -1,4 +1,9 @@
 import { expect, test } from '@playwright/test';
+import { legalAcceptance } from '../src/features/legal/constants';
+
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('vault-cookie-consent', JSON.stringify({ choice: 'rejected', version: '2026-10-10' })));
+});
 
 test('recuperação de senha volta ao formulário de login após o envio', async ({ page }) => {
   await page.route('**/auth/forgot-password', (route) =>
@@ -29,9 +34,9 @@ test('transações recentes usam ícones da categoria e verde para receitas', as
   const email = `icones-${Date.now()}@example.com`;
   const password = 'senha-segura-123';
   expect((await request.post(`${apiBase}/auth/register`, { data: {
-    name: 'QA Ícones', email, password, default_currency: 'BRL'
+    ...legalAcceptance, name: 'QA Ícones', email, password, default_currency: 'BRL'
   } })).status()).toBe(201);
-  const login = await request.post(`${apiBase}/auth/login`, { data: { email, password } });
+  const login = await request.post(`${apiBase}/auth/login`, { data: { ...legalAcceptance, email, password } });
   const token = (await login.json()).access_token as string;
   const headers = { Authorization: `Bearer ${token}` };
   const categories = await request.get(`${apiBase}/categories`, { headers });
@@ -73,6 +78,8 @@ test('fluxo principal persiste dados e funciona em desktop e mobile', async ({ p
   await page.getByLabel('Nome').fill('QA Vault');
   await page.getByLabel('E-mail').fill(email);
   await page.getByLabel('Senha').fill('senha-segura-123');
+  await page.getByRole('checkbox', { name: /Li e aceito os Termos/ }).check();
+  await page.getByRole('checkbox', { name: /Li e aceito a Política/ }).check();
   await page.getByRole('button', { name: 'Criar conta' }).click();
   await expect(page).toHaveURL(/\/$/);
   await expect(page.getByRole('heading', { name: 'Visão geral' })).toBeVisible();
@@ -212,6 +219,8 @@ test('fluxo principal persiste dados e funciona em desktop e mobile', async ({ p
   await expect(page).toHaveURL(/\/login$/);
   await page.getByLabel('E-mail').fill(email);
   await page.getByLabel('Senha').fill('senha-segura-123');
+  await page.getByRole('checkbox', { name: /Li e aceito os Termos/ }).check();
+  await page.getByRole('checkbox', { name: /Li e aceito a Política/ }).check();
   await page.getByRole('button', { name: 'Entrar' }).click();
   await expect(page.getByText('QA Vault Persistido')).toBeVisible();
 
@@ -244,9 +253,9 @@ test('fluxo principal persiste dados e funciona em desktop e mobile', async ({ p
 test('histórico pagina, combina filtros e ordena lançamentos', async ({ page, request }) => {
   const apiBase = 'http://127.0.0.1:8000/api/v1';
   const email = `historico-${Date.now()}@example.com`;
-  const user = { name: 'QA Histórico', email, password: 'senha-segura-123', default_currency: 'BRL' };
+  const user = { ...legalAcceptance, name: 'QA Histórico', email, password: 'senha-segura-123', default_currency: 'BRL' };
   expect((await request.post(`${apiBase}/auth/register`, { data: user })).status()).toBe(201);
-  const login = await request.post(`${apiBase}/auth/login`, { data: { email, password: user.password } });
+  const login = await request.post(`${apiBase}/auth/login`, { data: { ...legalAcceptance, email, password: user.password } });
   expect(login.status()).toBe(200);
   const token = (await login.json()).access_token as string;
   const headers = { Authorization: `Bearer ${token}` };
@@ -314,9 +323,9 @@ test('status de recorrência alterna entre pendente e pago na interface', async 
   const email = `recorrencia-ui-${Date.now()}@example.com`;
   const password = 'senha-segura-123';
   expect((await request.post(`${apiBase}/auth/register`, { data: {
-    name: 'QA Recorrência', email, password, default_currency: 'BRL'
+    ...legalAcceptance, name: 'QA Recorrência', email, password, default_currency: 'BRL'
   } })).status()).toBe(201);
-  const login = await request.post(`${apiBase}/auth/login`, { data: { email, password } });
+  const login = await request.post(`${apiBase}/auth/login`, { data: { ...legalAcceptance, email, password } });
   const token = (await login.json()).access_token as string;
   const categories = await request.get(`${apiBase}/categories`, { headers: { Authorization: `Bearer ${token}` } });
   const category = (await categories.json() as { id: string; name: string; type: string }[]).find((item) => item.type === 'expense');
@@ -354,9 +363,9 @@ test('erro de rede mostra mensagem compreensível no histórico', async ({ page,
   const email = `erro-ui-${Date.now()}@example.com`;
   const password = 'senha-segura-123';
   expect((await request.post(`${apiBase}/auth/register`, { data: {
-    name: 'QA Erro', email, password, default_currency: 'BRL'
+    ...legalAcceptance, name: 'QA Erro', email, password, default_currency: 'BRL'
   } })).status()).toBe(201);
-  const login = await request.post(`${apiBase}/auth/login`, { data: { email, password } });
+  const login = await request.post(`${apiBase}/auth/login`, { data: { ...legalAcceptance, email, password } });
   const token = (await login.json()).access_token as string;
   await page.route(/\/api\/v1\/transactions\?.*/, (route) => route.fulfill({
     status: 503, json: { detail: 'Serviço temporariamente indisponível' }
@@ -371,9 +380,9 @@ test('histórico mostra subtotais separados e duas casas por moeda', async ({ pa
   const email = `moedas-ui-${Date.now()}@example.com`;
   const password = 'senha-segura-123';
   expect((await request.post(`${apiBase}/auth/register`, { data: {
-    name: 'QA Moedas', email, password, default_currency: 'BRL'
+    ...legalAcceptance, name: 'QA Moedas', email, password, default_currency: 'BRL'
   } })).status()).toBe(201);
-  const login = await request.post(`${apiBase}/auth/login`, { data: { email, password } });
+  const login = await request.post(`${apiBase}/auth/login`, { data: { ...legalAcceptance, email, password } });
   const token = (await login.json()).access_token as string;
   const headers = { Authorization: `Bearer ${token}` };
   const categories = await request.get(`${apiBase}/categories`, { headers });

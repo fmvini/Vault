@@ -3,6 +3,7 @@ from datetime import UTC, date, datetime, timedelta
 
 from sqlalchemy import select
 
+from app.core.legal import LEGAL_VERSION
 from app.db.session import SessionLocal
 from app.jobs import scheduler as jobs
 from app.models import NotificationPreference, User
@@ -15,10 +16,12 @@ def test_jobs_ignore_preview_and_cleanup_preserves_regular_accounts(client, monk
     email = 'preview-jobs-regular@example.com'
     registered = client.post('/api/v1/auth/register', json={
         'name': 'Regular jobs', 'email': email, 'password': 'senha-segura-123',
+        'terms_accepted': True, 'privacy_accepted': True, 'legal_version': LEGAL_VERSION,
     })
     assert registered.status_code == 201
     token = client.post('/api/v1/auth/login', json={
         'email': email, 'password': 'senha-segura-123',
+        'terms_accepted': True, 'privacy_accepted': True, 'legal_version': LEGAL_VERSION,
     }).json()['access_token']
     regular_headers = {'Authorization': f'Bearer {token}'}
     today = date.today()

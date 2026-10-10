@@ -6,6 +6,7 @@ import { createWorkspaceQueryClient } from '../../lib/queryClient';
 import { applyTheme, getStoredTheme, initializeTheme } from '../../lib/theme';
 import { WorkspaceContext } from '../../lib/workspace';
 import { useAuthStore } from '../auth/store';
+import { LegalFooter } from '../legal/LegalFooter';
 import { createPreviewApi, usePreviewStore } from './store';
 import type { PreviewSession } from './store';
 import './preview.css';
@@ -45,7 +46,7 @@ export function PreviewLayout() {
   if (status === 'ready' && session) return <PreviewWorkspace key={session.access_token} session={session} />;
   const expired = status === 'expired';
   const loading = status === 'loading' || status === 'idle';
-  return <main className="preview-state" aria-busy={loading}>
+  return <div className="public-page"><main className="preview-state" aria-busy={loading}>
     <Link className="brand" to="/preview" aria-label="Vault — demonstração"><span className="brand-mark"><img src="/vault-icon.svg" alt="" /></span>Vault</Link>
     <h1>{loading ? 'Preparando sua demonstração' : expired ? 'A demonstração expirou' : 'Demonstração indisponível'}</h1>
     <p role={loading ? 'status' : 'alert'}>{loading ? 'Criando um espaço isolado com dados fictícios. Você não precisa fazer login.' : expired ? 'Esta sessão temporária terminou. Reinicie para explorar uma nova demonstração com dados fictícios.' : error}</p>
@@ -55,5 +56,5 @@ export function PreviewLayout() {
       <Link className="secondary-button" to={accountToken ? '/' : '/register'} onClick={leave}>{accountToken ? 'Ir para minha conta' : 'Criar minha conta'}</Link>
       <Link className="secondary-button" to={accountToken ? '/' : '/login'} onClick={leave}>Sair da demonstração</Link>
     </div>
-  </main>;
+  </main><LegalFooter /></div>;
 }

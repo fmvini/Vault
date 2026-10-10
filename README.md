@@ -8,7 +8,8 @@ O projeto é um monorepo com uma interface React e uma API FastAPI. O frontend u
 
 ## O que o aplicativo oferece
 
-- **Contas e perfil:** cadastro, login, logout, redefinição de senha e escolha da moeda padrão.
+- **Contas e perfil:** cadastro, login, logout, redefinição de senha e escolha da moeda padrão, com aceite obrigatório dos Termos de Uso e da Política de Privacidade.
+- **Privacidade e suporte:** documentos públicos, aviso de cookies com escolha persistida e revisão da preferência, contato por e-mail e página 404 personalizada.
 - **Transações:** receitas e gastos em BRL, USD ou EUR, com edição, exclusão, busca, filtros, ordenação e paginação.
 - **Categorias:** opções padrão protegidas e categorias personalizadas com nome, tipo, cor e ícone.
 - **Gastos fixos:** cadastro e edição de recorrências, geração mensal de transações por job, data final, desativação e status pago/pendente.
@@ -43,7 +44,7 @@ Cada visitante recebe uma sessão de 30 minutos com dados fictícios próprios, 
 
 O preview usa `sessionStorage`, cliente HTTP e cache separados da conta normal. Não exige `VITE_DEMO_MODE=true`; mantenha essa variável em `false` para validar o fluxo real. A expiração é verificada pela API em cada acesso, e a limpeza de dados expirados ocorre em lotes ao criar demonstrações e no job de recorrência.
 
-**Antes de publicar a API**, execute `python -m alembic upgrade head` com a conexão de migração do banco para aplicar `20261003_0003`, que adiciona `users.preview_expires_at` e seu índice. Publique a API atualizada antes do frontend. Confirme `VITE_API_BASE_URL`, `FRONTEND_URL` e a abertura direta de `/preview` após os deploys; a configuração SPA existente em `frontend/vercel.json` já cobre essa rota.
+**Antes de publicar a API**, execute `python -m alembic upgrade head` com a conexão de migração do banco para aplicar `20261003_0003`, que adiciona `users.preview_expires_at` e seu índice. Planeje a publicação coordenada da API e do frontend com versões compatíveis para os novos aceites. Confirme `VITE_API_BASE_URL`, `FRONTEND_URL` e a abertura direta de `/preview` após os deploys; a configuração SPA existente em `frontend/vercel.json` já cobre essa rota.
 
 Para executar somente os nove cenários E2E de preview em portas diferentes das usadas por outros projetos, mantenha ambos os servidores do Vault ativos e rode em `frontend/`:
 
@@ -54,6 +55,18 @@ npm run test:e2e -- e2e/preview.spec.ts
 ```
 
 Consulte `docs/DEVELOPMENT_LOG.md` para as evidências de validação e as verificações ainda pendentes desta alteração.
+
+## Termos, privacidade, cookies e suporte
+
+As rotas públicas são `/termos-de-uso`, `/politica-de-privacidade` e `/politica-de-cookies`. Cadastro e login exigem os dois aceites, desmarcados inicialmente, inclusive na API. O suporte recebe solicitações em `viniciusfmarrocos@gmail.com`; os links usam `mailto:`.
+
+A versão vigente é `2026-10-10`, definida em `backend/app/core/legal.py` e `frontend/src/features/legal/constants.ts`. Os dois endpoints exigem `terms_accepted: true`, `privacy_accepted: true` e `legal_version` vigente. Ausência, recusa, coerção de booleanos ou versão antiga retornam 422. O banco registra somente a versão e a data do **último aceite bem-sucedido**, sem presumir aceite de contas antigas e sem alterar sessões já abertas.
+
+**Antes de usar a API atualizada**, aplique `python -m alembic upgrade head` em `backend/`, inclusive sobre bancos SQLite já existentes. A revisão `20261010_0004` adiciona `users.legal_accepted_at` e `users.legal_version`. O startup de desenvolvimento cria tabelas ausentes, mas não adiciona colunas a tabelas existentes. Migração, API e frontend com o novo contrato precisam ser publicados de forma coordenada: a API nova rejeita clientes antigos que não enviam os aceites. Nenhum banco foi migrado automaticamente nesta implementação.
+
+O aviso permite aceitar ou rejeitar opcionais com a mesma facilidade e reabrir a escolha pelo rodapé. A aplicação atual não possui rastreadores opcionais; sessão, perfil, tema e escolha usam armazenamento do navegador. Uma futura integração opcional deve consultar `optionalCookiesAllowed()` antes de carregar e ser acompanhada de atualização da política, da versão e das escolhas por finalidade; o aceite atual não autoriza novas finalidades silenciosamente. Referência para a escolha independente e rejeição de opcionais: [guia de cookies da ANPD](https://www.gov.br/anpd/pt-br/centrais-de-conteudo/materiais-educativos-e-publicacoes/guia_orientativo_cookies_e_protecao_de_dados_pessoais).
+
+Os caminhos desconhecidos exibem a 404 preservando o endereço. O mesmo vale para subrotas inexistentes de `/preview`, sem criar uma sessão de demonstração para uma página inexistente.
 
 ## Executar localmente com SQLite
 
@@ -202,6 +215,7 @@ No diretório `frontend/`:
 
 ```bash
 npm run lint -- --quiet
+npm run test:consent
 npm run build
 npx playwright install chromium
 npm run test:e2e

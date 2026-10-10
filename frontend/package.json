@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:consent": "node --test tests/cookieConsent.test.cjs"
   },
   "dependencies": {
     "@fontsource/basic": "^5.1.1",

@@ -1,3 +1,44 @@
+## 2026-10-10 — Termos, privacidade, cookies, suporte e página 404
+
+### Implementado
+- Páginas públicas `/termos-de-uso`, `/politica-de-privacidade` e `/politica-de-cookies`, com conteúdo baseado nas funcionalidades, fornecedores e formas de armazenamento existentes.
+- Dois aceites obrigatórios e inicialmente desmarcados no cadastro e no login; abertura dos documentos em outra aba preserva o formulário. Validação no frontend e na API de booleanos estritos e versão vigente `2026-10-10`.
+- Registro da versão e do timestamp UTC do último aceite bem-sucedido em `users.legal_version` e `users.legal_accepted_at`; falhas de autenticação não atualizam o registro.
+- Banner de cookies com explicação breve, aceitar/rejeitar opcionais com controles equivalentes, preferência persistida e versionada, reabertura pelo rodapé e aviso quando o navegador bloqueia a persistência.
+- Política descreve localStorage/sessionStorage usados para sessão, perfil, tema, demonstração e escolha. Nenhum rastreador opcional foi adicionado; aceitar/rejeitar não controla o acesso à conta.
+- Página 404 para URLs desconhecidas, preservando o endereço e oferecendo retorno ao login, à conta ou ao preview. URLs inexistentes de preview não iniciam sessão de demonstração.
+- Suporte por `mailto:viniciusfmarrocos@gmail.com`, rodapé nas telas normais, autenticação, documentos, 404 e estados de carregamento/erro/expiração do preview.
+- Testes de consentimento, API e E2E adicionados; chamadas de autenticação dos testes existentes atualizadas para o novo contrato.
+
+### Arquivos principais alterados
+- `frontend/src/features/legal/constants.ts`, `frontend/src/features/legal/cookieConsent.ts`, `frontend/src/features/legal/CookieBanner.tsx`, `frontend/src/features/legal/LegalFooter.tsx`, `frontend/src/features/legal/LegalPage.tsx`, `frontend/src/features/legal/NotFoundPage.tsx`, `frontend/src/features/legal/legal.css`.
+- `frontend/src/App.tsx`, `frontend/src/main.tsx`, `frontend/src/components/AppShell.tsx`, `frontend/src/features/auth/AuthPage.tsx`, `frontend/src/features/auth/ResetPasswordPage.tsx`, `frontend/src/features/preview/PreviewLayout.tsx`.
+- `backend/app/core/legal.py`, `backend/app/schemas/api.py`, `backend/app/api/v1/auth.py`, `backend/app/models/entities.py`, `backend/alembic/versions/20261010_0004_legal_acceptance.py`.
+- `backend/tests/test_legal.py`, `backend/tests/test_api.py`, `backend/tests/test_preview.py`, `backend/tests/test_preview_db.py`, `backend/tests/test_preview_jobs.py`, `frontend/tests/cookieConsent.test.cjs`, `frontend/e2e/legal.spec.ts`, `frontend/e2e/vault.spec.ts`, `frontend/e2e/preview.spec.ts`, `frontend/package.json`.
+- `README.md`, `docs/03-modelo-de-dados.md`, `docs/04-especificacao-api.md`, `docs/DEVELOPMENT_LOG.md`.
+
+### Decisões técnicas
+- Migração aditiva e nullable, sem preenchimento retroativo: contas antigas não recebem aceite presumido. O upgrade verifica colunas já presentes porque a migração inicial usa metadados ORM atuais. Não há histórico imutável de todos os aceites; o registro representa o mais recente.
+- Aceite dos documentos e preferência de cookies são independentes; sessões já abertas não são invalidadas por esta implementação.
+- `optionalCookiesAllowed()` permanece falso sem decisão ou após rejeição. Futuros rastreadores precisam consultar esse gate, atualizar política/versão e oferecer consentimento por finalidade antes de carregar; o aceite atual não autoriza novas finalidades.
+- Preservados os tokens claros/escuros, Basic, Spline Sans Mono, marca e botões existentes. Corrigido o foco por teclado dos novos checkboxes com outline sólido contrastante em ambos os temas.
+- Nenhuma dependência, alteração de infraestrutura, migração automática ou publicação foi executada.
+
+### Estado atual
+- Implementação concluída e validada localmente; publicação pendente. Build oficial `npm run build`, ESLint e Ruff passaram. Permanece o aviso conhecido de chunk JavaScript acima de 500 kB.
+- `npm run test:consent`: quatro testes aprovados pelo runner Node, cobrindo decisão padrão, persistência, recarga, revogação, valores inválidos/antigos e armazenamento bloqueado.
+- Pytest completo: 68 testes aprovados e 10 skips previstos (oito casos PostgreSQL sem URL de teste configurada e dois casos de concorrência específicos desse banco); dois avisos de depreciação de dependências.
+- Migrações validadas com SQLite FK ON/OFF: banco novo, downgrade até `20260924_0002`, upgrade para `20261010_0004`, `alembic check`, preservação da conta sintética existente e campos de aceite nulos sem preenchimento retroativo.
+- Playwright: 25 cenários aprovados em Chromium contra Vite/API reais em 5173/8000 e banco exclusivo `test-results/legal-e2e.db`, incluindo os oito novos cenários legais. Cenário de isolamento conta/preview repetido e aprovado após retirar campos desnecessários do payload de categoria.
+- Capturas de desktop 1440px e mobile 390/320px, temas claro/escuro, em `.impeccable/review/legal/`: sete telas sem overflow horizontal nem erros JavaScript. Aceites required e desmarcados confirmados nas capturas. Revisão independente final: `ship`, sem defeito visual material; detector da skill nos novos componentes retornou lista vazia.
+- Bloqueio de terminal da primeira rodada superado após a autorização adicional do usuário. Git diff/status revisados; implementação, testes e documentação constituem uma única unidade de commit local.
+- A conexão padrão aponta para PostgreSQL remoto. A migração desse banco não foi aplicada nesta tarefa; nenhum push ou deploy foi executado.
+
+### Próximos passos
+- Antes da publicação, aplicar `python -m alembic upgrade head` ao PostgreSQL remoto pelo acesso de migração, confirmando revisão `20261010_0004` e preservação das contas. Os oito cenários PostgreSQL requerem banco descartável e URL explícita de testes.
+- Publicar API e frontend com o novo contrato de aceite de forma coordenada, pois a API nova rejeita clientes antigos sem os dois aceites e a versão. Fazer push/deploy somente quando solicitado.
+- Após publicar, validar cadastro/login, páginas legais, rejeição/recarga/reabertura de cookies, 404 e mailto de suporte no domínio online.
+
 ## 2026-10-03 — Preview recuperado em produção e acesso pelo login
 
 ### Implementado

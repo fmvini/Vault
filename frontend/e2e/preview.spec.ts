@@ -1,5 +1,10 @@
 import { expect, test } from '@playwright/test';
+import { legalAcceptance } from '../src/features/legal/constants';
 import type { Page } from '@playwright/test';
+
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('vault-cookie-consent', JSON.stringify({ choice: 'rejected', version: '2026-10-10' })));
+});
 
 const apiBase = process.env.E2E_API_BASE_URL ?? 'http://127.0.0.1:8000/api/v1';
 test.use({ baseURL: process.env.E2E_BASE_URL ?? 'http://127.0.0.1:5173' });
@@ -202,8 +207,8 @@ test('conta real e preview isolam tokens, perfil, preferências, dados e cache',
   page.on('request', (request) => { if (request.url().endsWith('/preview/session')) bootstraps++; });
   const email = `preview-isolation-${Date.now()}@example.com`;
   const password = 'senha-qa-preview-123';
-  expect((await request.post(`${apiBase}/auth/register`, { data: { name: 'Conta Real QA', email, password, default_currency: 'BRL' } })).status()).toBe(201);
-  const login = await request.post(`${apiBase}/auth/login`, { data: { email, password } });
+  expect((await request.post(`${apiBase}/auth/register`, { data: { ...legalAcceptance, name: 'Conta Real QA', email, password, default_currency: 'BRL' } })).status()).toBe(201);
+  const login = await request.post(`${apiBase}/auth/login`, { data: { ...legalAcceptance, email, password } });
   expect(login.status()).toBe(200);
   const accountToken = (await login.json()).access_token as string;
   const headers = { Authorization: `Bearer ${accountToken}` };

@@ -47,6 +47,9 @@ class User(TimestampMixin, Base):
     # NULL denotes a regular account; preview access must stop at this deadline.
     preview_expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), index=True)
 
+    legal_accepted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    legal_version: Mapped[str | None] = mapped_column(String(32))
+
     categories: Mapped[list["Category"]] = relationship(back_populates="user")
     transactions: Mapped[list["Transaction"]] = relationship(back_populates="user")
     fixed_expenses: Mapped[list["FixedExpense"]] = relationship(back_populates="user")

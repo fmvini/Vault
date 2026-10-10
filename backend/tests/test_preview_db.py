@@ -295,11 +295,18 @@ async def test_migrations_fresh_and_existing_database_preserve_normal_user(datab
         async with engine.connect() as connection:
             indexes = await connection.run_sync(lambda sync: inspect(sync).get_indexes("users"))
             assert any(index["name"] == "ix_users_preview_expires_at" for index in indexes)
-            assert await connection.scalar(text("SELECT version_num FROM alembic_version")) == "20261003_0003"
+            assert await connection.scalar(text("SELECT version_num FROM alembic_version")) == "20261010_0004"
+            columns = await connection.run_sync(lambda sync: inspect(sync).get_columns("users"))
+            assert {"legal_version", "legal_accepted_at"} <= {
+                column["name"] for column in columns
+            }
         run_alembic(url, "downgrade", "20260924_0002")
         async with engine.begin() as connection:
             columns = await connection.run_sync(lambda sync: inspect(sync).get_columns("users"))
             assert "preview_expires_at" not in {column["name"] for column in columns}
+            assert {"legal_version", "legal_accepted_at"}.isdisjoint(
+                column["name"] for column in columns
+            )
             await connection.execute(text(
                 "INSERT INTO users (id, name, email, password_hash, default_currency) "
                 "VALUES (:id, 'Fictício para teste de migração', 'migration@vault.example', 'unusable', 'BRL')"
@@ -308,10 +315,13 @@ async def test_migrations_fresh_and_existing_database_preserve_normal_user(datab
         run_alembic(url, "check")
         async with engine.connect() as connection:
             row = (await connection.execute(text(
-                "SELECT name, preview_expires_at FROM users WHERE email='migration@vault.example'"
+                "SELECT name, preview_expires_at, legal_version, legal_accepted_at "
+                "FROM users WHERE email='migration@vault.example'"
             ))).one()
             assert row.name == "Fictício para teste de migração"
             assert row.preview_expires_at is None
+            assert row.legal_version is None
+            assert row.legal_accepted_at is None
             assert await connection.scalar(text("SELECT COUNT(*) FROM categories WHERE is_system = true")) == 11
     finally:
         await engine.dispose()

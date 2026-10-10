@@ -8,6 +8,7 @@ import { initializeTheme } from "./lib/theme";
 import "./styles.css";
 import "./feature.css";
 import './enhancements.css';
+import './features/legal/legal.css';
 
 initializeTheme();
 

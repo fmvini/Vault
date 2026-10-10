@@ -8,14 +8,17 @@
 ## 1. Autenticação (`/auth`)
 
 ### `POST /auth/register`
-Cria um novo usuário.
+Cria um novo usuário com aceite explícito dos Termos de Uso e da Política de Privacidade vigentes.
 **Body:**
 ```json
 {
   "name": "string",
   "email": "string",
   "password": "string",
-  "default_currency": "BRL"
+  "default_currency": "BRL",
+  "terms_accepted": true,
+  "privacy_accepted": true,
+  "legal_version": "2026-10-10"
 }
 ```
 **Resposta 201:**
@@ -32,13 +35,21 @@ Cria um novo usuário.
 ### `POST /auth/login`
 **Body:**
 ```json
-{ "email": "string", "password": "string" }
+{
+  "email": "string",
+  "password": "string",
+  "terms_accepted": true,
+  "privacy_accepted": true,
+  "legal_version": "2026-10-10"
+}
 ```
 **Resposta 200:**
 ```json
 { "access_token": "string", "token_type": "bearer" }
 ```
-**Erros**: `401` (credenciais inválidas).
+**Erros**: `401` (credenciais inválidas), `422` (aceites ausentes, recusados, valores não booleanos ou versão diferente da vigente).
+
+Os dois endpoints validam booleanos estritos e a versão definida em `backend/app/core/legal.py`. Registram a versão e o timestamp UTC do último aceite após cadastro ou autenticação bem-sucedidos; um login com senha incorreta não altera o registro. Os campos de aceite não são editáveis por `PATCH /auth/me`. O aceite dos documentos é independente da preferência de cookies e não altera sessões já abertas. A migração `20261010_0004` deve ser aplicada antes de usar a API atualizada.
 
 ### `POST /auth/forgot-password`
 **Body:** `{ "email": "string" }`
