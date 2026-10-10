@@ -1,3 +1,28 @@
+## 2026-10-10 — Aviso de cookies compacto e explicativo
+
+### Implementado
+- Reformulado o aviso com o título “Como usamos cookies” e explicação direta sobre armazenamento para sessão, tema e escolha de cookies, mantendo o link da política e a informação sobre ausência de publicidade/análise.
+- Substituída a faixa inferior que ocupava a largura da página por um aviso no canto inferior esquerdo, limitado a 860 px, com espaçamento menor e os dois botões ao lado do texto em desktop.
+- Em telas até 700 px, botões abaixo do texto; mantidos persistência, reabertura e controles equivalentes. Cor do texto explícita e foco contrastante nos temas claro/escuro.
+
+### Arquivos principais alterados
+- `frontend/src/features/legal/CookieBanner.tsx`.
+- `frontend/src/features/legal/legal.css`.
+- `frontend/e2e/legal.spec.ts`.
+- `docs/DEVELOPMENT_LOG.md`.
+
+### Decisões técnicas
+- Texto fiel ao uso atual de localStorage/sessionStorage; nenhuma finalidade opcional nova nem alteração na versão ou no mecanismo de consentimento.
+- Layout horizontal a partir de 701 px e vertical nas telas menores, preservando alvos de botão de pelo menos 44 px.
+
+### Estado atual
+- Build, ESLint, quatro testes de consentimento e oito cenários E2E legais aprovados. Persiste o aviso conhecido de bundle acima de 500 kB.
+- Capturas verificadas em desktop 1440 px, tablet 768 px, mobile 390/320 px e viewport reduzido 720×450, com temas claro/escuro; nenhum overflow horizontal. Em desktop, aviso de 860×139 px com botões ao lado. Detector visual sem achados.
+- A versão local exibe o texto; não foi confirmada a causa de sua ausência na visualização relatada pelo usuário. Publicação deste ajuste pendente.
+
+### Próximos passos
+- Quando solicitado, publicar o frontend com este ajuste e validar o aviso no domínio online, incluindo aceitar/rejeitar e reabrir pelo rodapé. A publicação coordenada dos aceites legais da API/frontend continua conforme o registro anterior; a migração remota já foi aplicada.
+
 ## 2026-10-10 — Migração de aceite aplicada ao PostgreSQL remoto
 
 ### Implementado

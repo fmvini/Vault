@@ -40,12 +40,20 @@ for (const mode of ['login', 'register']) {
 
 for (const choice of ['accepted', 'rejected']) {
   test('cookies: ' + choice + ' persiste e pode ser alterado em mobile e tema escuro', async ({ page }) => {
-    await page.setViewportSize({ width: 390, height: 844 });
+    await page.setViewportSize({ width: 1440, height: 900 });
     await page.addInitScript(() => localStorage.setItem('vault-theme', 'dark'));
     await page.goto('/login');
-    const dialog = page.getByRole('dialog', { name: 'Você escolhe o que fica no navegador' });
+    const dialog = page.getByRole('dialog', { name: 'Como usamos cookies' });
     await expect(dialog).toBeVisible();
-    await expect(dialog).toContainText('pequenos arquivos');
+    await expect(dialog.locator('#cookie-description')).toBeVisible();
+    await expect(dialog).toContainText('manter sua sessão, lembrar o tema e salvar sua escolha de cookies');
+    const desktopBox = await dialog.boundingBox();
+    const copyBox = await dialog.locator('.cookie-copy').boundingBox();
+    const actionsBox = await dialog.locator('.cookie-actions').boundingBox();
+    expect(desktopBox!.width).toBeLessThanOrEqual(860);
+    expect(actionsBox!.x).toBeGreaterThanOrEqual(copyBox!.x + copyBox!.width);
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect(dialog.locator('#cookie-description')).toBeInViewport();
     await dialog.getByRole('button', { name: choice === 'accepted' ? 'Aceitar opcionais' : 'Rejeitar opcionais' }).click();
     await expect(dialog).not.toBeVisible();
     expect(await page.evaluate(() => JSON.parse(localStorage.getItem('vault-cookie-consent') || 'null').choice)).toBe(choice);
