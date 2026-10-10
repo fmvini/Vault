@@ -1,3 +1,28 @@
+## 2026-10-10 — Migração de aceite aplicada ao PostgreSQL remoto
+
+### Implementado
+- Aplicada explicitamente a revisão Alembic `20261010_0004` ao PostgreSQL remoto do projeto Supabase, após autorização do usuário.
+- Criadas `users.legal_version` (VARCHAR(32)) e `users.legal_accepted_at` (timestamp com timezone), ambas nullable e sem default ou preenchimento retroativo.
+
+### Arquivos principais alterados
+- `docs/DEVELOPMENT_LOG.md`.
+- Migração existente executada, sem alteração do arquivo: `backend/alembic/versions/20261010_0004_legal_acceptance.py`.
+
+### Decisões técnicas
+- Utilizada `MIGRATION_DATABASE_URL` de `backend/.env.deploy.local`, via Session pooler na porta 5432; confirmado o mesmo host, banco e usuário da conexão de publicação. Credenciais e URLs não foram exibidas nem adicionadas ao Git.
+- Executado `alembic upgrade 20261010_0004`, limitado à revisão solicitada, com TLS, DDL transacional, statement timeout de 30 segundos e lock timeout de 5 segundos.
+- Verificações antes/depois em conexões somente leitura; nenhum servidor da aplicação foi iniciado e nenhum teste com dados sintéticos foi executado no banco remoto.
+
+### Estado atual
+- Precondição confirmada: revisão remota `20261003_0003`, sem as colunas de aceite.
+- Upgrade concluído. Nova conexão confirmou revisão `20261010_0004`, os tipos, timezone, nulabilidade e ausência de defaults das colunas.
+- A única conta normal existente foi preservada, com contagem e hash dos identificadores iguais antes/depois; nenhum aceite foi presumido ou preenchido.
+- Banco preparado para a implementação do commit `81f0bb3`. Esta execução não publicou API/frontend nem enviou commits ao remoto.
+
+### Próximos passos
+- Publicar API e frontend do commit `81f0bb3` de forma coordenada quando solicitado; a migração do banco já está concluída.
+- Após publicar, validar cadastro/login com os dois aceites, documentos legais, preferências de cookies, 404 e contato de suporte no domínio online.
+
 ## 2026-10-10 — Termos, privacidade, cookies, suporte e página 404
 
 ### Implementado
